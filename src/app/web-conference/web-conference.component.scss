@@ -1,0 +1,27 @@
+.stream-container {
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 8px;
+}
+
+.local-stream-container {
+    position: absolute;
+    top:2%;
+    left: 775px;
+}
+
+.video-control-buttons {
+    position:absolute;
+    top:65%;
+    left:20%;
+}
+
+.video-control-button {
+    margin-right:16px;
+    color:black;
+}
+
+.user-action-buttons {
+    margin-left: 16px;
+}

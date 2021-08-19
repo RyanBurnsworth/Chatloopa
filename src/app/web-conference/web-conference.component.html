@@ -1,0 +1,14 @@
+<div class="stream-container">
+    <app-remote-video class="remote-stream-container" id="remote" autoplay #remote></app-remote-video>
+    <app-local-video class="local-stream-container" id="local" autoplay #local></app-local-video>
+    <div class="video-control-buttons">
+        <button mat-fab class="video-control-button" (click)="toggleMicrophone()"><mat-icon>{{ micSubject$ | async }}</mat-icon></button>
+        <button mat-fab class="video-control-button" (click)="toggleLocalVideo()"><mat-icon>{{ videoSubject$ | async }}</mat-icon></button>
+        <button mat-fab class="video-control-button" (click)="closeConnection()" title="Hang Up"><mat-icon>call_end</mat-icon></button>
+    </div>
+    
+</div>
+
+<div class="user-action-buttons">
+    <button mat-raised-button (click)="startService()" *ngIf='!isConnected'>Start Video Chat</button>
+</div>

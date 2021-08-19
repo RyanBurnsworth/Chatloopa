@@ -1,0 +1,19 @@
+.video-console {
+    width:1200px;
+    height:900px;
+    border-radius: 32px;
+    background-color: black;
+    padding:8px;
+    align-items: center;
+}
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.spinner {
+    position: absolute;
+    left:550px;
+}
