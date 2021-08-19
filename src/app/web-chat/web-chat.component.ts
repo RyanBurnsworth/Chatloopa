@@ -1,7 +1,10 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Message } from '../models/message.model';
 import { Room } from '../models/room.model';
 import { MessageService } from '../services/message.service';
 import { RoomService } from '../services/room.service';
+import { Utils } from '../shared/utils';
 
 @Component({
   selector: 'app-web-chat',
@@ -10,6 +13,9 @@ import { RoomService } from '../services/room.service';
 })
 export class WebChatComponent implements OnInit {
   currentRoom: Room;
+  messageSubject$ = new BehaviorSubject<Message[]>([]);
+  messageCache: Message[] = [];
+  message: Message;
 
   @ViewChild('message') messageBox: ElementRef;
   @ViewChild('chatbox', { read: ElementRef }) chatBox: ElementRef;
@@ -18,7 +24,7 @@ export class WebChatComponent implements OnInit {
     private readonly messageService: MessageService,
     private readonly roomService: RoomService,
   ) { }
-
+  
   ngOnInit(): void {
     this.roomService.currentRoom$.subscribe((currentRoom) => {
       this.currentRoom = currentRoom;
@@ -30,7 +36,13 @@ export class WebChatComponent implements OnInit {
     this.messageService.getChatUpdates(this.currentRoom.room_id).subscribe(
       (resp) => {
         resp.map((changes) => {
-            this.scrollToBottom();
+          this.message = changes.payload.doc.data() as Message;
+          if (Utils.compareMessages(this.message, this.messageCache)) {
+            return;
+          }
+          this.messageCache.push(this.message);
+          this.messageSubject$.next(this.messageCache);
+          this.scrollToBottom();
         })
       }
     );

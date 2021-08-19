@@ -1,7 +1,7 @@
 <div class="web-chat-console">
     <div class="main-chat-container">
         <mat-list role='list' class='chat-list' #chatbox>
-            
+            <mat-list-item role='list-item' class='chat-item' *ngFor="let message of messageSubject$ | async"> {{ message.message }}</mat-list-item>
         </mat-list>
     </div>
     <mat-form-field class="message-box full-width" appearance="fill">

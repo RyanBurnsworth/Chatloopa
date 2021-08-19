@@ -10,10 +10,9 @@ import { Room } from '../models/room.model';
 export class RoomService {
   constructor(private readonly httpClient: HttpClient) {
    }
+  currentRoom$ = new Subject<Room>();
 
-   currentRoom$ = new Subject<Room>();
-
-   public getRoom(): Observable<Room> {
-     return this.httpClient.get('https://burnsworthrobotics.com:8443/vacancy', {responseType: 'json'} ) as Observable<Room>
-   }
+  public getRoom(): Observable<Room> {
+    return this.httpClient.get('https://burnsworthrobotics.com:8443/vacancy', {responseType: 'json'} ) as Observable<Room>
+  }
 }
