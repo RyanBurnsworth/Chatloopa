@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Room } from '../models/room.model';
 import { Signal } from '../models/signal.model';
@@ -148,7 +148,6 @@ export class WebConferenceComponent implements OnDestroy {
 
     this.peerConnection.ontrack = event => {
         this.remote.sourceObject = event.streams[0];
-        console.log("On Track: " + JSON.stringify(event));
     };
 
     this.peerConnection.onconnectionstatechange = event => {

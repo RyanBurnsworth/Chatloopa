@@ -14,6 +14,6 @@ export class RoomService {
    currentRoom$ = new Subject<Room>();
 
    public getRoom(): Observable<Room> {
-     return this.httpClient.get('http://localhost:8080/vacancy', {responseType: 'json'} ) as Observable<Room>
+     return this.httpClient.get('https://burnsworthrobotics.com:8443/vacancy', {responseType: 'json'} ) as Observable<Room>
    }
 }
