@@ -1,0 +1,35 @@
+.web-chat-console {
+    background-color: grey;
+    width: 800px;
+    height: 800px;
+    margin-left: 16px;
+    border-radius: 24px;
+    padding: 8px;
+    box-shadow: black 2px;
+}
+
+.main-chat-container {
+    background-color: white;
+    width:800px;
+    height:90%;
+    border-radius: 24px;
+} 
+
+.message-box {
+    width: 700px;
+    margin:8px;
+}
+
+.send-button {
+    margin: 8px;
+}
+
+.chat-list {
+    width: 800px;
+    height: 700px;
+    overflow-y: scroll;
+}
+
+.chat-item {
+    color: black;
+}

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Room } from '../models/room.model';
 
 @Injectable({
@@ -10,6 +10,8 @@ import { Room } from '../models/room.model';
 export class RoomService {
   constructor(private readonly httpClient: HttpClient) {
    }
+
+   currentRoom$ = new Subject<Room>();
 
    public getRoom(): Observable<Room> {
      return this.httpClient.get('http://localhost:8080/vacancy', {responseType: 'json'} ) as Observable<Room>

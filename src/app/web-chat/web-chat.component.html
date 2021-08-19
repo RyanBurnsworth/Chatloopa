@@ -1,0 +1,15 @@
+<div class="web-chat-console">
+    <div class="main-chat-container">
+        <mat-list role='list' class='chat-list' #chatbox>
+            
+        </mat-list>
+    </div>
+    <mat-form-field class="message-box full-width" appearance="fill">
+        <mat-label>Send a message</mat-label>
+        <input matInput #message maxlength="256" placeholder="Message">
+        <mat-hint align="start">Talk about something!</mat-hint>
+        <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+    </mat-form-field>    
+    
+    <button mat-raised-button class="send-button" (click)="sendMessage()">Send</button>
+</div>

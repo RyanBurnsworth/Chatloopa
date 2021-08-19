@@ -14,6 +14,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { WebChatComponent } from './web-chat/web-chat.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     WebConferenceComponent,
     RemoteVideoComponent,
     LocalVideoComponent,
+    WebChatComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,6 +36,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatInputModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

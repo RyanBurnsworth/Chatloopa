@@ -13,7 +13,7 @@ import { Utils } from '../shared/utils';
   templateUrl: './web-conference.component.html',
   styleUrls: ['./web-conference.component.scss']
 })
-export class WebConferenceComponent implements OnInit, OnDestroy {
+export class WebConferenceComponent implements OnDestroy {
   userId = '';
   currentRoom : Room;
   turnServer: TurnServer;
@@ -48,11 +48,6 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     this.videoSubject$.unsubscribe();
   }
 
-  ngOnInit(): void {
-    // this.turnServerService.setTurnServer();
-    //this.turnServer = this.turnServerService.getTurnServer();
-  }
-
   /**
    * Starts the WebRTC process by first fetching a room from the service 
    * and then initializing the signaling service and then WebRTC.
@@ -62,6 +57,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     this.roomService.getRoom().subscribe(
       (response) => {
         this.currentRoom = response;
+        this.roomService.currentRoom$.next(response);
         this.initializeSignaling();
         this.initializeWebRTC();
       },
@@ -290,6 +286,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     this.local.sourceObject = undefined;
     this.remote.sourceObject = undefined;
     this.peerConnection = undefined;
+    this.roomService.currentRoom$.next(undefined);
     console.log("Disconnected!");
   }
 
