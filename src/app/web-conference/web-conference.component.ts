@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Room } from '../models/room.model';
 import { Signal } from '../models/signal.model';
 import { TurnServer } from '../models/turn-server.model';
+import { DialogService } from '../services/dialog.service';
 import { LoadingService } from '../services/loading.service';
 import { RoomService } from '../services/room.service';
 import { SignalingService } from '../services/signaling.service';
@@ -33,7 +34,8 @@ export class WebConferenceComponent implements OnDestroy {
   constructor(
     private readonly signalingService: SignalingService, 
     private readonly roomService: RoomService, 
-    private readonly loadingService: LoadingService, ) { }
+    private readonly loadingService: LoadingService,
+    private dialogService: DialogService, ) { }
 
   ngOnDestroy(): void {
     // TODO: look for a better way of assigning properties of an object
@@ -54,6 +56,10 @@ export class WebConferenceComponent implements OnDestroy {
    * 
    */
   public startService() {
+    // reset the action button icons
+    this.micSubject$.next('mic');
+    this.videoSubject$.next('videocam');
+
     this.roomService.getRoom().subscribe(
       (response) => {
         this.currentRoom = response;
@@ -317,5 +323,27 @@ export class WebConferenceComponent implements OnDestroy {
     } else {
       this.videoSubject$.next('videocam_off');
     }
+  }
+
+  showEndChatDialog() {
+    let data = {icon: '', title: 'Are you sure?', message: 'Do you want to end this video chat?', positiveButtonText: 'Leave Video Chat', negativeButtonText: 'Cancel' };
+    this.dialogService.openActionDialog(data);
+
+    this.dialogService.event$.subscribe((event) => {
+      switch (event) {
+        case 'positive':
+          this.closeConnection();
+          break;
+        case 'negative':
+          break;
+        default:
+          break;
+      }
+    })
+  }
+
+  showWaitingDialog() {
+    let data = {icon: '', title: 'Waiting for a Video Stranger', message: 'Hang tight, we\'ll find you someone soon!'};
+    this.dialogService.openProgressDialog(data);
   }
 }

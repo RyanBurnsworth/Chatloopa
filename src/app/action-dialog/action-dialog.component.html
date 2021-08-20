@@ -1,0 +1,7 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content>
+    <p>{{ message }} </p>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button (click)="action('positive')">{{ positiveButtonText }}</button><button mat-stroked-button (click)="action('negative')">{{ negativeButtonText }}</button>
+</mat-dialog-actions>

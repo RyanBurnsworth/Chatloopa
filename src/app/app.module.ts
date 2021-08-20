@@ -17,6 +17,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { WebChatComponent } from './web-chat/web-chat.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { ActionDialogComponent } from './action-dialog/action-dialog.component';
+import { ProgressDialogComponent } from './progress-dialog/progress-dialog.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -25,6 +29,8 @@ import { WebChatComponent } from './web-chat/web-chat.component';
     RemoteVideoComponent,
     LocalVideoComponent,
     WebChatComponent,
+    ActionDialogComponent,
+    ProgressDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +44,8 @@ import { WebChatComponent } from './web-chat/web-chat.component';
     MatProgressSpinnerModule,
     MatInputModule,
     MatListModule,
+    MatDialogModule,
+    MatProgressBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

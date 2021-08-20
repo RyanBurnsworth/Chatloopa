@@ -4,7 +4,7 @@
     <div class="video-control-buttons">
         <button mat-fab class="video-control-button" (click)="toggleMicrophone()"><mat-icon>{{ micSubject$ | async }}</mat-icon></button>
         <button mat-fab class="video-control-button" (click)="toggleLocalVideo()"><mat-icon>{{ videoSubject$ | async }}</mat-icon></button>
-        <button mat-fab class="video-control-button" (click)="closeConnection()" title="Hang Up"><mat-icon>call_end</mat-icon></button>
+        <button mat-fab class="video-control-button" (click)="showEndChatDialog()" title="Hang Up"><mat-icon>call_end</mat-icon></button>
     </div>
     
 </div>
