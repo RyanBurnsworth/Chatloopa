@@ -21,6 +21,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ActionDialogComponent } from './action-dialog/action-dialog.component';
 import { ProgressDialogComponent } from './progress-dialog/progress-dialog.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -46,8 +47,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatListModule,
     MatDialogModule,
     MatProgressBarModule,
+    MatSnackBarModule,
   ],
-  providers: [],
+  providers: [ {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}} ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,5 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { BehaviorSubject, from, Observable } from 'rxjs';
 import { Room } from '../models/room.model';
 import { Signal } from '../models/signal.model';
 import { TurnServer } from '../models/turn-server.model';
@@ -8,6 +8,11 @@ import { LoadingService } from '../services/loading.service';
 import { RoomService } from '../services/room.service';
 import { SignalingService } from '../services/signaling.service';
 import { Utils } from '../shared/utils';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-web-conference',
@@ -28,6 +33,9 @@ export class WebConferenceComponent implements OnDestroy {
   micSubject$ = new BehaviorSubject('mic');
   videoSubject$ = new BehaviorSubject('videocam');
 
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
   @ViewChild("local") local : any;
   @ViewChild("remote") remote: any;
 
@@ -35,10 +43,10 @@ export class WebConferenceComponent implements OnDestroy {
     private readonly signalingService: SignalingService, 
     private readonly roomService: RoomService, 
     private readonly loadingService: LoadingService,
-    private dialogService: DialogService, ) { }
+    private readonly dialogService: DialogService, 
+    private readonly snackBar: MatSnackBar) { }
 
   ngOnDestroy(): void {
-    // TODO: look for a better way of assigning properties of an object
     let sig = new Signal();
     sig.userId = this.userId;
     sig.type = "CLOSE";
@@ -219,6 +227,9 @@ export class WebConferenceComponent implements OnDestroy {
         this.peerConnection.setRemoteDescription(remoteDesc);
         break;
       case "ICE_CANDIDATE":
+        if (this.signal.message == 'null')
+          return;
+
         let iceCandidate = Utils.iceCandidateTransform(this.signal.message);
         this.peerConnection.addIceCandidate(new RTCIceCandidate(iceCandidate));
         break;
@@ -260,6 +271,7 @@ export class WebConferenceComponent implements OnDestroy {
         break;
       case "disconnected":
         this.closeConnection();
+        this.showSnackBar('Peer Left The Chat');
         break;
       default:
         break;
@@ -345,5 +357,12 @@ export class WebConferenceComponent implements OnDestroy {
   showWaitingDialog() {
     let data = {icon: '', title: 'Waiting for a Video Stranger', message: 'Hang tight, we\'ll find you someone soon!'};
     this.dialogService.openProgressDialog(data);
+  }
+
+  showSnackBar(message: string, ) {
+    this.snackBar.open(message, '', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 }
