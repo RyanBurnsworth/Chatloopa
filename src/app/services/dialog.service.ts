@@ -11,6 +11,8 @@ export class DialogService {
   private eventSubject = new Subject();
   event$ = this.eventSubject.asObservable();
 
+  private dialogRef: MatDialogRef<any, any>;
+
   constructor(private readonly dialog: MatDialog) { }
 
   private buildDialog<T>(dialogData: new (...args: any[]) => T, data: any): MatDialogRef<T, any> {
@@ -19,8 +21,8 @@ export class DialogService {
     dialogConfig.data = data;
     dialogConfig.disableClose = true;
     dialogConfig.backdropClass = 'blured';
-    const dialogRef = this.dialog.open(dialogData, dialogConfig);
-    return dialogRef;
+    this.dialogRef = this.dialog.open(dialogData, dialogConfig);
+    return this.dialogRef;
   }
 
   openActionDialog(data: any) {
@@ -33,5 +35,9 @@ export class DialogService {
 
   emitEvent(event: any) {
     this.eventSubject.next(event);
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 }
