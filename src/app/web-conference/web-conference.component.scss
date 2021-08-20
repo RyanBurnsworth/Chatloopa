@@ -7,12 +7,12 @@
 .local-stream-container {
     position: absolute;
     top:2%;
-    left: 775px;
+    left: 28%;
 }
 
 .video-control-buttons {
     position:absolute;
-    top:65%;
+    top:90%;
     left:20%;
 }
 
@@ -23,4 +23,29 @@
 
 .user-action-buttons {
     margin-left: 16px;
+}
+
+@media screen and (min-width: 2000px) {
+    .local-stream-container {
+        position: absolute;
+        top:2%;
+        left: 32%;
+    }
+    
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .video-control-buttons {
+        position:absolute;
+        top:90%;
+        left:33%;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .local-stream-container {
+        position: absolute;
+        top:2%;
+        left: 60%;
+    }
 }

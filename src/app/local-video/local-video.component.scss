@@ -1,10 +1,34 @@
 .video-console {
-    width: 420px;
-    height: 300px;
+    width: 40%;
+    height: auto;
+    min-height: 190px;
     border-radius: 24px;
-    border-style:5px solid;
-    border-color: blue;
     background-color: green;
-    box-shadow: red 24px;
     padding:4px 8px 8px 4px;
+}
+
+@media screen and (max-width: 1025px) {
+    .video-console {
+        width: 80%;
+        height: auto;
+        min-height: 100px;
+        border-radius: 24px;
+        background-color: green;
+        padding:4px 8px 8px 4px;
+    }
+}
+
+video {
+    object-fit: fill;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .video-console {
+        width: 60%;
+        height: auto;
+        min-height: 200px;
+        border-radius: 24px;
+        background-color: green;
+        padding:4px 8px 8px 4px;
+    }
 }

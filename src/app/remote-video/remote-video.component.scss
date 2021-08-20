@@ -1,19 +1,30 @@
 .video-console {
-    width:1200px;
-    height:900px;
-    border-radius: 32px;
+    width:50% !important;
+    height:100% !important;
     background-color: black;
     padding:8px;
-    align-items: center;
+    position:absolute;
 }
 
-.video-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+video {
+    object-fit: fill;
 }
 
 .spinner {
     position: absolute;
-    left:550px;
+    left: 23%;
+    top: 50%;
+}
+
+@media screen and (max-width: 1024px) {
+    .video-console {
+        width: 100% !important;
+        height:100%;
+        position: absolute;
+        object-fit: fill;
+    }
+    
+    .spinner {
+        left: 38%;
+    }
 }
