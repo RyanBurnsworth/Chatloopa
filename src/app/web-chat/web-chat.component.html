@@ -6,7 +6,7 @@
     </div>
     <mat-form-field class="message-box full-width" appearance="fill">
         <mat-label>Send a message</mat-label>
-        <input matInput #message maxlength="256" placeholder="Message">
+        <input matInput #message maxlength="256" placeholder="Message" autocomplete="off">
         <mat-hint align="start">Talk about something!</mat-hint>
         <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
     </mat-form-field>    
