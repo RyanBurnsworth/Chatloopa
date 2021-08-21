@@ -49,6 +49,21 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     this.peerService.connectionState$.subscribe((state) => {
       this.updateConnectionState(state as string);
     });
+
+    this.dialogService.event$.subscribe((event) => {
+      switch (event) {
+        case 'positive':
+          this.restartCall();
+          break;
+        case 'negative':
+          break;
+        case 'cancelled':
+          this.endCall();
+          break;
+        default:
+          break;
+      }
+    })
   }
 
   ngOnDestroy(): void {
@@ -105,12 +120,16 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
         break;
       case "disconnected":
         this.showSnackBar('Peer Left The Chat');
-        this.endCall();
-        this.startService();
+        this.restartCall();
         break;
       default:
         break;
     }
+  }
+
+  private restartCall() {
+    this.endCall();
+    this.startService();
   }
 
   /**
@@ -160,18 +179,6 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
   showEndChatDialog() {
     let data = {icon: '', title: 'Are you sure?', message: 'Do you want to end this video chat?', positiveButtonText: 'Leave Video Chat', negativeButtonText: 'Cancel' };
     this.dialogService.openActionDialog(data);
-
-    this.dialogService.event$.subscribe((event) => {
-      switch (event) {
-        case 'positive':
-          this.endCall();
-          break;
-        case 'negative':
-          break;
-        default:
-          break;
-      }
-    })
   }
 
   showWaitingDialog() {
