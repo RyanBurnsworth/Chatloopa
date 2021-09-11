@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { Signal } from '../models/signal.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignalingService {
+  private signalListener: Observable<DocumentChangeAction<unknown>[]>;
 
   constructor(private firestore: AngularFirestore) { }
 
-  getSignalListener(roomId: string) {
-    return this.firestore.collection(roomId).snapshotChanges();
+  startSignalListener(roomId: string) {
+    this.signalListener = this.firestore.collection(roomId).snapshotChanges();
+  }
+
+  getSignalListener() {
+   return this.signalListener;
   }
 
   sendSignal(collectionName: string, signal: Signal) {

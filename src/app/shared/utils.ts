@@ -27,6 +27,7 @@ export class Utils {
         signalList.forEach((sig => {
             if (sig.userId == signalObj.userId &&
                 sig.message == signalObj.message &&
+                sig.roomId == signalObj.roomId &&
                 sig.type == signalObj.type &&
                 signalObj.type != 'ICE_CANDIDATE') {
                 contains = true;
