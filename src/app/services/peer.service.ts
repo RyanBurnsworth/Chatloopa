@@ -62,8 +62,8 @@ export class PeerService {
       })
 
       this.waitTimer = this.waitTimer$.subscribe((timeElapsed) => {
-        console.log("It's been 10 seconds");
         if (!this.isConnected) {
+          console.log('Connection Timeout - Retrying');
           this.closeConnection();
           this.initPeerService();
         }
@@ -151,7 +151,7 @@ export class PeerService {
 
     this.peerConnection.onconnectionstatechange = event => {
       this.connectionStateSubject.next(event.currentTarget.connectionState);
-      this.isConnected = event.currentTarget.connectionState === 'connected';
+      this.isConnected = (event.currentTarget.connectionState === 'connected');
     }
 
     this.peerConnection.onicecandidateerror = event => {
@@ -217,7 +217,7 @@ export class PeerService {
             );
           },
           (error) => {
-            this.peerErrorSubject.next("Oops, we\'ve encounted an error. Try again");
+            this.peerErrorSubject.next("We have encounted an error.");
             console.error("Error creating answer: " + JSON.stringify(error));
             this.restartConnection();
           },
