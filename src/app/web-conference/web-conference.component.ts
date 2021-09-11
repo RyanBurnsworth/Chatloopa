@@ -70,7 +70,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     let sig = new Signal();
     sig.type = "CLOSE";
     sig.message = "";
-
+    sig.roomId = "";
     this.micSubject$.unsubscribe();
     this.videoSubject$.unsubscribe();
   }
