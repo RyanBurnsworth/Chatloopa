@@ -18,8 +18,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { WebChatComponent } from './web-chat/web-chat.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { ActionDialogComponent } from './action-dialog/action-dialog.component';
-import { ProgressDialogComponent } from './progress-dialog/progress-dialog.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
@@ -30,8 +28,6 @@ import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/mater
     RemoteVideoComponent,
     LocalVideoComponent,
     WebChatComponent,
-    ActionDialogComponent,
-    ProgressDialogComponent,
   ],
   imports: [
     BrowserModule,

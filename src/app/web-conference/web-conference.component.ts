@@ -1,10 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, } from 'rxjs';
 import { Signal } from '../models/signal.model';
-import { DialogService } from '../services/dialog.service';
 import { LoadingService } from '../services/loading.service';
 import {
-  MatSnackBar,
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
@@ -30,12 +28,10 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
   constructor(
     private readonly peerService: PeerService, 
     private readonly loadingService: LoadingService,
-    private readonly dialogService: DialogService, 
-    private readonly snackBar: MatSnackBar) { }
+    ) { }
 
   ngOnInit(): void {
     this.peerService.peerError$.subscribe((err) => {
-      this.showSnackBar(err as string);
     });
 
     this.peerService.remoteStream$.subscribe((stream) => {
@@ -49,21 +45,6 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     this.peerService.connectionState$.subscribe((state) => {
       this.updateConnectionState(state as string);
     });
-
-    this.dialogService.event$.subscribe((event) => {
-      switch (event) {
-        case 'positive':
-          this.restartCall();
-          break;
-        case 'negative':
-          break;
-        case 'cancelled':
-          this.endCall();
-          break;
-        default:
-          break;
-      }
-    })
   }
 
   ngOnDestroy(): void {
@@ -73,6 +54,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     sig.roomId = "";
     this.micSubject$.unsubscribe();
     this.videoSubject$.unsubscribe();
+    this.peerService.closeConnection();
   }
 
   /**
@@ -85,8 +67,6 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     this.micSubject$.next('mic');
     this.videoSubject$.next('videocam');
     this.peerService.initPeerService();
-
-    this.showWaitingDialog();
   }
 
   /**
@@ -111,7 +91,6 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
   private updateConnectionState(connectionState: string) {
     switch (connectionState) {
       case "connecting":
-        this.dialogService.closeDialog();
         this.loadingService.setLoadingStatus(true);
         break;
       case "connected":
@@ -119,7 +98,6 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
         this.isConnected = true;
         break;
       case "disconnected":
-        this.showSnackBar('Peer Left The Chat');
         this.restartCall();
         break;
       default:
@@ -136,7 +114,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
    * End the call and eset the UI components
    * 
    */
-  private endCall() {
+  endCall() {
     this.loadingService.setLoadingStatus(false);
     this.isConnected = false;
     this.micSubject$.next('mic');
@@ -174,22 +152,5 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     } else {
       this.videoSubject$.next('videocam_off');
     }
-  }
-
-  showEndChatDialog() {
-    let data = {icon: '', title: 'Are you sure?', message: 'Do you want to end this video chat?', positiveButtonText: 'Leave Video Chat', negativeButtonText: 'Cancel' };
-    this.dialogService.openActionDialog(data);
-  }
-
-  showWaitingDialog() {
-    let data = {icon: '', title: 'Waiting for a Video Stranger', message: 'Hang tight, we\'ll find you someone soon!'};
-    this.dialogService.openProgressDialog(data);
-  }
-
-  showSnackBar(message: string, ) {
-    this.snackBar.open(message, '', {
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-    });
   }
 }

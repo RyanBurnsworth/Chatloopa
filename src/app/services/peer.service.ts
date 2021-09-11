@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { interval, Subject } from 'rxjs';
 import { Room } from '../models/room.model';
 import { Signal } from '../models/signal.model';
 import { TurnServer } from '../models/turn-server.model';
 import { Utils } from '../shared/utils';
 import { RoomService } from './room.service';
 import { SignalingService } from './signaling.service';
+import { take, map, filter } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -34,15 +35,22 @@ export class PeerService {
   private connectionStateSubject = new Subject();
   connectionState$ = this.connectionStateSubject.asObservable();
 
+  private waitTimer$ = interval(1000).pipe(
+    map((x) => x + 1),
+    filter((y) => y == 10),
+    take(10),
+  );
+  private waitTimer: any;
+
+  private roomService$: any;
+
   constructor(
     private readonly signalingService: SignalingService, 
     private readonly roomService: RoomService, ) { }
 
   public initPeerService() {
-    console.log("WEBRTCLOG: " + "Initializing Peer Service"); // TODO: Remove comment
-    this.roomService.getRoom().subscribe(
+    this.roomService$ = this.roomService.getRoom().subscribe(
       (response) => {
-        console.log("WEBRTCLOG: " + "Received Room Response"); //TODO: Remove Comment
         this.currentRoom = response;
         this.roomService.currentRoom$.next(response); //TODO: Investigate
         this.startSignalingService();
@@ -52,10 +60,17 @@ export class PeerService {
         this.peerErrorSubject.next("Oops we\'ve encountered an error. Try again.");
         console.error("Error fetching room");
       })
+
+      this.waitTimer = this.waitTimer$.subscribe((timeElapsed) => {
+        console.log("It's been 10 seconds");
+        if (!this.isConnected) {
+          this.closeConnection();
+          this.initPeerService();
+        }
+      })
   }
 
   private startSignalingService() {
-    console.log("WEBRTCLOG: " + "Starting Signaling Service"); //TODO: Remove Comment
     // if no 2nd user exists in the room, this user is the initiator
     this.isInitiator = this.currentRoom.user_id_2 === "";
 
@@ -63,7 +78,6 @@ export class PeerService {
     let signal = new Signal();
     signal.message = "";
     if (this.isInitiator) {
-      console.log("WEBRTCLOG: " + "Is Initiator"); //TODO: Remove Comment
       signal.type = "CREATE_ROOM";
       this.userId = this.currentRoom.user_id_1;
       signal.userId = this.userId;
@@ -71,7 +85,6 @@ export class PeerService {
 
       this.signalingService.sendSignal(this.currentRoom.room_id, signal);
     } else {
-      console.log("WEBRTCLOG: " + "Is Joining Room"); //TODO: Remove Comment
       signal.type = "JOIN_ROOM";
       this.userId = this.currentRoom.user_id_2;
       signal.userId = this.userId;
@@ -83,10 +96,8 @@ export class PeerService {
     this.signalingService.startSignalListener(this.currentRoom.room_id);
     this.signalObservable$ = this.signalingService.getSignalListener().subscribe(
         (resp) => {
-          console.log("WEBRTCLOG: " + "Incoming Signal"); //TODO: Remove Comment
           resp.map(changes => {
             this.signal = changes.payload.doc.data() as Signal;
-            console.log("WEBRTCLOG: " + "SignalRoom: " + this.signal.roomId + " CurrentRoom: " + this.currentRoom.room_id); //TODO: Remove Log
             if (Utils.compareSignals(this.signal, this.signalCache) || this.signal.roomId !== this.currentRoom.room_id)
               return;
             this.signalCache.push(this.signal);
@@ -94,14 +105,13 @@ export class PeerService {
           })
         },
         (error) => {
-          this.peerErrorSubject.next("Oops...we have a problem! Please try again.");
+          this.peerErrorSubject.next("Error processing request.");
           console.error("Error receiving signal: " + error.error);
         }
       )
   }
 
   private initWebRTC() {
-    console.log("WEBRTCLOG: " + "Initialzing WebRTC "); //TODO: Remove Comment
     try {
       this.peerConnection = new RTCPeerConnection({
         iceServers: [
@@ -123,7 +133,6 @@ export class PeerService {
     this.localStreamSubject.next(true);
 
     this.peerConnection.onicecandidate = event => {
-      console.log("WEBRTCLOG: " + "Received Ice Candidate"); //TODO: Remove Comment
       let sig = new Signal();
       sig.message = JSON.stringify(event.candidate);
       sig.userId = this.userId;
@@ -137,23 +146,20 @@ export class PeerService {
     };
 
     this.peerConnection.ontrack = event => {
-      console.log("WEBRTCLOG: " + "Received Remote track"); //TODO: Remove Comment
       this.remoteStreamSubject.next(event.streams[0]);
     };
 
     this.peerConnection.onconnectionstatechange = event => {
-      console.log("WEBRTCLOG: " + "Connection change event "); //TODO: Remove Comment
       this.connectionStateSubject.next(event.currentTarget.connectionState);
+      this.isConnected = event.currentTarget.connectionState === 'connected';
     }
 
     this.peerConnection.onicecandidateerror = event => {
-      console.log("WEBRTCLOG: " + "Ice candidate error"); //TODO: Remove Comment
       console.error("Ice candidate error: " + event);
     }
   }
 
   private signalReceived() {
-    console.log("WEBRTCLOG: " + "New Signal received "); //TODO: Remove Comment
     // ignore signal messages from self
     if (this.signal.userId === this.userId) {
       return;
@@ -161,7 +167,6 @@ export class PeerService {
     
     switch (this.signal.type) {
       case "JOIN_ROOM":
-        console.log("WEBRTCLOG: " + "Joining Room: " + this.currentRoom.room_id); //TODO: Remove Comment
         if (this.isInitiator) {
           this.peerConnection.createOffer().then(
             (offer) => { 
@@ -175,20 +180,21 @@ export class PeerService {
                   this.signalingService.sendSignal(this.currentRoom.room_id, offerSignal)
                 },
                 (error) => {
-                  this.peerErrorSubject.next("Oops we\'ve encountered an error. Try again.")
+                  this.peerErrorSubject.next("We have encountered an error.")
                   console.error("Error setting local description: " + error.error);
+                  this.restartConnection();
                 }
               );
             },
             (error) => {
               console.error("Error creating offer: " + error.error),
-              this.peerErrorSubject.next("Oops, we\'ve encounted an error. Try again");
+              this.peerErrorSubject.next("We have encountered an error");
+              this.restartConnection();
             }
           );
         }
         break;
       case "OFFER":
-        console.log("WEBRTCLOG: " + "Receiving an offer"); //TODO: Remove Comment
         let rtcSessionDescInit = Utils.sdpTransform(this.signal.message);
         this.peerConnection.setRemoteDescription(new RTCSessionDescription(rtcSessionDescInit))
 
@@ -204,24 +210,33 @@ export class PeerService {
                 this.signalingService.sendSignal(this.currentRoom.room_id, sig);
               },
               (error) => {
-                this.peerErrorSubject.next("Oops, we\'ve encounted an error. Try again");
+                this.peerErrorSubject.next("We have encountered an error");
                 console.error("Error setting local desc: " + error.error);
+                this.restartConnection();
               }
             );
           },
           (error) => {
             this.peerErrorSubject.next("Oops, we\'ve encounted an error. Try again");
             console.error("Error creating answer: " + JSON.stringify(error));
+            this.restartConnection();
           },
         );
         break;
       case "ANSWER":
-        console.log("WEBRTCLOG: " + "Received an answer "); //TODO: Remove Comment
         let remoteDesc = Utils.sdpTransform(this.signal.message);
-        this.peerConnection.setRemoteDescription(remoteDesc);
+        this.peerConnection.setRemoteDescription(remoteDesc).then(
+          () => {
+            
+          },
+          (error) => {
+            this.peerErrorSubject.next("We have encountered an error");
+            console.error("Error setting remote description: " + error);
+            this.restartConnection();
+          }
+        );
         break;
       case "ICE_CANDIDATE":
-        console.log("WEBRTCLOG: " + "Incoming Ice Candidate"); //TODO: Remove Comment
         if (this.signal.message == 'null')
           return;
 
@@ -231,6 +246,7 @@ export class PeerService {
         break;
       case "CLOSED":
         this.connectionStateSubject.next('disconnected');
+        this.isConnected = false;
         break;
       default:
         break;
@@ -241,18 +257,28 @@ export class PeerService {
     this.peerConnection.addStream(stream);
   }
 
+  private restartConnection() {
+    this.closeConnection();
+    this.initPeerService();
+  }
+
   /**
    * End the current webRTC peer connection
    * 
    */
    public closeConnection() {
-    console.log("WEBRTCLOG: " + "Closing connection"); //TODO: Remove Comment
+    this.isConnected = false;
     this.signal.type="CLOSED";
     this.signalingService.sendSignal(this.currentRoom.room_id, this.signal);
     this.peerConnection.close()
+    this.destroy();
+  }
+
+  private destroy() {
     this.peerConnection = undefined;
-    this.currentRoom.room_id = '';
+    this.currentRoom = undefined;
     this.signalObservable$.unsubscribe();
-    this.roomService.currentRoom$.next(undefined);
+    this.waitTimer.unsubscribe();
+    this.roomService$.unsubscribe();
   }
 }
