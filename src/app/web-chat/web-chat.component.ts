@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Message } from '../models/message.model';
 import { Room } from '../models/room.model';
 import { MessageService } from '../services/message.service';
-import { RoomService } from '../services/room.service';
+import { RtcService } from '../services/room.service';
 import { Utils } from '../shared/utils';
 
 @Component({
@@ -22,7 +22,7 @@ export class WebChatComponent implements OnInit {
 
   constructor(
     private readonly messageService: MessageService,
-    private readonly roomService: RoomService,
+    private readonly roomService: RtcService,
   ) { }
   
   ngOnInit(): void {
@@ -33,7 +33,7 @@ export class WebChatComponent implements OnInit {
   }
 
   initializeChatBox() {
-    this.messageService.getChatUpdates(this.currentRoom.room_id).subscribe(
+    this.messageService.getChatUpdates(this.currentRoom.roomId).subscribe(
       (resp) => {
         resp.map((changes) => {
           this.message = changes.payload.doc.data() as Message;
@@ -55,8 +55,8 @@ export class WebChatComponent implements OnInit {
       return;
     }
 
-    let msg = this.messageService.buildMessage("1", this.currentRoom.user_id_1, this.currentRoom.user_id_2, "MESSAGE", this.messageBox.nativeElement.value);
-    this.messageService.sendChatMessage(this.currentRoom.room_id, msg).then((resp) => {
+    let msg = this.messageService.buildMessage("1", this.currentRoom.userOneId, this.currentRoom.userTwoId, "MESSAGE", this.messageBox.nativeElement.value);
+    this.messageService.sendChatMessage(this.currentRoom.roomId, msg).then((resp) => {
       this.messageBox.nativeElement.value='';
     }).catch((err) => {
       console.error("Error sending message: " + JSON.stringify(err));

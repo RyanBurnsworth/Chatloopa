@@ -31,6 +31,7 @@ export class Utils {
                 sig.type == signalObj.type &&
                 signalObj.type != 'ICE_CANDIDATE') {
                 contains = true;
+                console.warn("Signal match. Type: " + sig.type + " Message: " + sig.message);
             } 
         }));
         return contains;

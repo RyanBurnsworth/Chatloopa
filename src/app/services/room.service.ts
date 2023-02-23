@@ -7,12 +7,18 @@ import { Room } from '../models/room.model';
   providedIn: 'root'
 })
 
-export class RoomService {
+export class RtcService {
   constructor(private readonly httpClient: HttpClient) {
    }
   currentRoom$ = new ReplaySubject<Room>(1);
 
-  public getRoom(): Observable<Room> {
-    return this.httpClient.get('https://burnsworthrobotics.com:8443/vacancy', {responseType: 'json'} ) as Observable<Room>
+  /**
+   * Fetch a room without userTwoId set
+   * 
+   * @returns Observable of {@link Room}
+   */
+  public getSoloRoom(): Observable<Room> {
+    console.log("Fetching room from rtc service");
+    return this.httpClient.get('http://172.105.153.56:3000/room', {responseType: 'json'} ) as Observable<Room>
   }
 }
