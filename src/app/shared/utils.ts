@@ -25,14 +25,17 @@ export class Utils {
         let contains = false;
 
         signalList.forEach((sig => {
-            if (sig.userId == signalObj.userId &&
-                sig.message == signalObj.message &&
-                sig.roomId == signalObj.roomId &&
-                sig.type == signalObj.type &&
-                signalObj.type != 'ICE_CANDIDATE') {
+            // if (sig.userId == signalObj.userId &&
+            //     sig.message == signalObj.message &&
+            //     sig.roomId == signalObj.roomId &&
+            //     sig.type == signalObj.type &&
+            //     signalObj.type != 'ICE_CANDIDATE') {
+            //     contains = true;
+            //     console.warn("Signal match. Type: " + sig.type + " Message: " + sig.message);
+            // } 
+            if (sig.id == signalObj.id) {
                 contains = true;
-                console.warn("Signal match. Type: " + sig.type + " Message: " + sig.message);
-            } 
+            }
         }));
         return contains;
     }

@@ -7,6 +7,7 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { PeerService } from '../services/peer.service';
+import * as uuid from 'uuid';
 
 @Component({
   selector: 'app-web-conference',
@@ -32,6 +33,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.peerService.peerError$.subscribe((err) => {
+      console.error("UI ERROR: " + err);
     });
 
     this.peerService.remoteStream$.subscribe((stream) => {
@@ -49,9 +51,12 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     let sig = new Signal();
+    sig.id = uuid.v4();
     sig.type = "CLOSE";
     sig.message = "";
     sig.roomId = "";
+    sig.timestamp = new Date();
+
     this.micSubject$.unsubscribe();
     this.videoSubject$.unsubscribe();
     this.peerService.closeConnection();
@@ -98,16 +103,11 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
         this.isConnected = true;
         break;
       case "disconnected":
-        this.restartCall();
+        this.endCall();
         break;
       default:
         break;
     }
-  }
-
-  private restartCall() {
-    this.endCall();
-    this.startService();
   }
 
   /**
@@ -119,6 +119,8 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     this.isConnected = false;
     this.micSubject$.next('mic');
     this.videoSubject$.next('videocam');
+
+    // TODO: review whether these should be toggled
     this.localStream.getVideoTracks()[0].stop();
     this.localStream.getAudioTracks()[0].stop();
     this.peerService.closeConnection();

@@ -7,6 +7,7 @@ import { Utils } from '../shared/utils';
 import { RtcService } from './room.service';
 import { SignalingService } from './signaling.service';
 import { take, map, filter } from 'rxjs/operators'
+import * as uuid from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -60,8 +61,8 @@ export class PeerService {
         this.initWebRTC();
       },
       (error) => {
-        this.peerErrorSubject.next("Oops we\'ve encountered an error. Try again.");
-        console.error("Error fetching room: ", error.message);
+        this.peerErrorSubject.next("Failed to initiate services. Please try again.");
+        console.error("Failed to initiate services: ", error.message);
       })
 
       // this.waitTimer = this.waitTimer$.subscribe((timeElapsed) => {
@@ -79,12 +80,15 @@ export class PeerService {
 
     let signal = new Signal();
     signal.message = "";
+    signal.id = uuid.v4();
+    
     if (this.isInitiator) {
       // create a Firestore document for this room
       signal.type = "CREATE_ROOM";
       this.userId = this.currentRoom.userOneId;
       signal.userId = this.userId;
       signal.roomId = this.currentRoom.roomId;
+      signal.timestamp = new Date();
 
       console.log("Sending CREATE_ROOM signal");
       this.signalingService.sendSignal(this.currentRoom.roomId, signal);
@@ -94,6 +98,7 @@ export class PeerService {
       this.userId = this.currentRoom.userTwoId;
       signal.userId = this.userId;
       signal.roomId = this.currentRoom.roomId;
+      signal.timestamp = new Date();
 
       console.log("Sending JOIN_ROOM signal");
       this.signalingService.sendSignal(this.currentRoom.roomId, signal);
@@ -126,7 +131,6 @@ export class PeerService {
           })
         },
         (error) => {
-          this.peerErrorSubject.next("Error processing request.");
           console.error("Error receiving signal: " + error.error);
         }
       )
@@ -139,17 +143,49 @@ export class PeerService {
     try {
       this.peerConnection = new RTCPeerConnection({
         iceServers: [
-          { urls: "stun:stun.services.mozilla.com" },
-          { urls: "stun:stun.l.google.com:19302" }
+            {
+              urls: "stun:relay.metered.ca:80",
+            },
+            {
+              urls: "turn:relay.metered.ca:80",
+              username: "71ae287c7eedae7b7b714043",
+              credential: "e01q/DsuNEoUmGOM",
+            },
+            {
+              urls: "turn:relay.metered.ca:443",
+              username: "71ae287c7eedae7b7b714043",
+              credential: "e01q/DsuNEoUmGOM",
+            },
+            {
+              urls: "turn:relay.metered.ca:443?transport=tcp",
+              username: "71ae287c7eedae7b7b714043",
+              credential: "e01q/DsuNEoUmGOM",
+            },
         ]
       },);
     } catch(error) {
       console.error(error);
       this.peerConnection = new RTCPeerConnection({
         iceServers: [
-          { urls: "stun:stun.services.mozilla.com" },
-          { urls: "stun:stun.l.google.com:19302" }
-        ]
+          {
+            urls: "stun:relay.metered.ca:80",
+          },
+          {
+            urls: "turn:relay.metered.ca:80",
+            username: "71ae287c7eedae7b7b714043",
+            credential: "e01q/DsuNEoUmGOM",
+          },
+          {
+            urls: "turn:relay.metered.ca:443",
+            username: "71ae287c7eedae7b7b714043",
+            credential: "e01q/DsuNEoUmGOM",
+          },
+          {
+            urls: "turn:relay.metered.ca:443?transport=tcp",
+            username: "71ae287c7eedae7b7b714043",
+            credential: "e01q/DsuNEoUmGOM",
+          },
+      ]
       },);
     }
 
@@ -158,9 +194,11 @@ export class PeerService {
 
     this.peerConnection.onicecandidate = event => {
       let sig = new Signal();
+      sig.id = uuid.v4();
       sig.message = JSON.stringify(event.candidate);
       sig.userId = this.userId;
       sig.type = "ICE_CANDIDATE";
+      sig.timestamp = new Date();
       sig.roomId = this.currentRoom.roomId;
 
       console.log("Received ICE_CANDIDATE event. Sending signal");
@@ -176,6 +214,8 @@ export class PeerService {
       this.remoteStreamSubject.next(event.streams[0]);
     };
 
+    // TODO: If state becomes disconnected trigger endcall method
+    // TODO: SPIKE: See if connecting... for too long results in a failed connection
     this.peerConnection.onconnectionstatechange = event => {
       console.log("Received connection state change event. Connection state change: " + event.currentTarget.connectionState);
 
@@ -207,25 +247,27 @@ export class PeerService {
               this.peerConnection.setLocalDescription(offer).then(
                 () => {
                   let offerSignal = new Signal();
+                  offerSignal.id = uuid.v4();
                   offerSignal.message = JSON.stringify(offer);
                   offerSignal.userId = this.userId;
                   offerSignal.type = "OFFER";
                   offerSignal.roomId = this.currentRoom.roomId;
+                  offerSignal.timestamp = new Date();
 
                   console.log("Sending offer");
                   this.signalingService.sendSignal(this.currentRoom.roomId, offerSignal)
                 },
                 (error) => {
-                  this.peerErrorSubject.next("We have encountered an error.")
+                  this.peerErrorSubject.next("Failed to establish a connection with peer.")
                   console.error("Error setting local description: " + error.error);
-                  this.restartConnection();
+                  this.closeConnection();
                 }
               );
             },
             (error) => {
               console.error("Error creating offer: " + error.error),
-              this.peerErrorSubject.next("We have encountered an error");
-              this.restartConnection();
+              this.peerErrorSubject.next("Failed to establish a connection with peer.");
+              this.closeConnection();
             }
           );
         }
@@ -240,25 +282,27 @@ export class PeerService {
             this.peerConnection.setLocalDescription(answer).then(
               () => {
                 let sig = new Signal();
+                sig.id = uuid.v4();
                 sig.message = JSON.stringify(answer);
                 sig.type = "ANSWER";
                 sig.userId = this.userId;
                 sig.roomId = this.currentRoom.roomId;
+                sig.timestamp = new Date();
 
                 console.log("Sending an ANSWER");
                 this.signalingService.sendSignal(this.currentRoom.roomId, sig);
               },
               (error) => {
-                this.peerErrorSubject.next("We have encountered an error");
+                this.peerErrorSubject.next("Failed to establish a connection with peer.");
                 console.error("Error setting local desc: " + error.error);
-                this.restartConnection();
+                this.closeConnection();
               }
             );
           },
           (error) => {
-            this.peerErrorSubject.next("We have encounted an error.");
+            this.peerErrorSubject.next("Failed to establish a connection with peer.");
             console.error("Error creating answer: " + JSON.stringify(error));
-            this.restartConnection();
+            this.closeConnection();
           },
         );
         break;
@@ -269,9 +313,9 @@ export class PeerService {
             console.log("Received an ANSWER signal");
           },
           (error) => {
-            this.peerErrorSubject.next("We have encountered an error");
+            this.peerErrorSubject.next("Failed to establish a connection with peer.");
             console.error("Error setting remote description: " + error);
-            this.restartConnection();
+            this.closeConnection();
           }
         );
         break;
@@ -283,7 +327,7 @@ export class PeerService {
 
         let iceCandidate = Utils.iceCandidateTransform(this.signal.message);
         this.peerConnection.addIceCandidate(new RTCIceCandidate(iceCandidate))
-          .catch((error) => console.log("Error adding ice candidate: " + error));
+          .catch((error) => console.error("Error adding ice candidate: " + error.message));
         break;
       default:
         break;
@@ -293,12 +337,6 @@ export class PeerService {
   public addStream(stream) {
     console.log("adding stream");
     this.peerConnection.addStream(stream);
-  }
-
-  private restartConnection() {
-    console.log("Restarting connection...");
-    this.closeConnection();
-    this.initPeerService();
   }
 
   /**
@@ -319,7 +357,7 @@ export class PeerService {
     this.peerConnection = undefined;
     this.currentRoom = undefined;
     this.signalObservable$.unsubscribe();
-    this.waitTimer.unsubscribe();
     this.room$.unsubscribe();
+    // this.waitTimer.unsubscribe();
   }
 }
