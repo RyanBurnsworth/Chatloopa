@@ -49,8 +49,7 @@ export class PeerService {
     private readonly signalingService: SignalingService, 
     private readonly rtcService: RtcService, ) { }
 
-  public initPeerService() {
-    
+  public initVideoChat() {    
     this.room$ = this.rtcService.getSoloRoom().subscribe(
       (response) => {
         this.currentRoom = response;
@@ -58,7 +57,6 @@ export class PeerService {
 
         console.log("Received RoomId: " + this.currentRoom.roomId + ". Starting signaling service and web rtc.");
         this.startSignalingService();
-        this.initWebRTC();
       },
       (error) => {
         this.peerErrorSubject.next("Failed to initiate services. Please try again.");
@@ -74,72 +72,10 @@ export class PeerService {
       // })
   }
 
-  private startSignalingService() {
-    // if no 2nd user exists in the room, this user is the initiator
-    this.isInitiator = this.currentRoom.userTwoId === "";
-
-    let signal = new Signal();
-    signal.message = "";
-    signal.id = uuid.v4();
-    
-    if (this.isInitiator) {
-      // create a Firestore document for this room
-      signal.type = "CREATE_ROOM";
-      this.userId = this.currentRoom.userOneId;
-      signal.userId = this.userId;
-      signal.roomId = this.currentRoom.roomId;
-      signal.timestamp = new Date();
-
-      console.log("Sending CREATE_ROOM signal");
-      this.signalingService.sendSignal(this.currentRoom.roomId, signal);
-    } else {
-      // send the JOIN_ROOM signal to Firestore
-      signal.type = "JOIN_ROOM";
-      this.userId = this.currentRoom.userTwoId;
-      signal.userId = this.userId;
-      signal.roomId = this.currentRoom.roomId;
-      signal.timestamp = new Date();
-
-      console.log("Sending JOIN_ROOM signal");
-      this.signalingService.sendSignal(this.currentRoom.roomId, signal);
-    }
-
-    // start the Firestore listener to listen for incoming signals
-    this.signalingService.startSignalListener(this.currentRoom.roomId);
-
-    // 
-    this.signalObservable$ = this.signalingService.getSignalListener().subscribe(
-        (resp) => {
-          resp.map(changes => {
-            // extract the signal data
-            this.signal = changes.payload.doc.data() as Signal;
-
-            // validate the latest incoming signal is not the same as the last
-            if (Utils.compareSignals(this.signal, this.signalCache))  {
-              console.warn("Incoming signal matches previous signal");
-              return;
-            }
-            
-            // validate the room ids match
-            if (this.signal.roomId !== this.currentRoom.roomId) {
-              console.warn("Incoming signal was for wrong room: Your roomId: " + this.currentRoom.roomId + " Incoming roomId: " + this.signal.roomId);
-              return;
-            }
-              
-            this.signalCache.push(this.signal);
-            this.signalResolver();
-          })
-        },
-        (error) => {
-          console.error("Error receiving signal: " + error.error);
-        }
-      )
-  }
-
   /**
    * Initialize the Web RTC functionality
    */
-  private initWebRTC() {
+  public initWebRTC() {
     try {
       this.peerConnection = new RTCPeerConnection({
         iceServers: [
@@ -224,8 +160,70 @@ export class PeerService {
     }
 
     this.peerConnection.onicecandidateerror = event => {
-      console.warn("Received IceCandidateError event. Ice candidate error: " + event);
+      console.error("Received IceCandidateError event. Ice candidate error: " + event.currentTarget.error);
     }
+  }
+
+  private startSignalingService() {
+    // if no 2nd user exists in the room, this user is the initiator
+    this.isInitiator = this.currentRoom.userTwoId === "";
+
+    let signal = new Signal();
+    signal.message = "";
+    signal.id = uuid.v4();
+    
+    if (this.isInitiator) {
+      // create a Firestore document for this room
+      signal.type = "CREATE_ROOM";
+      this.userId = this.currentRoom.userOneId;
+      signal.userId = this.userId;
+      signal.roomId = this.currentRoom.roomId;
+      signal.timestamp = new Date();
+
+      console.log("Sending CREATE_ROOM signal");
+      this.signalingService.sendSignal(this.currentRoom.roomId, signal);
+    } else {
+      // send the JOIN_ROOM signal to Firestore
+      signal.type = "JOIN_ROOM";
+      this.userId = this.currentRoom.userTwoId;
+      signal.userId = this.userId;
+      signal.roomId = this.currentRoom.roomId;
+      signal.timestamp = new Date();
+
+      console.log("Sending JOIN_ROOM signal");
+      this.signalingService.sendSignal(this.currentRoom.roomId, signal);
+    }
+
+    // start the Firestore listener to listen for incoming signals
+    this.signalingService.startSignalListener(this.currentRoom.roomId);
+
+    // 
+    this.signalObservable$ = this.signalingService.getSignalListener().subscribe(
+        (resp) => {
+          resp.map(changes => {
+            // extract the signal data
+            this.signal = changes.payload.doc.data() as Signal;
+
+            // validate the latest incoming signal is not the same as the last
+            if (Utils.compareSignals(this.signal, this.signalCache))  {
+              console.warn("Incoming signal matches previous signal");
+              return;
+            }
+            
+            // validate the room ids match
+            if (this.signal.roomId !== this.currentRoom.roomId) {
+              console.warn("Incoming signal was for wrong room: Your roomId: " + this.currentRoom.roomId + " Incoming roomId: " + this.signal.roomId);
+              return;
+            }
+              
+            this.signalCache.push(this.signal);
+            this.signalResolver();
+          })
+        },
+        (error) => {
+          console.error("Error receiving signal: " + error.error);
+        }
+      )
   }
 
   /**
@@ -354,10 +352,14 @@ export class PeerService {
 
   private destroy() {
     console.log("Destroying connection...");
-    this.peerConnection = undefined;
-    this.currentRoom = undefined;
-    this.signalObservable$.unsubscribe();
-    this.room$.unsubscribe();
-    // this.waitTimer.unsubscribe();
+    try {
+      this.peerConnection = undefined;
+      this.currentRoom = undefined;
+      this.signalObservable$.unsubscribe();
+      this.room$.unsubscribe();
+      // this.waitTimer.unsubscribe();
+    } catch (err) {
+      console.error("Error destroying connection: " + err.message);
+    }
   }
 }

@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, } from 'rxjs';
-import { Signal } from '../models/signal.model';
-import { LoadingService } from '../services/loading.service';
+import { Signal } from '../../models/signal.model';
+import { LoadingService } from '../../services/loading.service';
 import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-import { PeerService } from '../services/peer.service';
+import { PeerService } from '../../services/peer.service';
 import * as uuid from 'uuid';
 
 @Component({
@@ -17,6 +17,7 @@ import * as uuid from 'uuid';
 export class WebConferenceComponent implements OnInit, OnDestroy {
   localStream: any;
   isConnected = false;
+  isAudioVideoReady = false;
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
@@ -71,7 +72,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     // reset the action button icons
     this.micSubject$.next('mic');
     this.videoSubject$.next('videocam');
-    this.peerService.initPeerService();
+    this.peerService.initWebRTC();
   }
 
   /**
@@ -84,7 +85,11 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
         this.local.sourceObject = stream;
         this.peerService.addStream(stream);
         this.localStream = stream;
-      })
+        this.peerService.initVideoChat();
+        console.log("audio video enabled");
+      }).catch(err => {
+        console.error("PERMISSIONS NOT GRANTED!");
+      });
   }
 
   /**
@@ -120,9 +125,8 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     this.micSubject$.next('mic');
     this.videoSubject$.next('videocam');
 
-    // TODO: review whether these should be toggled
-    this.localStream.getVideoTracks()[0].stop();
-    this.localStream.getAudioTracks()[0].stop();
+    // this.localStream.getVideoTracks()[0].stop();
+    // this.localStream.getAudioTracks()[0].stop();
     this.peerService.closeConnection();
   }
 

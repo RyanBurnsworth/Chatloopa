@@ -1,10 +1,10 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Message } from '../models/message.model';
-import { Room } from '../models/room.model';
-import { MessageService } from '../services/message.service';
-import { RtcService } from '../services/room.service';
-import { Utils } from '../shared/utils';
+import { Message } from '../../models/message.model';
+import { Room } from '../../models/room.model';
+import { MessageService } from '../../services/message.service';
+import { RtcService } from '../../services/room.service';
+import { Utils } from '../../shared/utils';
 
 @Component({
   selector: 'app-web-chat',
