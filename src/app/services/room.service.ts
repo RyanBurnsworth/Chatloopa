@@ -18,7 +18,7 @@ export class RtcService {
    * @returns Observable of {@link Room}
    */
   public getSoloRoom(): Observable<Room> {
-    console.log("Fetching room from rtc service");
-    return this.httpClient.get('https://chatloopa:3000/room', {responseType: 'json'} ) as Observable<Room>
+    console.log("Fetching room from rtc service from local api");
+    return this.httpClient.get('https://developingads.com:3000/room', {responseType: 'json'} ) as Observable<Room>
   }
 }
