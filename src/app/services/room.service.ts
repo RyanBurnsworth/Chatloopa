@@ -19,6 +19,6 @@ export class RtcService {
    */
   public getSoloRoom(): Observable<Room> {
     console.log("Fetching room from rtc service");
-    return this.httpClient.get('http://172.105.153.56:3000/room', {responseType: 'json'} ) as Observable<Room>
+    return this.httpClient.get('https://chatloopa:3000/room', {responseType: 'json'} ) as Observable<Room>
   }
 }

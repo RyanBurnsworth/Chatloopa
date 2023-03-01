@@ -85,6 +85,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
         this.local.sourceObject = stream;
         this.peerService.addStream(stream);
         this.localStream = stream;
+        
         this.peerService.initVideoChat();
         console.log("audio video enabled");
       }).catch(err => {
