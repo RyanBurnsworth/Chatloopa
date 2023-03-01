@@ -1,11 +1,16 @@
+<mat-toolbar>
+    <span>ChatLoopa</span>
+    <span class="example-spacer"></span>
+  </mat-toolbar>
+  
 <div class="stream-container">
     <app-remote-video class="remote-stream-container" id="remote" autoplay #remote></app-remote-video>
     <app-local-video class="local-stream-container" id="local" autoplay #local></app-local-video>
-    <div class="video-control-buttons">
+    <!-- <div class="video-control-buttons">
         <button mat-fab class="video-control-button" (click)="toggleMicrophone()"><mat-icon class="white-icon">{{ micSubject$ | async }}</mat-icon></button>
         <button mat-fab class="video-control-button" (click)="toggleLocalVideo()"><mat-icon class="white-icon">{{ videoSubject$ | async }}</mat-icon></button>
         <button mat-fab class="video-control-button" (click)="endCall()" title="Hang Up" color='warn'><mat-icon class="white-icon">call_end</mat-icon></button>
-    </div>
+    </div> -->
     
 </div>
 

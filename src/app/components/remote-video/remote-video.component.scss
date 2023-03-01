@@ -1,8 +1,9 @@
+/* Mobile version */
+
 .video-console {
-    width:50% !important;
+    width:100% !important;
     height:100% !important;
     background-color: black;
-    padding:8px;
     position:absolute;
 }
 
@@ -16,15 +17,26 @@ video {
     top: 50%;
 }
 
-@media screen and (max-width: 1024px) {
+@media only screen and (min-width: 768px) {
+    /* Desktop versions */
+
     .video-console {
-        width: 100% !important;
-        height:100%;
-        position: absolute;
-        object-fit: fill;
+        width:80% !important;
+        height:80% !important;
+        background-color: black;
+        position:absolute;
+        margin-left:10vw;
     }
-    
-    .spinner {
-        left: 38%;
+}
+
+@media only screen and (min-width: 600px) and (max-width: 768px) {
+    /* Tablet versions */
+
+    .video-console {
+        width:75% !important;
+        height:75% !important;
+        background-color: black;
+        position:absolute;
+        margin-left:12vw;
     }
 }

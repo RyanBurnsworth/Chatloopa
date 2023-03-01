@@ -6,14 +6,14 @@
 
 .local-stream-container {
     position: absolute;
-    top:2%;
-    left: 28%;
+    top: 20vw;
+    left: 60vw;
 }
 
 .video-control-buttons {
     position:absolute;
-    top:90%;
-    left:20%;
+    top:80vw;
+    left:45vw;
 }
 
 .video-control-button {
@@ -29,27 +29,22 @@
     color: #ffffff;
 }
 
-@media screen and (min-width: 2000px) {
+@media only screen and (min-width: 1024px) {
+    /* Desktop versions */
+
     .local-stream-container {
         position: absolute;
-        top:2%;
-        left: 32%;
-    }
-    
-}
-
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-    .video-control-buttons {
-        position:absolute;
-        top:90%;
-        left:33%;
+        top: 5vw;
+        left: 80vw;
     }
 }
 
-@media screen and (max-width: 1024px) {
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
+    /* Tablet versions */
+
     .local-stream-container {
         position: absolute;
-        top:2%;
-        left: 60%;
+        top: 8vw;
+        left: 60vw;
     }
 }
