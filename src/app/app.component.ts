@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
 
   @HostListener('window:beforeunload', [ '$event' ])
   beforeUnloadHandler(event) {
+    // respond to browser close, refresh, etc. by telling the other peer the chat has ended
     this.peerService.sendEndChatSignal();
   }
 }

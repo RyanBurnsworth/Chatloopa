@@ -130,11 +130,12 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
    * Stop the WebRTC service
    */
   stopService() {
+    this.peerService.sendEndChatSignal();
     this.endCall();
 
     // turn off the camera and mic
     this.localStream.getVideoTracks()[0].stop();
-    this.localStream.getAudioTracks()[0].stop();;
+    this.localStream.getAudioTracks()[0].stop();
     this.isServiceStarted = false;
   }
 
@@ -142,6 +143,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
    * Move on to the next peer
    */
   nextPeer() {
+    this.peerService.sendEndChatSignal();
     this.endCall();
     this.peerService.initWebRTC();
   }

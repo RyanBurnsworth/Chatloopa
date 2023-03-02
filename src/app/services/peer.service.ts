@@ -330,15 +330,19 @@ export class PeerService {
   }
 
   public sendEndChatSignal() {
-    let sig = new Signal();
-    sig.id = uuid.v4();
-    sig.message = "";
-    sig.type = "CLOSED";
-    sig.userId = this.userId;
-    sig.roomId = this.currentRoom.roomId;
-    sig.timestamp = new Date();
+    try {
+      let sig = new Signal();
+      sig.id = uuid.v4();
+      sig.message = "";
+      sig.type = "CLOSED";
+      sig.userId = this.userId;
+      sig.roomId = this.currentRoom.roomId;
+      sig.timestamp = new Date();
 
-    this.signalingService.sendSignal(this.currentRoom.roomId, sig);
+      this.signalingService.sendSignal(this.currentRoom.roomId, sig);
+    } catch (err) {
+        // error retrieving the items needed to send a signal
+    }
   }
 
   private destroy() {
