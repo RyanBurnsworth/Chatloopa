@@ -3,6 +3,7 @@ import { BehaviorSubject, } from 'rxjs';
 import { Signal } from '../../models/signal.model';
 import { LoadingService } from '../../services/loading.service';
 import {
+  MatSnackBar,
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
@@ -31,11 +32,13 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
   constructor(
     private readonly peerService: PeerService, 
     private readonly loadingService: LoadingService,
+    private snackBar: MatSnackBar
     ) { }
 
   ngOnInit(): void {
     this.peerService.peerError$.subscribe((err) => {
       console.error("UI ERROR: " + err);
+      this.openErrorSnackBar("Error connecting to service. Please try again");
     });
 
     this.peerService.remoteStream$.subscribe((stream) => {
@@ -73,7 +76,6 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     // reset the action button icons
     this.micSubject$.next('mic');
     this.videoSubject$.next('videocam');
-    this.isServiceStarted = true;
     this.peerService.initWebRTC();
   }
 
@@ -89,8 +91,9 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
         this.localStream = stream;
         
         this.peerService.initVideoChat();
-        console.log("audio video enabled");
+        this.isServiceStarted = true;
       }).catch(err => {
+        this.openErrorSnackBar("Error: Permission not granted!");
         console.error("PERMISSIONS NOT GRANTED!");
       });
   }
@@ -111,7 +114,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
         this.isConnected = true;
         break;
       case "disconnected":
-        this.endCall();
+        this.nextPeer();
         break;
       default:
         break;
@@ -139,9 +142,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     // turn off the camera and mic
     this.localStream.getVideoTracks()[0].stop();
     this.localStream.getAudioTracks()[0].stop();;
-
     this.isServiceStarted = false;
-    this.isConnected = false;
   }
 
   /**
@@ -180,5 +181,9 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     } else {
       this.videoSubject$.next('videocam_off');
     }
+  }
+
+  openErrorSnackBar(message: string) {
+    this.snackBar.open(message, "", { duration: 5000, panelClass: ['red-snackbar'] });
   }
 }

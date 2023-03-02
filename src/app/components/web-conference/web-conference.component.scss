@@ -25,8 +25,19 @@
     margin-left: 16px;
 }
 
-.white-icon {
+.white-icon-mic {
     color: #ffffff;
+}
+
+.white-icon-vid {
+    color: #ffffff;
+    margin-right: 8px;
+    margin-left: 12px;
+}
+
+.purple-icon {
+    color: #9C27B0;
+    margin-left: 8px;
 }
 
 .toolbar-spacer {
@@ -38,17 +49,20 @@
 }
 
 .mat-success {
-    background-color: #FFCA28;
-    color: #000;
+    background-color: #FFAC1C;
+    color: #8B4000;
+    font-family: 'Roboto', sans-serif;
 }
 
 .mat-warning {
-    background-color: #FAD5A5;
-    color: #000;
+    background-color: #DAA520;
+    color: #8B4000;
+    font-family: 'Roboto', sans-serif;
 }
 
 .control-container-card {
-    background-color: #BA68C8;
+    background-color: #9C27B0;
+    padding: 8px
 }
 
 .status-text {
@@ -76,7 +90,7 @@
     }
     
     .control-container-card {
-        background-color: #BA68C8;
+        background-color: #9C27B0;
         margin-top: 32px;
         left: 42vw;
         width: auto;
@@ -89,6 +103,7 @@
         left: 40vw;
         z-index: 99;
         position: absolute;
+        font-family: 'Roboto', sans-serif;
     }
 }
 
@@ -103,7 +118,7 @@
 
     
     .control-container-card {
-        background-color: #BA68C8;
+        background-color: #9C27B0;
         margin-top: 16px;
         left: 40vw;
         width: auto;

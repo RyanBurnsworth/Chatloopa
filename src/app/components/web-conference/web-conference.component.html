@@ -1,11 +1,11 @@
 <mat-toolbar>
     <span class="chatloopa-name">ChatLoopa</span>
     <span class="toolbar-spacer"></span>
-    <button mat-raised-button (click)="startService()" color="success" *ngIf="!isServiceStarted">Start Chatting!</button>
+    <button mat-raised-button (click)="startService()" color="success" *ngIf="!isServiceStarted" matTooltip="Start chatting with random people" aria-label="Click here to start chatting with random people">Start Chatting <mat-icon class="purple-icon">voice_chat</mat-icon></button>
     <span class="button-spacer"></span>
-    <button mat-raised-button (click)="stopService()" color="warning" *ngIf="isServiceStarted"><mat-icon class="white-icon">call_end</mat-icon> Stop Chatting</button>
+    <button mat-raised-button (click)="stopService()" color="warning" *ngIf="isServiceStarted" matTooltip="Stop chatting with random people" aria-label="Click here to stop chatting with random people">Stop Chatting <mat-icon class="purple-icon">call_end</mat-icon> </button>
     <span class="button-spacer"></span>
-    <button mat-raised-button (click)="nextPeer()" color="success" *ngIf="isServiceStarted">Next Peer</button>
+    <button mat-raised-button (click)="nextPeer()" color="success" *ngIf="isServiceStarted" matTooltip="Skip to the next random person">Next Peer <mat-icon class="purple-icon">skip_next</mat-icon></button>
 </mat-toolbar>
 
 <div class="">
@@ -16,10 +16,10 @@
     <app-remote-video class="remote-stream-container" id="remote" autoplay #remote></app-remote-video>
     <app-local-video class="local-stream-container" id="local" autoplay #local></app-local-video>
 
-    <mat-card class="control-container-card mat-elevation-z8">
+    <mat-card class="control-container-card mat-elevation-z0">
         <mat-card-content>
-            <button mat-button class="video-control-button" (click)="toggleLocalVideo()"><mat-icon class="white-icon">{{ videoSubject$ | async }}</mat-icon></button>
-            <button mat-button class="video-control-button" (click)="toggleMicrophone()"><mat-icon class="white-icon">{{ micSubject$ | async }}</mat-icon></button>
+            <button mat-button class="video-control-button" (click)="toggleLocalVideo()" matTooltip="Toggle your video camera" aria-label="Click here to toggle your video camera"><mat-icon class="white-icon-vid">{{ videoSubject$ | async }}</mat-icon></button>
+            <button mat-button class="video-control-button" (click)="toggleMicrophone()"><mat-icon class="white-icon-mic" matTooltip="Toggle your microphone" aria-label="Click here to toggle your microphone">{{ micSubject$ | async }}</mat-icon></button>
         </mat-card-content>
     </mat-card>
 </div>
