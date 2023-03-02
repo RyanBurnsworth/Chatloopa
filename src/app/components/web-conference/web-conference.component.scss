@@ -29,13 +29,66 @@
     color: #ffffff;
 }
 
+.toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+.button-spacer {
+    flex: 0.01 1 auto;
+}
+
+.mat-success {
+    background-color: #FFCA28;
+    color: #000;
+}
+
+.mat-warning {
+    background-color: #FAD5A5;
+    color: #000;
+}
+
+.control-container-card {
+    background-color: #BA68C8;
+}
+
+.status-text {
+    width: 50%;
+    top: 75vw;
+    left: 8vw;
+    z-index: 99;
+    position: absolute;
+    color: #fff;
+    font-size: 1.25em;
+}
+
+.chatloopa-name {
+    font-family: 'Satisfy', cursive;
+    font-size: 36px;
+}
+
 @media only screen and (min-width: 1024px) {
     /* Desktop versions */
 
     .local-stream-container {
         position: absolute;
-        top: 5vw;
+        top: 4vw;
         left: 80vw;
+    }
+    
+    .control-container-card {
+        background-color: #BA68C8;
+        margin-top: 32px;
+        left: 42vw;
+        width: auto;
+        height: auto;
+    }
+
+    .status-text {
+        width: 50%;
+        top: 20vw;
+        left: 40vw;
+        z-index: 99;
+        position: absolute;
     }
 }
 
@@ -46,5 +99,22 @@
         position: absolute;
         top: 8vw;
         left: 60vw;
+    }
+
+    
+    .control-container-card {
+        background-color: #BA68C8;
+        margin-top: 16px;
+        left: 40vw;
+        width: auto;
+        height: auto;
+    }
+
+    .status-text {
+        width: 50%;
+        top: 30vw;
+        left: 35vw;
+        z-index: 99;
+        position: absolute;
     }
 }

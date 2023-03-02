@@ -1,19 +1,25 @@
 <mat-toolbar>
-    <span>ChatLoopa</span>
-    <span class="example-spacer"></span>
-  </mat-toolbar>
-  
+    <span class="chatloopa-name">ChatLoopa</span>
+    <span class="toolbar-spacer"></span>
+    <button mat-raised-button (click)="startService()" color="success" *ngIf="!isServiceStarted">Start Chatting!</button>
+    <span class="button-spacer"></span>
+    <button mat-raised-button (click)="stopService()" color="warning" *ngIf="isServiceStarted"><mat-icon class="white-icon">call_end</mat-icon> Stop Chatting</button>
+    <span class="button-spacer"></span>
+    <button mat-raised-button (click)="nextPeer()" color="success" *ngIf="isServiceStarted">Next Peer</button>
+</mat-toolbar>
+
+<div class="">
+    <p class="status-text" *ngIf="!isConnected && isServiceStarted">Searching for a peer for you to chat with...</p>
+</div>
+
 <div class="stream-container">
     <app-remote-video class="remote-stream-container" id="remote" autoplay #remote></app-remote-video>
     <app-local-video class="local-stream-container" id="local" autoplay #local></app-local-video>
-    <!-- <div class="video-control-buttons">
-        <button mat-fab class="video-control-button" (click)="toggleMicrophone()"><mat-icon class="white-icon">{{ micSubject$ | async }}</mat-icon></button>
-        <button mat-fab class="video-control-button" (click)="toggleLocalVideo()"><mat-icon class="white-icon">{{ videoSubject$ | async }}</mat-icon></button>
-        <button mat-fab class="video-control-button" (click)="endCall()" title="Hang Up" color='warn'><mat-icon class="white-icon">call_end</mat-icon></button>
-    </div> -->
-    
-</div>
 
-<div class="user-action-buttons">
-    <button mat-raised-button (click)="startService()" *ngIf='!isConnected'>Start Video Chat</button>
+    <mat-card class="control-container-card mat-elevation-z8">
+        <mat-card-content>
+            <button mat-button class="video-control-button" (click)="toggleLocalVideo()"><mat-icon class="white-icon">{{ videoSubject$ | async }}</mat-icon></button>
+            <button mat-button class="video-control-button" (click)="toggleMicrophone()"><mat-icon class="white-icon">{{ micSubject$ | async }}</mat-icon></button>
+        </mat-card-content>
+    </mat-card>
 </div>

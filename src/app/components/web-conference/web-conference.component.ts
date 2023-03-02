@@ -17,6 +17,7 @@ import * as uuid from 'uuid';
 export class WebConferenceComponent implements OnInit, OnDestroy {
   localStream: any;
   isConnected = false;
+  isServiceStarted = false;
   isAudioVideoReady = false;
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
@@ -72,6 +73,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     // reset the action button icons
     this.micSubject$.next('mic');
     this.videoSubject$.next('videocam');
+    this.isServiceStarted = true;
     this.peerService.initWebRTC();
   }
 
@@ -125,10 +127,29 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
     this.isConnected = false;
     this.micSubject$.next('mic');
     this.videoSubject$.next('videocam');
-
-    // this.localStream.getVideoTracks()[0].stop();
-    // this.localStream.getAudioTracks()[0].stop();
     this.peerService.closeConnection();
+  }
+
+  /**
+   * Stop the WebRTC service
+   */
+  stopService() {
+    this.endCall();
+
+    // turn off the camera and mic
+    this.localStream.getVideoTracks()[0].stop();
+    this.localStream.getAudioTracks()[0].stop();;
+
+    this.isServiceStarted = false;
+    this.isConnected = false;
+  }
+
+  /**
+   * Move on to the next peer
+   */
+  nextPeer() {
+    this.endCall();
+    this.peerService.initWebRTC();
   }
 
   /**
