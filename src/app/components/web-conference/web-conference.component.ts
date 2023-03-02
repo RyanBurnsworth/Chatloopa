@@ -55,13 +55,6 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    let sig = new Signal();
-    sig.id = uuid.v4();
-    sig.type = "CLOSE";
-    sig.message = "";
-    sig.roomId = "";
-    sig.timestamp = new Date();
-
     this.micSubject$.unsubscribe();
     this.videoSubject$.unsubscribe();
     this.peerService.closeConnection();

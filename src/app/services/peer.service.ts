@@ -36,13 +36,6 @@ export class PeerService {
   private connectionStateSubject = new Subject();
   connectionState$ = this.connectionStateSubject.asObservable();
 
-  private waitTimer$ = interval(1000).pipe(
-    map((x) => x + 1),
-    filter((y) => y == 10),
-    take(10),
-  );
-  private waitTimer: any;
-
   private room$: any;
 
   constructor(
@@ -62,14 +55,6 @@ export class PeerService {
         this.peerErrorSubject.next("Failed to initiate services. Please try again.");
         console.error("Failed to initiate services: ", error.message);
       })
-
-      // this.waitTimer = this.waitTimer$.subscribe((timeElapsed) => {
-      //   if (!this.isConnected) {
-      //     console.log('Connection Timeout - Retrying');
-      //     this.closeConnection();
-      //     this.initPeerService();
-      //   }
-      // })
   }
 
   /**
@@ -206,13 +191,11 @@ export class PeerService {
 
             // validate the latest incoming signal is not the same as the last
             if (Utils.compareSignals(this.signal, this.signalCache))  {
-              console.warn("Incoming signal matches previous signal");
               return;
             }
             
             // validate the room ids match
             if (this.signal.roomId !== this.currentRoom.roomId) {
-              console.warn("Incoming signal was for wrong room: Your roomId: " + this.currentRoom.roomId + " Incoming roomId: " + this.signal.roomId);
               return;
             }
               
@@ -239,7 +222,6 @@ export class PeerService {
     switch (this.signal.type) {
       case "JOIN_ROOM":
         if (this.isInitiator) {
-          console.log("A peer is joining the room...");
           this.peerConnection.createOffer().then(
             (offer) => { 
               this.peerConnection.setLocalDescription(offer).then(
@@ -252,12 +234,10 @@ export class PeerService {
                   offerSignal.roomId = this.currentRoom.roomId;
                   offerSignal.timestamp = new Date();
 
-                  console.log("Sending offer");
                   this.signalingService.sendSignal(this.currentRoom.roomId, offerSignal)
                 },
                 (error) => {
                   this.peerErrorSubject.next("Failed to establish a connection with peer.")
-                  console.error("Error setting local description: " + error.error);
                   this.closeConnection();
                 }
               );
@@ -287,19 +267,16 @@ export class PeerService {
                 sig.roomId = this.currentRoom.roomId;
                 sig.timestamp = new Date();
 
-                console.log("Sending an ANSWER");
                 this.signalingService.sendSignal(this.currentRoom.roomId, sig);
               },
               (error) => {
                 this.peerErrorSubject.next("Failed to establish a connection with peer.");
-                console.error("Error setting local desc: " + error.error);
                 this.closeConnection();
               }
             );
           },
           (error) => {
             this.peerErrorSubject.next("Failed to establish a connection with peer.");
-            console.error("Error creating answer: " + JSON.stringify(error));
             this.closeConnection();
           },
         );
@@ -308,11 +285,10 @@ export class PeerService {
         let remoteDesc = Utils.sdpTransform(this.signal.message);
         this.peerConnection.setRemoteDescription(remoteDesc).then(
           () => {
-            console.log("Received an ANSWER signal");
+            console.log("Received");
           },
           (error) => {
             this.peerErrorSubject.next("Failed to establish a connection with peer.");
-            console.error("Error setting remote description: " + error);
             this.closeConnection();
           }
         );
@@ -327,13 +303,15 @@ export class PeerService {
         this.peerConnection.addIceCandidate(new RTCIceCandidate(iceCandidate))
           .catch((error) => console.error("Error adding ice candidate: " + error.message));
         break;
+      case "CLOSED":
+        this.closeConnection();
+        this.connectionStateSubject.next("disconnected") // signal the UI of the disconnect
       default:
         break;
     }
   }
 
   public addStream(stream) {
-    console.log("adding stream");
     this.peerConnection.addStream(stream);
   }
 
@@ -342,16 +320,28 @@ export class PeerService {
    * 
    */
    public closeConnection() {
-    console.log("Closing connection...");
     this.isConnected = false;
-    this.signal.type="CLOSED";
-    this.signalingService.sendSignal(this.currentRoom.roomId, this.signal);
-    this.peerConnection.close()
-    this.destroy();
+    try {
+      this.peerConnection.close()
+      this.destroy();
+    } catch (err) {
+      // the connection may have already been closed
+    };
+  }
+
+  public sendEndChatSignal() {
+    let sig = new Signal();
+    sig.id = uuid.v4();
+    sig.message = "";
+    sig.type = "CLOSED";
+    sig.userId = this.userId;
+    sig.roomId = this.currentRoom.roomId;
+    sig.timestamp = new Date();
+
+    this.signalingService.sendSignal(this.currentRoom.roomId, sig);
   }
 
   private destroy() {
-    console.log("Destroying connection...");
     try {
       this.peerConnection = undefined;
       this.currentRoom = undefined;
