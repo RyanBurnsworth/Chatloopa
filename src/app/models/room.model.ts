@@ -1,6 +1,6 @@
 
 export class Room {
-    id: string;
+    _id: string;
     roomId: string;
     userOneId: string;
     userTwoId: string;

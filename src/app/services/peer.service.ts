@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { interval, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Room } from '../models/room.model';
 import { Signal } from '../models/signal.model';
 import { TurnServer } from '../models/turn-server.model';
 import { Utils } from '../shared/utils';
 import { RtcService } from './room.service';
 import { SignalingService } from './signaling.service';
-import { take, map, filter } from 'rxjs/operators'
 import * as uuid from 'uuid';
 
 @Injectable({
@@ -46,6 +45,7 @@ export class PeerService {
     this.room$ = this.rtcService.getSoloRoom().subscribe(
       (response) => {
         this.currentRoom = response;
+        console.log(this.currentRoom);
         this.rtcService.currentRoom$.next(response); //TODO: Investigate
 
         console.log("Received RoomId: " + this.currentRoom.roomId + ". Starting signaling service and web rtc.");
@@ -177,6 +177,11 @@ export class PeerService {
 
       console.log("Sending JOIN_ROOM signal");
       this.signalingService.sendSignal(this.currentRoom.roomId, signal);
+
+      this.currentRoom.joinTime = new Date().toString();
+      this.rtcService.updateRoom(this.currentRoom).subscribe((room) => {
+        this.currentRoom = room;
+      });
     }
 
     // start the Firestore listener to listen for incoming signals
@@ -340,6 +345,11 @@ export class PeerService {
       sig.timestamp = new Date();
 
       this.signalingService.sendSignal(this.currentRoom.roomId, sig);
+
+      this.currentRoom.endTime = new Date().toString();
+      this.rtcService.updateRoom(this.currentRoom).subscribe((room) => {
+        this.currentRoom = room;
+      });
     } catch (err) {
         // error retrieving the items needed to send a signal
     }

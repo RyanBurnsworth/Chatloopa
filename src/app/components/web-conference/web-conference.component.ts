@@ -77,7 +77,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
    * 
    */
   private enableLocalStream() {
-    navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+    window.navigator.mediaDevices.getUserMedia({ audio: true, video: true })
       .then((stream) => {
         this.local.sourceObject = stream;
         this.peerService.addStream(stream);

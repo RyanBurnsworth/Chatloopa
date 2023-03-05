@@ -13,11 +13,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
   }
   
-  @HostListener('window:unload', [ '$event' ])
-  unloadHandler(event) {
-    console.log("unloading...");
-  }
-
   @HostListener('window:beforeunload', [ '$event' ])
   beforeUnloadHandler(event) {
     // respond to browser close, refresh, etc. by telling the other peer the chat has ended

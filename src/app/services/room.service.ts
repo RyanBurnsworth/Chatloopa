@@ -19,6 +19,11 @@ export class RtcService {
    */
   public getSoloRoom(): Observable<Room> {
     console.log("Fetching room from rtc service from local api");
-    return this.httpClient.get('https://developingads.com:3000/room', {responseType: 'json'} ) as Observable<Room>
+    return this.httpClient.get('https://developingads.com:3000/room', { responseType: 'json' } ) as Observable<Room>
+  }
+
+  public updateRoom(room: Room): Observable<Room> {
+    console.log("Updating room");
+    return this.httpClient.put('https://developingads.com:3000/room/' + room._id, room, { responseType: 'json' }) as Observable<Room>
   }
 }
