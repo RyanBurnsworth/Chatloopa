@@ -1,3 +1,12 @@
+.local-video-container {
+    display: flex;
+    justify-content:end;
+    position: absolute;
+    width: 100%;
+    padding-right: 11vw;
+    padding-top: 8px;
+}
+
 .video-console {
     width: 125px;
     height: 125px;

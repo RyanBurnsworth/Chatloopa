@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, } from 'rxjs';
-import { Signal } from '../../models/signal.model';
 import { LoadingService } from '../../services/loading.service';
 import {
   MatSnackBar,
@@ -8,7 +7,6 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { PeerService } from '../../services/peer.service';
-import * as uuid from 'uuid';
 
 @Component({
   selector: 'app-web-conference',
@@ -86,8 +84,8 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
         this.peerService.initVideoChat();
         this.isServiceStarted = true;
       }).catch(err => {
-        this.openErrorSnackBar("Error: Permission not granted!");
-        console.error("PERMISSIONS NOT GRANTED!");
+        this.openErrorSnackBar("Error: Couldn't obtain camera and/or microphone!");
+        console.error("Error obtaining camera and microphone: " + err.message);
       });
   }
 
@@ -145,6 +143,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
   nextPeer() {
     this.peerService.sendEndChatSignal();
     this.endCall();
+    
     this.peerService.initWebRTC();
   }
 

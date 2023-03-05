@@ -1,4 +1,9 @@
 /* Mobile version */
+.remote-video-container {
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+}
 
 .video-console {
     width:100% !important;
@@ -13,8 +18,7 @@ video {
 
 .spinner {
     position: absolute;
-    left: 23%;
-    top: 50%;
+    top: 40%;
 }
 
 @media only screen and (min-width: 768px) {
@@ -25,7 +29,6 @@ video {
         height:80% !important;
         background-color: black;
         position:absolute;
-        margin-left:10vw;
     }
 }
 
