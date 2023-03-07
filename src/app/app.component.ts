@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { PeerService } from './services/peer.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,12 @@ import { PeerService } from './services/peer.service';
 })
 
 export class AppComponent implements OnInit {
-  constructor(private readonly peerService: PeerService) {}
+  
+  constructor(private readonly peerService: PeerService, translate: TranslateService) {
+    translate.addLangs(['en', 'fr', 'es']);
+    translate.setDefaultLang('en');
+    translate.use(window.navigator.language);
+  }
 
   ngOnInit() {
   }
