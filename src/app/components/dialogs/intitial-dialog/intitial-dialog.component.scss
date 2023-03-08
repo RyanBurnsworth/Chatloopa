@@ -1,0 +1,49 @@
+.dialog-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.header {
+    font-family: 'Satisfy', cursive;
+    font-size: 48px;
+    color: #9C27B0;
+    margin-bottom: 24px;
+    align-self: center;
+}
+
+.checkbox-container {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    margin-top: 16px;
+}
+
+.continue-dialog-button {
+    width: 25%;
+    align-self: center;
+    margin-top:16px;
+}
+
+.initial-dialog-content {
+    width:auto;
+    align-self: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+// breaks up long labels on the checkbox
+::ng-deep .mat-checkbox-layout {
+    white-space: normal !important;
+}
+
+.dialog-style .mat-dialog-container {
+    background-color: #9C27B0;
+} 
+
+.mat-success {
+    font-family: 'Roboto', sans-serif;
+    background-color: #FFAC1C;
+    color: #fff;
+}

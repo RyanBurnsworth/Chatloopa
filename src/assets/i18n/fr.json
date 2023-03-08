@@ -10,5 +10,8 @@
     "searchingForPeer": "Recherche d'un pair avec qui discuter...",
     "toggleCamera": "Basculez votre appareil photo",
     "toggleCameraAriaLabel": "Bouton pour activer ou désactiver votre caméra",
-    "toggleMic": "Basculez votre microphone"
+    "toggleMic": "Basculez votre microphone",
+    "continue": "Continuer",
+    "agreementText": "En cochant la case, vous reconnaissez que vous avez au moins 18 ans et acceptez les conditions d'utilisation de ChatLoopa.",
+    "mainDialogText": "Rencontrez et discutez en vidéo avec des personnes au hasard. Faites-vous de nouveaux amis du monde entier."
 }

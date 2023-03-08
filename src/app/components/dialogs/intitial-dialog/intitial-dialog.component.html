@@ -1,0 +1,15 @@
+<div class="dialog-container">
+    <h1 class="header">ChatLoopa</h1>
+
+    <div class="initial-dialog-content">
+        {{ 'mainDialogText' | translate }}
+    </div>
+
+    <div class="checkbox-container">
+        <mat-checkbox (change)="disableContinueButton($event)">
+            {{ 'agreementText' | translate }}
+        </mat-checkbox>
+    </div>
+
+    <button mat-raised-button class="continue-dialog-button" color="success" mat-dialog-close [disabled]="disableObservable|async">{{ 'continue' | translate }}</button>
+</div>

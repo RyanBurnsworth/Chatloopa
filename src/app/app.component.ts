@@ -11,8 +11,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent implements OnInit {
   
   constructor(private readonly peerService: PeerService, translate: TranslateService) {
-    translate.addLangs(['en', 'fr', 'es']);
-    translate.setDefaultLang('en');
+    translate.addLangs(['en-US', 'fr', 'es']);
+    translate.setDefaultLang('en-US');
     translate.use(window.navigator.language);
   }
 

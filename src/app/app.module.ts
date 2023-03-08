@@ -23,9 +23,10 @@ import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/mater
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { MainComponent } from './components/main/main.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { IntitialDialogComponent } from './components/dialogs/intitial-dialog/intitial-dialog.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -39,7 +40,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RemoteVideoComponent,
     LocalVideoComponent,
     WebChatComponent,
-    MainComponent,
+    IntitialDialogComponent,
   ],
   imports: [
     BrowserModule,    
@@ -66,6 +67,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatToolbarModule,
     MatCardModule,
     MatTooltipModule,
+    MatCheckboxModule,
   ],
   providers: [ 
     {

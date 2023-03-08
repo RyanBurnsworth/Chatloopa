@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, } from 'rxjs';
 import { LoadingService } from '../../services/loading.service';
 import {
@@ -7,13 +7,15 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { PeerService } from '../../services/peer.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { IntitialDialogComponent } from '../dialogs/intitial-dialog/intitial-dialog.component';
 
 @Component({
   selector: 'app-web-conference',
   templateUrl: './web-conference.component.html',
   styleUrls: ['./web-conference.component.scss']
 })
-export class WebConferenceComponent implements OnInit, OnDestroy {
+export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit {
   localStream: any;
   isConnected = false;
   isServiceStarted = false;
@@ -30,6 +32,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
   constructor(
     private readonly peerService: PeerService, 
     private readonly loadingService: LoadingService,
+    private dialog: MatDialog,
     private snackBar: MatSnackBar
     ) { }
 
@@ -49,6 +52,14 @@ export class WebConferenceComponent implements OnInit, OnDestroy {
 
     this.peerService.connectionState$.subscribe((state) => {
       this.updateConnectionState(state as string);
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.dialog.open(IntitialDialogComponent, {
+      panelClass: 'dialog-style',
+      disableClose: true,
+      autoFocus: true
     });
   }
 

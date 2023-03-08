@@ -9,5 +9,8 @@
     "nextPeerTooltip": "Skip to the next random person",
     "searchingForPeer": "Searching for a peer for you to chat with...",
     "toggleCamera": "Toggle your video camera",
-    "toggleMic": "Toggle your microphone"
+    "toggleMic": "Toggle your microphone",
+    "continue": "Continue",
+    "agreementText": "By checking the box you acknowledge that you are at least 18 years of age and agree to the ChatLoopa Terms of Service.",
+    "mainDialogText": "Meet and video chat with random people. Make new friends from all across the world."
 }
