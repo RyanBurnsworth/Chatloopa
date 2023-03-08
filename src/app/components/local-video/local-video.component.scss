@@ -11,7 +11,7 @@
     width: 125px;
     height: 125px;
     border-radius: 24px;
-    border-color: #BA68C8;
+    border-color: #FF8C00;
     border-style: ridge;
     border-width: 2px;
     padding: 2px 2px 2px 2px;
@@ -21,28 +21,28 @@ video {
     object-fit: fill;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1024px) {
     /* Desktop versions */
 
     .video-console {
         width: 175px;
         height: 175px;
         border-radius: 24px;
-        border-color: #BA68C8;
+        border-color: #FF8C00;
         border-style: ridge;
         border-width: 2px;
         padding: 2px 2px 2px 2px;
     }
 }
 
-@media only screen and (min-width: 600px) and (max-width: 768px) {
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
     /* Tablet versions */
 
     .video-console {
-        width: 125px;
-        height: 125px;
+        width: 150px;
+        height: 150px;
         border-radius: 24px;
-        border-color: #BA68C8;
+        border-color: #FF8C00;
         border-style: ridge;
         border-width: 2px;
         padding: 2px 2px 2px 2px;

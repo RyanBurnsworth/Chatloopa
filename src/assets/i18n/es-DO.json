@@ -1,0 +1,17 @@
+{
+    "startChatting": "Empezar a chatear",
+    "startChattingTooltip": "Empieza a chatear con personas al azar",
+    "startChattingAriaLabel": "Botón para comenzar a chatear con personas al azar",
+    "stopChatting": "Para de chatear",
+    "stopChattingTooltip": "Deja de chatear con personas aleatorias",
+    "stopChattingAriaLabel": "Botón para dejar de chatear con personas aleatorias",
+    "nextPeer": "Próximo compañero",
+    "nextPeerTooltip": "Saltar a la siguiente persona aleatoria",
+    "searchingForPeer": "Buscando un compañero para que charlas con ...",
+    "toggleCamera": "Cambia tu cámara",
+    "toggleCameraAriaLabel": "Botón para habilitar o deshabilitar tu cámara",
+    "toggleMic": "Cambia tu micrófono",
+    "continue": "Continuar",
+    "agreementText": "Al marcar la casilla, reconoce que tiene al menos 18 años de edad y acepta los Términos de servicio de ChatLoopa.",
+    "mainDialogText": "Conoce y chatea por video con personas aleatorias. Haz nuevos amigos de todo el mundo."
+}

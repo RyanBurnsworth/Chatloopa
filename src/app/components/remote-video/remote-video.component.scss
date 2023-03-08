@@ -31,7 +31,7 @@ video {
     top: 95%;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1024px) {
     /* Desktop versions */
 
     .video-console {
@@ -43,16 +43,16 @@ video {
 
     .watermark {
         z-index: 1000;
-        position: relative;
+        position: absolute;
         margin: 8px;
         width: 125px;
         height: 50px;
-        left: 0px;
-        top: 95%;
+        left: 10%;
+        top: 80%;
     }
 }
 
-@media only screen and (min-width: 600px) and (max-width: 768px) {
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
     /* Tablet versions */
 
     .video-console {
@@ -61,5 +61,15 @@ video {
         background-color: black;
         position:absolute;
         margin-left:12vw;
+    }
+
+    .watermark {
+        z-index: 1000;
+        position: absolute;
+        margin: 8px;
+        width: 125px;
+        height: 50px;
+        left: 20%;
+        top: 75%;
     }
 }
