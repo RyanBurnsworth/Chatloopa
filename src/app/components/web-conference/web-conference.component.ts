@@ -9,6 +9,7 @@ import {
 import { PeerService } from '../../services/peer.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { IntitialDialogComponent } from '../dialogs/intitial-dialog/intitial-dialog.component';
+import { UserCountService } from 'src/app/services/userCount.service';
 
 @Component({
   selector: 'app-web-conference',
@@ -32,6 +33,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
   constructor(
     private readonly peerService: PeerService, 
     private readonly loadingService: LoadingService,
+    private readonly userCountService: UserCountService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
     ) { }
@@ -61,6 +63,8 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
       disableClose: true,
       autoFocus: true
     });
+
+    this.userCountService.addToUserCount().subscribe();
   }
 
   ngOnDestroy(): void {

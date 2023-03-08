@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { PeerService } from './services/peer.service';
 import { TranslateService } from '@ngx-translate/core';
+import { UserCountService } from './services/userCount.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 export class AppComponent implements OnInit {
   
-  constructor(private readonly peerService: PeerService, translate: TranslateService) {
+  constructor(private readonly peerService: PeerService, translate: TranslateService, private readonly userCountService: UserCountService) {
     translate.addLangs(['en-US', 'fr', 'es']);
     translate.setDefaultLang('en-US');
     translate.use(window.navigator.language);
@@ -23,5 +24,6 @@ export class AppComponent implements OnInit {
   beforeUnloadHandler(event) {
     // respond to browser close, refresh, etc. by telling the other peer the chat has ended
     this.peerService.sendEndChatSignal();
+    this.userCountService.removeFromUserCount().subscribe();
   }
 }
