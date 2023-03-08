@@ -5,7 +5,7 @@
     <span class="button-spacer"></span>
     <button mat-raised-button (click)="stopService()" color="warning" *ngIf="isServiceStarted" matTooltip="{{ 'stopChattingTooltip' | translate }}" aria-label="{{ 'stopChattingAriaLabel' | translate }}">{{ 'stopChatting' | translate }}<mat-icon class="purple-icon">call_end</mat-icon> </button>
     <span class="button-spacer"></span>
-    <button mat-raised-button (click)="nextPeer()" color="success" *ngIf="isServiceStarted" matTooltip="{{ 'nextPeerTooltip' | translate }}">{{ 'nextPeer' | translate }} <mat-icon class="purple-icon">skip_next</mat-icon></button>
+    <button mat-raised-button class="next-peer" (click)="nextPeer()" color="success" *ngIf="isServiceStarted" matTooltip="{{ 'nextPeerTooltip' | translate }}">{{ 'nextPeer' | translate }} <mat-icon class="purple-icon">skip_next</mat-icon></button>
 </mat-toolbar>
 
 <div class="">
@@ -19,10 +19,16 @@
     <app-local-video class="local-stream-container" id="local" autoplay #local>
     </app-local-video>
 
-    <mat-card class="control-container-card mat-elevation-z0" *ngIf="isConnected">
+    <mat-card class="control-container-card mat-elevation-z0" *ngIf="isServiceStarted">
         <mat-card-content>
             <button mat-button class="video-control-button" (click)="toggleLocalVideo()" matTooltip="{{ 'toggleCamera' | translate }}" aria-label="Click here to toggle your video camera"><mat-icon class="white-icon-vid">{{ videoSubject$ | async }}</mat-icon></button>
             <button mat-button class="video-control-button" (click)="toggleMicrophone()"><mat-icon class="white-icon-mic" matTooltip="{{ 'toggleMic' | translate }}" aria-label="Click here to toggle your microphone">{{ micSubject$ | async }}</mat-icon></button>
         </mat-card-content>
     </mat-card>
+
+    <div class="mobile-video-control-buttons" *ngIf="isServiceStarted">
+        <button mat-fab class="mobile-video-control-button" (click)="toggleMicrophone()" color="warning" matTooltip="{{ 'toggleCamera' | translate }}" ><mat-icon class="white-icon">{{ micSubject$ | async }}</mat-icon></button>
+        <button mat-fab class="mobile-video-control-button" (click)="toggleLocalVideo()" color="warning"><mat-icon class="white-icon">{{ videoSubject$ | async }}</mat-icon></button>
+        <button mat-fab class="mobile-video-control-button" (click)="nextPeer()" title="Hang Up" color='danger' matTooltip="{{ 'nextPeerTooltip' | translate }}"><mat-icon class="white-icon">skip_next</mat-icon></button>
+    </div>
 </div>

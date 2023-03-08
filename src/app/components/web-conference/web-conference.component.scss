@@ -9,6 +9,22 @@
     color:black;
 }
 
+.mobile-video-control-buttons {
+    visibility: visible;
+    position:absolute;
+    top:95%;
+    left:28%;
+}
+
+.mobile-video-control-button {
+    margin-right:16px;
+    color:black;
+}
+
+.next-peer {
+    display: none;
+}
+
 .user-action-buttons {
     margin-left: 16px;
 }
@@ -37,18 +53,24 @@
 }
 
 .mat-success {
-    background-color: #FFAC1C;
-    color: #8B4000;
+    background-color: #FF8C00;
+    color: #fff;
     font-family: 'Roboto', sans-serif;
 }
 
 .mat-warning {
-    background-color: #DAA520;
-    color: #8B4000;
+    background-color: #FF8C00;
+    color: #fff;
     font-family: 'Roboto', sans-serif;
 }
 
+.mat-danger {
+    background-color: green;
+    color: #fff;
+}
+
 .control-container-card {
+    display: none;
     width: 200px;
     background-color: #9C27B0;
     padding: 8px
@@ -62,6 +84,7 @@
     position: absolute;
     color: #fff;
     font-size: 1.25em;
+    margin: 0 auto;
 }
 
 .chatloopa-name {
@@ -77,6 +100,8 @@
     }
 
     .control-container-card {
+        visibility: visible;
+        display: block;
         background-color: #9C27B0;
         margin-top: 32px;
         left: 42vw;
@@ -92,6 +117,14 @@
         position: absolute;
         font-family: 'Roboto', sans-serif;
     }
+
+    .mobile-video-control-buttons {
+        display: none;
+    }
+
+    .next-peer {
+        display: block;
+    }
 }
 
 @media only screen and (min-width: 600px) and (max-width: 1024px) {
@@ -102,6 +135,8 @@
     }
     
     .control-container-card {
+        visibility: visible;
+        display: block;
         background-color: #9C27B0;
         margin-top: 16px;
         left: 40vw;
@@ -115,5 +150,13 @@
         left: 35vw;
         z-index: 99;
         position: absolute;
+    }
+
+    .mobile-video-control-buttons {
+        display: none;
+    }
+
+    .next-peer {
+        display: block;
     }
 }
