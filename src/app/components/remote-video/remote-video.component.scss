@@ -21,6 +21,16 @@ video {
     top: 40%;
 }
 
+.watermark {
+    z-index: 1000;
+    position: absolute;
+    margin: 8px;
+    width: 125px;
+    height: 50px;
+    left: 0px;
+    top: 95%;
+}
+
 @media only screen and (min-width: 768px) {
     /* Desktop versions */
 
@@ -29,6 +39,16 @@ video {
         height:80% !important;
         background-color: black;
         position:absolute;
+    }
+
+    .watermark {
+        z-index: 1000;
+        position: relative;
+        margin: 8px;
+        width: 125px;
+        height: 50px;
+        left: 0px;
+        top: 95%;
     }
 }
 

@@ -12,8 +12,8 @@
 .mobile-video-control-buttons {
     visibility: visible;
     position:absolute;
-    top:95%;
-    left:28%;
+    top:90%;
+    left:30%;
 }
 
 .mobile-video-control-button {
@@ -78,8 +78,8 @@
 
 .status-text {
     width: 50%;
-    top: 75vw;
-    left: 8vw;
+    top: 50%;
+    left: 30%;
     z-index: 99;
     position: absolute;
     color: #fff;
@@ -104,15 +104,15 @@
         display: block;
         background-color: #9C27B0;
         margin-top: 32px;
-        left: 42vw;
+        left: 45%;
         width: 200px;
         height: auto;
     }
 
     .status-text {
         width: 50%;
-        top: 20vw;
-        left: 40vw;
+        top: 50%;
+        left: 42%;
         z-index: 99;
         position: absolute;
         font-family: 'Roboto', sans-serif;
@@ -139,15 +139,15 @@
         display: block;
         background-color: #9C27B0;
         margin-top: 16px;
-        left: 40vw;
+        left: 40%;
         width: 200px;
         height: auto;
     }
 
     .status-text {
         width: 50%;
-        top: 30vw;
-        left: 35vw;
+        top: 45%;
+        left: 35%;
         z-index: 99;
         position: absolute;
     }
