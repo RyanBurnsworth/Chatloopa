@@ -7,7 +7,7 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { PeerService } from '../../services/peer.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { IntitialDialogComponent } from '../dialogs/intitial-dialog/intitial-dialog.component';
 import { UserCountService } from 'src/app/services/userCount.service';
 
