@@ -9,7 +9,6 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'text', component: TextChatComponent },
   { path: 'video', component: WebConferenceComponent },
-  { path: '**', redirectTo: '/' } // Wildcard route for 404 handling
 ];
 
 @NgModule({
