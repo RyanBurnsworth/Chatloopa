@@ -174,7 +174,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
       this.micSubject$.next('mic');
     } else {
       this.micSubject$.next('mic_off');
-    }
+    }    
   }
 
   /**
