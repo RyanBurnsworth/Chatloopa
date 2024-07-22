@@ -1,10 +1,11 @@
+/* Mobile versions */
 .main-container {
     display: flex;
-    width: 60vw;
+    width: 100%;
+    height:  80%;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
 }
 
 .messaging-container {
@@ -23,7 +24,7 @@
 }
 
 .message-box {
-    width: 55vw;
+    width: 65vw;
     margin-top: 8px;
 }
 
@@ -56,7 +57,7 @@
 
 .message-content {
     margin-top: 16px;
-    width: 54vw;
+    width: 90vw;
 }
 
 .chatloopa-name {
@@ -75,4 +76,170 @@
 .purple-icon {
     color: #9C27B0;
     margin-left: 8px;
+}
+
+@media only screen and (min-width: 1025px) {
+    /* Desktop versions */
+    .main-container {
+        display: flex;
+        width: 60vw;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .messaging-container {
+        display: flex;
+        max-width: 100%;
+        flex-direction: row;
+    }
+
+    .chat-container {
+        width: 100%;
+        height: 60vh;
+        margin-top: 32px;
+        padding: 8px;
+        background-color: white;
+        overflow-y: auto;
+    }
+
+    .message-box {
+        width: 55vw;
+        margin-top: 8px;
+    }
+
+    .send-button {
+        margin-top: 8px;
+        margin-left: 8px;
+        width: 120px;
+    }
+
+    .user {
+        font-size: 1.5em;
+        margin-right: 8px;
+        margin-left: 4px;
+        margin-top: 16px;
+        color: lightgreen;
+    }
+
+    .stranger {
+        font-size: 1.5em;
+        margin-right: 8px;
+        margin-left: 4px;
+        margin-top: 16px;
+        color: red;
+    }
+
+    .message {
+        font-size: 1.25em;
+        margin-top: 16px;
+    }
+
+    .message-content {
+        margin-top: 16px;
+        width: 54vw;
+    }
+
+    .chatloopa-name {
+        font-family: 'Satisfy', cursive;
+        font-size: 36px;
+    }
+
+    .toolbar-spacer {
+        flex: 1 1 auto;
+    }
+
+    .button-spacer {
+        flex: 0.01 1 auto;
+    }
+
+    .purple-icon {
+        color: #9C27B0;
+        margin-left: 8px;
+    }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
+    /* Tablet versions */
+
+    .main-container {
+        display: flex;
+        width: 90%;
+        height:  80%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+    
+    .messaging-container {
+        display: flex;
+        max-width: 100%;
+        flex-direction: row;
+    }
+
+    .chat-container {
+        width: 100%;
+        height: 60vh;
+        margin-top: 32px;
+        padding: 8px;
+        background-color: white;
+        overflow-y: auto;
+    }
+
+    .message-box {
+        width: 78vw;
+        margin-top: 8px;
+    }
+
+    .send-button {
+        margin-top: 8px;
+        margin-left: 8px;
+        width: 120px;
+    }
+
+    .user {
+        font-size: 1.5em;
+        margin-right: 8px;
+        margin-left: 4px;
+        margin-top: 16px;
+        color: lightgreen;
+    }
+
+    .stranger {
+        font-size: 1.5em;
+        margin-right: 8px;
+        margin-left: 4px;
+        margin-top: 16px;
+        color: red;
+    }
+
+    .message {
+        font-size: 1.25em;
+        margin-top: 16px;
+    }
+
+    .message-content {
+        margin-top: 16px;
+        width: 90%;
+    }
+
+    .chatloopa-name {
+        font-family: 'Satisfy', cursive;
+        font-size: 36px;
+    }
+
+    .toolbar-spacer {
+        flex: 1 1 auto;
+    }
+
+    .button-spacer {
+        flex: 0.01 1 auto;
+    }
+
+    .purple-icon {
+        color: #9C27B0;
+        margin-left: 8px;
+    }
 }

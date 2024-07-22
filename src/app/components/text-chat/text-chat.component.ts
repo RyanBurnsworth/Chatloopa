@@ -121,6 +121,9 @@ export class TextChatComponent implements OnInit, AfterViewInit, AfterViewChecke
     this.destroyStatusUpdateListener();
   }
 
+  /**
+   * Disconnect the text chat service
+   */
   private disconnectService(): void {
     if (this.isConnected) {
       this.sendStatusUpdate('DISCONNECTED');
@@ -293,7 +296,6 @@ export class TextChatComponent implements OnInit, AfterViewInit, AfterViewChecke
   }
 
   onPopState(event: PopStateEvent) {
-    console.log('Back button or history navigation detected');
     this.sendStatusUpdate('DISCONNECTED');
   }
 }
