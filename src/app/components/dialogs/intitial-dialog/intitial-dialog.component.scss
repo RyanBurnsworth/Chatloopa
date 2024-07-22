@@ -47,3 +47,17 @@
     background-color: #FF8C00;
     color: #fff;
 }
+
+.dialog-action-button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-chat-action-button {
+    width: 25%;
+    align-self: center;
+    margin-top:16px;
+    margin-right: 8px;
+}

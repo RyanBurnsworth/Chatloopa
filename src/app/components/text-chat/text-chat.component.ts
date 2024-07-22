@@ -1,5 +1,6 @@
 import { AfterViewChecked, AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Message } from 'src/app/models/message.model';
 import { Room } from 'src/app/models/room.model';
 import { Status } from 'src/app/models/status.model';
@@ -45,10 +46,16 @@ export class TextChatComponent implements OnInit, AfterViewInit, AfterViewChecke
   constructor(private readonly messageService: MessageService, 
     private readonly roomService: RtcService, 
     private readonly statusService: StatusService,
+    private readonly router: Router,
     private snackBar: MatSnackBar) { }
  
   ngOnInit(): void {
     window.addEventListener('popstate', this.onPopState);
+    
+    // if the age requirement agreement is not checked, return to dialog
+    if (!localStorage.getItem('Non-Minor-User') || localStorage.getItem('Non-Minor-User') !== 'true') {
+      this.router.navigate(['']);
+    }    
   }
 
   ngAfterViewInit() {
