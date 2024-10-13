@@ -1,74 +1,44 @@
 // src/styles.scss
 @use '@angular/material' as mat;
 
-// Custom Theming for Angular Material
+// Custom Theming for Angular Material 17
 
-// For more information: https://material.angular.io/guide/theming
+// Define your color palettes
+$primary-palette: mat.define-palette(mat.$amber-palette);
+$accent-palette: mat.define-palette(mat.$deep-orange-palette, A200, A100, A400);
+$warn-palette: mat.define-palette(mat.$red-palette);
 
-@import "@angular/material/theming";
-// Plus imports for other components in your app.
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-
-// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
-//  The following line adds:
-//    1. Default typography styles for all components
-//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
-//  If you specify typography styles for the components you use elsewhere, you should delete this line.
-//  If you don't need the default component typographies but still want the hierarchy styles,
-//  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
-@include mat.all-legacy-component-typographies();
-@include mat.legacy-core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-
-$theming-material-components-primary: mat.define-palette(mat.$amber-palette);
-$theming-material-components-accent: mat.define-palette(mat.$deep-orange-palette, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-
-$theming-material-components-warn: mat.define-palette(mat.$red-palette);
-
-// Create the theme object (a Sass map containing all of the palettes).
-
-$theming-material-components-theme: mat.define-light-theme(
-  $theming-material-components-primary,
-  $theming-material-components-accent,
-  $theming-material-components-warn
+// Define the theme object using the palettes
+$my-theme: mat.define-light-theme(
+  $primary-palette,
+  $accent-palette,
+  $warn-palette
 );
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
+// Include the theme styles for Angular Material components
+@include mat.all-component-themes($my-theme);
 
-@include mat.all-legacy-component-themes($theming-material-components-theme);
+// Add any additional global styles or customizations below
 
-/* You can add global styles to this file, and also import other style files */
-
-html,
-body {
+html, body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: #BA68C8;
 }
+
 .mat-toolbar {
   background: #9C27B0;
   color: #fff;
 }
 
-
 .red-snackbar {
   background: #8B0000;
   color: #fff;
-  font-size:28px;
+  font-size: 28px;
   font-weight: 400;
   font-family: 'Roboto', sans-serif;
 }

@@ -14,10 +14,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -57,9 +55,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatIconModule,
     MatProgressSpinnerModule,
     MatInputModule,
-    MatListModule,
     MatDialogModule,
-    MatProgressBarModule,
     MatSnackBarModule,
     MatToolbarModule,
     MatCardModule,
@@ -68,7 +64,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [ 
     {
-      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, 
+      useValue: {duration: 2500}
     } 
   ],
   bootstrap: [AppComponent]

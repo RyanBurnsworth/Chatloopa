@@ -1,6 +1,6 @@
 .local-video-container {
     display: flex;
-    justify-content:flex-end;
+    justify-content: flex-end;
     position: absolute;
     width: 100%;
     padding-right: 11vw;
@@ -11,10 +11,8 @@
     width: 125px;
     height: 125px;
     border-radius: 24px;
-    border-color: #FF8C00;
-    border-style: ridge;
-    border-width: 2px;
-    padding: 2px 2px 2px 2px;
+    border: 2px ridge #FF8C00;
+    padding: 2px;
 }
 
 video {
@@ -23,28 +21,16 @@ video {
 
 @media only screen and (min-width: 1024px) {
     /* Desktop versions */
-
     .video-console {
         width: 175px;
         height: 175px;
-        border-radius: 24px;
-        border-color: #FF8C00;
-        border-style: ridge;
-        border-width: 2px;
-        padding: 2px 2px 2px 2px;
     }
 }
 
 @media only screen and (min-width: 600px) and (max-width: 1024px) {
     /* Tablet versions */
-
     .video-console {
         width: 150px;
         height: 150px;
-        border-radius: 24px;
-        border-color: #FF8C00;
-        border-style: ridge;
-        border-width: 2px;
-        padding: 2px 2px 2px 2px;
     }
 }

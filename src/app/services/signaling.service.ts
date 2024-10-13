@@ -12,7 +12,7 @@ export class SignalingService {
   constructor(private firestore: AngularFirestore) { }
 
   startSignalListener(roomId: string) {
-    this.signalListener = this.firestore.collection(roomId).snapshotChanges();
+    this.signalListener = this.firestore.collection(roomId).snapshotChanges() as unknown as Observable<DocumentChangeAction<Signal>[]>;
   }
 
   getSignalListener() {

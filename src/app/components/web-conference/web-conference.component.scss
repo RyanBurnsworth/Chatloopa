@@ -1,24 +1,20 @@
 .video-control-buttons {
-    position:absolute;
-    top:80vw;
-    left:45vw;
+    position: absolute;
+    top: 80vw;
+    left: 45vw;
 }
 
-.video-control-button {
-    margin-right:16px;
-    color:black;
+.video-control-button,
+.mobile-video-control-button {
+    margin-right: 16px;
+    color: black;
 }
 
 .mobile-video-control-buttons {
     visibility: visible;
-    position:absolute;
-    top:90%;
-    left:30%;
-}
-
-.mobile-video-control-button {
-    margin-right:16px;
-    color:black;
+    position: absolute;
+    top: 90%;
+    left: 30%;
 }
 
 .next-peer {
@@ -29,14 +25,13 @@
     margin-left: 16px;
 }
 
-.white-icon-mic {
+.white-icon-mic,
+.white-icon-vid {
     color: #ffffff;
 }
 
 .white-icon-vid {
-    color: #ffffff;
-    margin-right: 8px;
-    margin-left: 12px;
+    margin: 0 8px 0 12px;
 }
 
 .purple-icon {
@@ -44,7 +39,8 @@
     margin-left: 8px;
 }
 
-.toolbar-spacer {
+.toolbar-spacer,
+.button-spacer {
     flex: 1 1 auto;
 }
 
@@ -52,12 +48,7 @@
     flex: 0.01 1 auto;
 }
 
-.mat-success {
-    background-color: #FF8C00;
-    color: #fff;
-    font-family: 'Roboto', sans-serif;
-}
-
+.mat-success,
 .mat-warning {
     background-color: #FF8C00;
     color: #fff;
@@ -73,7 +64,7 @@
     display: none;
     width: 200px;
     background-color: #9C27B0;
-    padding: 8px
+    padding: 8px;
 }
 
 .status-text {
@@ -93,8 +84,6 @@
 }
 
 @media only screen and (min-width: 1024px) {
-    /* Desktop versions */
-
     .stream-container {
         margin-top: 16px;
     }
@@ -102,19 +91,13 @@
     .control-container-card {
         visibility: visible;
         display: block;
-        background-color: #9C27B0;
         margin-top: 32px;
         left: 45%;
-        width: 200px;
         height: auto;
     }
 
     .status-text {
-        width: 50%;
-        top: 50%;
         left: 42%;
-        z-index: 99;
-        position: absolute;
         font-family: 'Roboto', sans-serif;
     }
 
@@ -128,28 +111,21 @@
 }
 
 @media only screen and (min-width: 600px) and (max-width: 1024px) {
-    /* Tablet versions */
-
     .stream-container {
         margin-top: 16px;
     }
-    
+
     .control-container-card {
         visibility: visible;
         display: block;
-        background-color: #9C27B0;
         margin-top: 16px;
         left: 40%;
-        width: 200px;
         height: auto;
     }
 
     .status-text {
-        width: 50%;
         top: 45%;
         left: 35%;
-        z-index: 99;
-        position: absolute;
     }
 
     .mobile-video-control-buttons {
