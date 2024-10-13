@@ -7,7 +7,17 @@
       "request": "launch",
       "url": "http://localhost:4200",
       "webRoot": "${workspaceFolder}/src",
-      "reAttach": true
+      "reAttach": true,
+      "pathMappings": [
+        {
+          "url": "http://localhost:4200/src",
+          "path": "${workspaceFolder}/src"
+        },
+        {
+          "url": "http://localhost:4200",
+          "path": "${workspaceFolder}"
+        }
+      ]
     },
     {
       "name": "Attach to Firefox",

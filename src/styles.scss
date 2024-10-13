@@ -31,15 +31,6 @@ body {
   background-color: #F7F9FC; // Light grey/white background
 }
 
-// Custom red snackbar background
-.red-snackbar {
-  background: #8B0000; // Custom red background for the snackbar
-  color: #fff;
-  font-size: 28px;
-  font-weight: 400;
-  font-family: 'Roboto', sans-serif;
-}
-
 // MDC Checkbox styling
 .mdc-checkbox {
   --mdc-checkbox-selected-checkmark-color: #fff;
@@ -47,4 +38,13 @@ body {
   --mdc-checkbox-unselected-pressed-icon-color: #fff;
   --mdc-checkbox-unselected-hover-icon-color: #fff;
   --mdc-checkbox-unselected-focus-icon-color: #fff;
+}
+
+// Custom red snackbar background
+.red-snackbar {
+  background: #8B0000 !important; // Custom red background for the snackbar
+  color: #fff !important;
+  font-size: 28px;
+  font-weight: 400;
+  font-family: 'Roboto', sans-serif;
 }

@@ -19,9 +19,15 @@ import { Router } from '@angular/router';
 })
 export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit {
   localStream: any;
+
+  loadingStatus: string = '';
+
   isConnected = false;
   isServiceStarted = false;
+  isServiceStopped = false;
   isAudioVideoReady = false;
+  isCameraMicError = false;
+
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
@@ -49,6 +55,8 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
     this.peerService.peerError$.subscribe((err) => {
       console.error("UI ERROR: " + err);
       this.openErrorSnackBar("Error connecting to service. Please try again");
+      this.isCameraMicError = true;
+      this.stopService();
     });
 
     this.peerService.remoteStream$.subscribe((stream) => {
@@ -62,15 +70,21 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
     this.peerService.connectionState$.subscribe((state) => {
       this.updateConnectionState(state as string);
     });
+    
+    this.loadingService.loadingStatus.subscribe((status) => { this.loadingStatus = status; });
   }
 
   ngAfterViewInit(): void {
-    this.userCountService.addToUserCount().subscribe();
-    
-    this.dialog.open(IntitialDialogComponent, {
+    // Open the dialog
+    const dialogRef = this.dialog.open(IntitialDialogComponent, {
       panelClass: 'dialog-style',
       disableClose: true,
       autoFocus: true
+    });
+
+    // Perform action after the dialog is closed
+    dialogRef.afterClosed().subscribe(result => {
+      this.startService();
     });
   }
 
@@ -89,7 +103,30 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
     // reset the action button icons
     this.micSubject$.next('mic');
     this.videoSubject$.next('videocam');
+    
     this.peerService.initWebRTC();
+    
+    this.isServiceStopped = false;
+    this.isServiceStarted = true;
+
+    this.loadingService.setIsSearching(true);
+    this.loadingService.setLoadingStatus('Searching for Peer...');
+  }
+
+  /**
+   * Stop the WebRTC service
+   */
+  stopService() {
+    this.peerService.sendEndChatSignal();
+    this.endCall();
+
+    // turn off the camera and mic
+    if (this.localStream) {
+      this.localStream.getVideoTracks()[0].stop();
+      this.localStream.getAudioTracks()[0].stop();
+    }
+    this.isServiceStarted = false;
+    this.isServiceStopped = true;
   }
 
   /**
@@ -104,10 +141,10 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
         this.localStream = stream;
         
         this.peerService.initVideoChat();
-        this.isServiceStarted = true;
       }).catch(err => {
         this.openErrorSnackBar("Error: Couldn't obtain camera and/or microphone!");
         console.error("Error obtaining camera and microphone: " + err.message);
+        this.stopService();
       });
   }
 
@@ -120,14 +157,15 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
   private updateConnectionState(connectionState: string) {
     switch (connectionState) {
       case "connecting":
-        this.loadingService.setLoadingStatus(true);
+        this.loadingService.setIsSearching(false);
+        this.loadingService.setLoadingStatus("Connecting to Peer...");
         break;
       case "connected":
-        this.loadingService.setLoadingStatus(false);
         this.isConnected = true;
+        this.loadingService.setLoadingStatus('');
         break;
       case "disconnected":
-        this.nextPeer();
+        this.stopService();
         break;
       default:
         break;
@@ -139,34 +177,12 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
    * 
    */
   endCall() {
-    this.loadingService.setLoadingStatus(false);
+    this.loadingService.setIsSearching(false);
+    this.loadingService.setLoadingStatus('Disconnected from Peer');
     this.isConnected = false;
     this.micSubject$.next('mic');
     this.videoSubject$.next('videocam');
     this.peerService.closeConnection();
-  }
-
-  /**
-   * Stop the WebRTC service
-   */
-  stopService() {
-    this.peerService.sendEndChatSignal();
-    this.endCall();
-
-    // turn off the camera and mic
-    this.localStream.getVideoTracks()[0].stop();
-    this.localStream.getAudioTracks()[0].stop();
-    this.isServiceStarted = false;
-  }
-
-  /**
-   * Move on to the next peer
-   */
-  nextPeer() {
-    this.peerService.sendEndChatSignal();
-    this.endCall();
-    
-    this.peerService.initWebRTC();
   }
 
   /**

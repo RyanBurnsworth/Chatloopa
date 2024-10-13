@@ -1,10 +1,11 @@
 .local-video-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-end; /* Changed to align to the right */
     position: absolute;
-    width: 100%;
-    padding-right: 11vw;
-    padding-top: 8px;
+    right: 10vw; /* Added to position the container on the right side */
+    width: auto;
+    margin-top: 16px;
+    margin-right: 16px;
 }
 
 .video-console {
