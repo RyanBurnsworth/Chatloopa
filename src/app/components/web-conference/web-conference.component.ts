@@ -7,9 +7,10 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { PeerService } from '../../services/peer.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { IntitialDialogComponent } from '../dialogs/intitial-dialog/intitial-dialog.component';
 import { UserCountService } from 'src/app/services/userCount.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-web-conference',
@@ -34,11 +35,16 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
     private readonly peerService: PeerService, 
     private readonly loadingService: LoadingService,
     private readonly userCountService: UserCountService,
-    private dialog: MatDialog,
+    private readonly router: Router,
     private snackBar: MatSnackBar
     ) { }
 
   ngOnInit(): void {
+    // if the age requirement agreement is not checked, return to dialog
+    if (!localStorage.getItem('Non-Minor-User') || localStorage.getItem('Non-Minor-User') !== 'true') {
+      this.router.navigate(['']);
+    }
+
     this.peerService.peerError$.subscribe((err) => {
       console.error("UI ERROR: " + err);
       this.openErrorSnackBar("Error connecting to service. Please try again");
@@ -58,12 +64,6 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   ngAfterViewInit(): void {
-    this.dialog.open(IntitialDialogComponent, {
-      panelClass: 'dialog-style',
-      disableClose: true,
-      autoFocus: true
-    });
-
     this.userCountService.addToUserCount().subscribe();
   }
 
@@ -174,7 +174,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
       this.micSubject$.next('mic');
     } else {
       this.micSubject$.next('mic_off');
-    }
+    }    
   }
 
   /**

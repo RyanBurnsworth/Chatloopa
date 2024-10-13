@@ -25,6 +25,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IntitialDialogComponent } from './components/dialogs/intitial-dialog/intitial-dialog.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TextChatComponent } from './components/text-chat/text-chat.component';
+import { HomeComponent } from './components/home/home.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -38,6 +40,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RemoteVideoComponent,
     LocalVideoComponent,
     IntitialDialogComponent,
+    TextChatComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,    
