@@ -1,64 +1,50 @@
-// src/styles.scss
+@use '@angular/material' as mat;
+@include mat.core();
 
-// Custom Theming for Angular Material
+// Define your color palettes using Material 3's new approach
+$primary-color: mat.m2-define-palette(mat.$m2-blue-palette);  // Primary color (Blue)
+$accent-color: mat.m2-define-palette(mat.$m2-orange-palette); // Accent color (Orange)
+$warn-color: mat.m2-define-palette(mat.$m2-red-palette);  // Warn color (Red)
 
-// For more information: https://material.angular.io/guide/theming
+// Define the theme object using the palettes
+$myapp-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $primary-color,
+    accent: $accent-color,
+    warn: $warn-color,
+  ),
+  typography: mat.m2-define-typography-config(),
+  density: 0,
+));
 
-@import "~@angular/material/theming";
-// Plus imports for other components in your app.
+@include mat.all-component-themes($myapp-theme);
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
+// Add any additional global styles or customizations below
 
-@include mat-core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-
-$theming-material-components-primary: mat-palette($mat-amber);
-$theming-material-components-accent: mat-palette($mat-deep-orange, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-
-$theming-material-components-warn: mat-palette($mat-red);
-
-// Create the theme object (a Sass map containing all of the palettes).
-
-$theming-material-components-theme: mat-light-theme(
-  $theming-material-components-primary,
-  $theming-material-components-accent,
-  $theming-material-components-warn
-);
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-
-@include angular-material-theme($theming-material-components-theme);
-
-/* You can add global styles to this file, and also import other style files */
-
-html,
-body {
+html, body {
   height: 100%;
 }
+
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #BA68C8;
-}
-.mat-toolbar {
-  background: #9C27B0;
-  color: #fff;
+  font-family: 'Open Sans', "Helvetica Neue", sans-serif;
+  background-color: #F7F9FC; // Light grey/white background
 }
 
-
+// Custom red snackbar background
 .red-snackbar {
-  background: #8B0000;
+  background: #8B0000; // Custom red background for the snackbar
   color: #fff;
-  font-size:28px;
+  font-size: 28px;
   font-weight: 400;
   font-family: 'Roboto', sans-serif;
+}
+
+// MDC Checkbox styling
+.mdc-checkbox {
+  --mdc-checkbox-selected-checkmark-color: #fff;
+  --mdc-checkbox-unselected-icon-color: #fff;
+  --mdc-checkbox-unselected-pressed-icon-color: #fff;
+  --mdc-checkbox-unselected-hover-icon-color: #fff;
+  --mdc-checkbox-unselected-focus-icon-color: #fff;
 }

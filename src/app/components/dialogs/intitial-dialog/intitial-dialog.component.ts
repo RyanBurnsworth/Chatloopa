@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -11,7 +10,7 @@ export class IntitialDialogComponent implements OnInit {
   disableSubject = new BehaviorSubject(true);
   disableObservable = this.disableSubject.asObservable();
 
-  constructor(private readonly router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
@@ -23,12 +22,5 @@ export class IntitialDialogComponent implements OnInit {
 
   continueToVideoChat() {
     console.log("Continuing to Video Chat");
-    
-    this.router.navigate(['video']);
-  }
-
-  continueToTextChat() {
-    console.log("Continuing to Text Chat");
-    this.router.navigate(['text']);
   }
 }

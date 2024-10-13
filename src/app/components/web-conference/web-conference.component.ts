@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, } from 'rxjs';
 import { LoadingService } from '../../services/loading.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
+  MatSnackBarHorizontalPosition as MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition as MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { PeerService } from '../../services/peer.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -35,6 +35,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
     private readonly peerService: PeerService, 
     private readonly loadingService: LoadingService,
     private readonly userCountService: UserCountService,
+    private readonly dialog: MatDialog,
     private readonly router: Router,
     private snackBar: MatSnackBar
     ) { }
@@ -65,6 +66,12 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngAfterViewInit(): void {
     this.userCountService.addToUserCount().subscribe();
+    
+    this.dialog.open(IntitialDialogComponent, {
+      panelClass: 'dialog-style',
+      disableClose: true,
+      autoFocus: true
+    });
   }
 
   ngOnDestroy(): void {

@@ -2,50 +2,128 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-height: 300px;
+    min-width: 800px;
+    padding: 16px;
+    background: linear-gradient(to right, #a0c4ff, #ffadad);
+    
+    @media (max-width: 1024px) {
+        min-width: 600px;
+    }
+
+    @media (max-width: 768px) {
+        min-width: 100%;
+        padding: 8px;
+    }
 }
 
 .header {
     font-family: 'Satisfy', cursive;
-    font-size: 48px;
-    color: #9C27B0;
+    font-size: 60px;
+    color: var(--primary);
+    margin-top: 24px;
     margin-bottom: 24px;
     align-self: center;
+    font-weight: 600;
+    
+    @media (max-width: 768px) {
+        margin-top:32px;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 36px;
+        margin-bottom: 8px;
+    }
+}
+
+.header-content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .checkbox-container {
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     margin-top: 16px;
+
+    @media (max-width: 768px) {
+        font-size: 14px;
+    }
 }
 
 .continue-dialog-button {
     width: 25%;
     align-self: center;
-    margin-top:16px;
+    margin-top: 16px;
+
+    @media (max-width: 768px) {
+        width: 50%;
+    }
+
+    @media (max-width: 480px) {
+        width: 75%;
+    }
+}
+
+// changes the color of the checkbox
+::ng-deep .mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background, .mdc-checkbox__ripple {
+    background-color: var(--primary) !important;
+    border-color: var(--accent) !important;
 }
 
 .initial-dialog-content {
-    width:auto;
-    align-self: center;
     font-family: 'Roboto', sans-serif;
-    font-size: 20px;
-    margin-top: 16px;
+    line-height: normal;
+    font-size: 32px;
+    font-weight: 600;
+    margin-top: 24px;
     margin-bottom: 16px;
+    color: #333333 !important;
+
+    @media (max-width: 768px) {
+        font-size: 24px;
+        margin-left: 16px;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 20px;
+        margin-right: 4px;
+    }
+}
+
+.secondary-dialog-content {
+    font-family: 'Roboto', sans-serif;
+    line-height: normal;
+    font-size: 20px;
+    margin-bottom: 16px;
+    
+    @media (max-width: 768px) {
+        font-size: 18px;
+        margin-left: 16px;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
 }
 
 // breaks up long labels on the checkbox
-::ng-deep .mat-checkbox-layout {
+::ng-deep .mat-mdc-checkbox-layout {
     white-space: normal !important;
 }
 
-.dialog-style .mat-dialog-container {
-    background-color: #9C27B0;
-} 
+::ng-deep .mdc-label {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 8px;
+    line-height: normal;
 
-.mat-success {
-    font-family: 'Roboto', sans-serif;
-    background-color: #FF8C00;
-    color: #fff;
+    @media (max-width: 768px) {
+        font-size: 14px;
+    }
 }
 
 .dialog-action-button-container {
@@ -53,11 +131,18 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
 }
 
-.text-chat-action-button {
-    width: 25%;
-    align-self: center;
-    margin-top:16px;
-    margin-right: 8px;
+::ng-deep .mdc-button.continue-dialog-button {
+    color: white !important;        /* White text for high contrast */
+    border: none;                   /* No border */
+
+    &:hover {
+        background-color: #E65100  !important;  /* Darker red on hover */
+    }
 }
+ 
