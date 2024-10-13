@@ -12,12 +12,18 @@
 
         <div class="checkbox-container">
             <mat-checkbox (change)="disableContinueButton($event)" class="agreement-checkbox">
-                {{ 'agreementText' | translate }}
+                <span>By checking the box you acknowledge that you are at least 13 years of age and agree to the <a (click)="closeDialogAndNavigate('tos')">ChatLoopa Terms of Service</a>.</span>
             </mat-checkbox>
         </div>
     </div>
 
     <div class="dialog-action-button-container">
-        <button mat-raised-button class="continue-dialog-button" id="continue-dialog-button" color="accent" mat-dialog-close [disabled]="disableObservable | async" (click)="continueToVideoChat()">{{ 'startChatting' | translate}}</button>
+        <button mat-raised-button class="continue-dialog-button" 
+            id="continue-dialog-button" 
+            color="accent" 
+            mat-dialog-close 
+            [disabled]="disableObservable | async" 
+            (click)="continueToVideoChat()">{{ 'startChatting' | translate}}
+        </button>
     </div>
 </div>
