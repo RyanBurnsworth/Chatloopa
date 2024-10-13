@@ -16,7 +16,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -54,7 +53,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         MatInputModule,
         MatDialogModule,
         MatSnackBarModule,
-        MatToolbarModule,
         MatCardModule,
         MatTooltipModule,
         MatCheckboxModule], providers: [

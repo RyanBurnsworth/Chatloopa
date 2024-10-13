@@ -1,12 +1,12 @@
-<mat-toolbar>
+<div class="toolbar mat-elevation-z8">
     <span class="chatloopa-name">ChatLoopa</span>
     <span class="toolbar-spacer"></span>
-    <button mat-button variant="raised" class="start-chat" id="start-chat" (click)="startService()" color="primary" *ngIf="!isServiceStarted" matTooltip="{{ 'startChattingTooltip' | translate }}" aria-label="{{ 'startChattingAriaLabel' | translate }}">{{ 'startChatting' | translate}} <mat-icon class="purple-icon">voice_chat</mat-icon></button>
+    <button mat-raised-button class="start-chat" id="start-chat" (click)="startService()" *ngIf="!isServiceStarted" matTooltip="{{ 'startChattingTooltip' | translate }}" aria-label="{{ 'startChattingAriaLabel' | translate }}">{{ 'startChatting' | translate}} <mat-icon class="purple-icon">voice_chat</mat-icon></button>
     <span class="button-spacer"></span>
-    <button mat-button variant="raised" class="end-chat" id="start-chat" (click)="stopService()" color="warn" *ngIf="isServiceStarted" matTooltip="{{ 'stopChattingTooltip' | translate }}" aria-label="{{ 'stopChattingAriaLabel' | translate }}">{{ 'stopChatting' | translate }}<mat-icon class="purple-icon">call_end</mat-icon> </button>
+    <button mat-raised-button class="stop-chat" id="end-chat" (click)="stopService()" *ngIf="isServiceStarted" matTooltip="{{ 'stopChattingTooltip' | translate }}" aria-label="{{ 'stopChattingAriaLabel' | translate }}">{{ 'stopChatting' | translate }}<mat-icon class="purple-icon">call_end</mat-icon> </button>
     <span class="button-spacer"></span>
-    <button mat-button variant="raised" class="next-peer" id="next-peer" (click)="nextPeer()" color="primary" *ngIf="isServiceStarted" matTooltip="{{ 'nextPeerTooltip' | translate }}">{{ 'nextPeer' | translate }} <mat-icon class="purple-icon">skip_next</mat-icon></button>
-</mat-toolbar>
+    <button mat-raised-button class="next-peer" id="next-peer" (click)="nextPeer()" color="primary" *ngIf="isServiceStarted" matTooltip="{{ 'nextPeerTooltip' | translate }}">{{ 'nextPeer' | translate }} <mat-icon class="purple-icon">skip_next</mat-icon></button>
+</div>
 
 <div class="">
     <p class="status-text" *ngIf="!isConnected && isServiceStarted">{{ 'searchingForPeer' | translate }}</p>

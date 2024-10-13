@@ -1,22 +1,23 @@
-// src/styles.scss
 @use '@angular/material' as mat;
+@include mat.core();
 
-// Custom Theming for Angular Material 17
-
-// Define your color palettes
-$primary-palette: mat.m2-define-palette(mat.$m2-amber-palette);
-$accent-palette: mat.m2-define-palette(mat.$m2-deep-orange-palette, A200, A100, A400);
-$warn-palette: mat.m2-define-palette(mat.$m2-red-palette);
+// Define your color palettes using Material 3's new approach
+$primary-color: mat.m2-define-palette(mat.$m2-blue-palette);  // Primary color (Blue)
+$accent-color: mat.m2-define-palette(mat.$m2-orange-palette); // Accent color (Orange)
+$warn-color: mat.m2-define-palette(mat.$m2-red-palette);  // Warn color (Red)
 
 // Define the theme object using the palettes
-$my-theme: mat.m2-define-light-theme(
-  $primary-palette,
-  $accent-palette,
-  $warn-palette
-);
+$myapp-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $primary-color,
+    accent: $accent-color,
+    warn: $warn-color,
+  ),
+  typography: mat.m2-define-typography-config(),
+  density: 0,
+));
 
-// Include the theme styles for Angular Material components
-@include mat.all-component-themes($my-theme);
+@include mat.all-component-themes($myapp-theme);
 
 // Add any additional global styles or customizations below
 
@@ -26,19 +27,24 @@ html, body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #BA68C8;
+  font-family: 'Open Sans', "Helvetica Neue", sans-serif;
+  background-color: #F7F9FC; // Light grey/white background
 }
 
-.mat-toolbar {
-  background: #9C27B0;
-  color: #fff;
-}
-
+// Custom red snackbar background
 .red-snackbar {
-  background: #8B0000;
+  background: #8B0000; // Custom red background for the snackbar
   color: #fff;
   font-size: 28px;
   font-weight: 400;
   font-family: 'Roboto', sans-serif;
+}
+
+// MDC Checkbox styling
+.mdc-checkbox {
+  --mdc-checkbox-selected-checkmark-color: #fff;
+  --mdc-checkbox-unselected-icon-color: #fff;
+  --mdc-checkbox-unselected-pressed-icon-color: #fff;
+  --mdc-checkbox-unselected-hover-icon-color: #fff;
+  --mdc-checkbox-unselected-focus-icon-color: #fff;
 }

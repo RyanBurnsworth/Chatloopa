@@ -1,17 +1,23 @@
 <div class="dialog-container">
     <h1 class="header">ChatLoopa</h1>
 
-    <div class="initial-dialog-content">
-        {{ 'mainDialogText' | translate }}
-    </div>
+    <div class="header-content-container">
+        <div class="initial-dialog-content">
+            {{ 'mainDialogText' | translate }}
+        </div>
 
-    <div class="checkbox-container">
-        <mat-checkbox (change)="disableContinueButton($event)">
-            {{ 'agreementText' | translate }}
-        </mat-checkbox>
+        <div class="secondary-dialog-content">
+            {{ 'secondaryDialogText' | translate }}
+        </div>
+
+        <div class="checkbox-container">
+            <mat-checkbox (change)="disableContinueButton($event)" class="agreement-checkbox">
+                {{ 'agreementText' | translate }}
+            </mat-checkbox>
+        </div>
     </div>
 
     <div class="dialog-action-button-container">
-        <button mat-raised-button class="continue-dialog-button" id="continue-dialog-button" color="primary" mat-dialog-close [disabled]="disableObservable | async" (click)="continueToVideoChat()">Video Chat</button>
+        <button mat-raised-button class="continue-dialog-button" id="continue-dialog-button" color="accent" mat-dialog-close [disabled]="disableObservable | async" (click)="continueToVideoChat()">{{ 'startChatting' | translate}}</button>
     </div>
 </div>
