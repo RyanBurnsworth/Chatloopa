@@ -4,12 +4,12 @@
 // Custom Theming for Angular Material 17
 
 // Define your color palettes
-$primary-palette: mat.define-palette(mat.$amber-palette);
-$accent-palette: mat.define-palette(mat.$deep-orange-palette, A200, A100, A400);
-$warn-palette: mat.define-palette(mat.$red-palette);
+$primary-palette: mat.m2-define-palette(mat.$m2-amber-palette);
+$accent-palette: mat.m2-define-palette(mat.$m2-deep-orange-palette, A200, A100, A400);
+$warn-palette: mat.m2-define-palette(mat.$m2-red-palette);
 
 // Define the theme object using the palettes
-$my-theme: mat.define-light-theme(
+$my-theme: mat.m2-define-light-theme(
   $primary-palette,
   $accent-palette,
   $warn-palette
