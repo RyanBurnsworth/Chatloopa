@@ -359,9 +359,13 @@ export class PeerService {
     try {
       this.peerConnection = undefined;
       this.currentRoom = undefined;
-      this.signalObservable$.unsubscribe();
-      this.room$.unsubscribe();
-      // this.waitTimer.unsubscribe();
+      if (this.signalObservable$) {
+        this.signalObservable$.unsubscribe();
+      }
+
+      if (this.room$) {
+        this.room$.unsubscribe();
+      }
     } catch (err) {
       console.error("Error destroying connection: " + err.message);
     }

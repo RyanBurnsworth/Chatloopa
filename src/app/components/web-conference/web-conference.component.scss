@@ -1,7 +1,47 @@
+.video-content-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.control-card {
+    width: auto;
+    height: auto;
+    background: var(--primary) !important;
+    padding: 16px;
+    position: relative;
+    border-radius: 8px;
+
+    @media screen and (max-width: 600px) {
+        display: none;   
+    }
+}
+
 .video-control-buttons {
     position: absolute;
     top: 80vw;
     left: 45vw;
+}
+
+.controls-buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 16px;
+    background-color: rgba(0, 0, 0, 0.5); /* Optional: Add a background color for better visibility */
+
+    @media screen and (max-width: 600px) {
+        display: none;   
+    }
 }
 
 .video-control-button,
@@ -14,29 +54,15 @@
     visibility: visible;
     position: absolute;
     top: 90%;
-    left: 30%;
-}
+    left: 25%;
 
-.next-peer {
-    display: none;
+    @media screen and (min-width: 600px) {
+        display: none;
+    }
 }
 
 .user-action-buttons {
     margin-left: 16px;
-}
-
-.white-icon-mic,
-.white-icon-vid {
-    color: #ffffff;
-}
-
-.white-icon-vid {
-    margin: 0 8px 0 12px;
-}
-
-.purple-icon {
-    color: #9C27B0;
-    margin-left: 8px;
 }
 
 .toolbar-spacer,
@@ -55,84 +81,80 @@
     font-family: 'Roboto', sans-serif;
 }
 
-.mat-danger {
-    background-color: green;
-    color: #fff;
-}
-
-.control-container-card {
-    display: none;
-    width: 200px;
-    background-color: #9C27B0;
-    padding: 8px;
-}
-
-.status-text {
-    width: 50%;
-    top: 50%;
-    left: 30%;
-    z-index: 99;
-    position: absolute;
-    color: #fff;
-    font-size: 1.25em;
-    margin: 0 auto;
-}
-
 .chatloopa-name {
     font-family: 'Satisfy', cursive;
     font-size: 36px;
+    margin-top: 8px;
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
+.toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 64px !important;
+    width: 100% !important;
+    padding: 16px;
+    background-color: var(--primary);
+}
+
+::ng-deep .mdc-button.start-chat {
+    background: #4CAF50 !important;  /* Medium Green (brighter and more vibrant) */
+    color: white !important;         /* White text for high contrast */
+    border: none;                    /* No border */
+    margin-right: 8px;
+    &:hover {
+        background-color: #388e3c !important; /* Darker green on hover */
+    }
+}
+
+::ng-deep .mdc-button.stop-chat {
+    background: #FF6D00 !important;  /* Bright red for the default state */
+    color: white !important;        /* White text for high contrast */
+    border: none;                   /* No border */
+
+    &:hover {
+        background-color: #C13636 !important;  /* Darker red on hover */
+    }
+}
+
+::ng-deep .mdc-button.next-peer {
+    &:hover {
+        background-color: #1976D2 !important;  /* Darker red on hover */
+    }
+
+    @media screen and (max-width: 600px) {
+        display: none;
+    }
+}
+ 
 @media only screen and (min-width: 1024px) {
+    .white-icon-vid {
+        margin: 0 8px 0 12px;
+    }
+    
+    ::ng-deep .mat-icon.white-icon-mic, .mat-icon.white-icon-vid {
+        font-size: 1.5em !important;
+        color: #ffffff;
+        padding: 0;
+    }
+    
     .stream-container {
         margin-top: 16px;
     }
 
-    .control-container-card {
-        visibility: visible;
-        display: block;
-        margin-top: 32px;
-        left: 45%;
-        height: auto;
-    }
-
-    .status-text {
-        left: 42%;
-        font-family: 'Roboto', sans-serif;
-    }
-
-    .mobile-video-control-buttons {
-        display: none;
-    }
-
-    .next-peer {
-        display: block;
+    .stop-chat {
+        display: visible;
     }
 }
 
-@media only screen and (min-width: 600px) and (max-width: 1024px) {
+@media only screen and (min-width: 600px) {
     .stream-container {
         margin-top: 16px;
     }
-
-    .control-container-card {
-        visibility: visible;
-        display: block;
-        margin-top: 16px;
-        left: 40%;
-        height: auto;
-    }
-
-    .status-text {
-        top: 45%;
-        left: 35%;
-    }
-
-    .mobile-video-control-buttons {
-        display: none;
-    }
-
-    .next-peer {
-        display: block;
+    
+    .stop-chat {
+        display: visible;
     }
 }

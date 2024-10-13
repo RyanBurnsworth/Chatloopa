@@ -5,11 +5,17 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class LoadingService {
-  loadingSubject = new BehaviorSubject(false);
+  isSearching = new BehaviorSubject(false);
   
+  loadingStatus  = new BehaviorSubject('');
+
   constructor() { }
 
-  setLoadingStatus(status: boolean) {
-    this.loadingSubject.next(status);
+  setIsSearching(status: boolean) {
+    this.isSearching.next(status);
+  }
+
+  setLoadingStatus(status: string) {
+    this.loadingStatus.next(status);
   }
 }
