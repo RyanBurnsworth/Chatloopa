@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { MatDialogRef } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators'; // For filtering events
+import { AnalyticsService } from 'src/app/services/analytics.service';
 
 @Component({
   selector: 'app-intitial-dialog',
@@ -15,6 +16,7 @@ export class IntitialDialogComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
+    private readonly analyticsService: AnalyticsService,
     private dialogRef: MatDialogRef<IntitialDialogComponent>
   ) { }
 
@@ -32,14 +34,19 @@ export class IntitialDialogComponent implements OnInit {
   disableContinueButton(event: any) {
     this.disableSubject.next(!event.checked);
     localStorage.setItem('Non-Minor-User', 'true');
+    this.analyticsService.trackEvent('Non_Minor_Checkbox_Click', 'User clicked the checkbox', 'Checkbox_Click');
   }
 
   continueToVideoChat() {
     console.log("Continuing to Video Chat");
+    this.analyticsService.trackEvent('Continue_Button_Click', 'User clicked the continue button', 'Button_Click');
   }
 
   closeDialogAndNavigate(link: string) {
     console.log("Navigating to", link);
+
+    // Track the event
+    this.analyticsService.trackEvent('TOS_Link_Click', 'User visited the TOS page', 'Link_Click');
 
     // First, navigate to the TOS page (or any other route)
     this.router.navigate([link]);

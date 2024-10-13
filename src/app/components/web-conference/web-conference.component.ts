@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { IntitialDialogComponent } from '../dialogs/intitial-dialog/intitial-dialog.component';
 import { UserCountService } from 'src/app/services/userCount.service';
 import { Router } from '@angular/router';
+import { AnalyticsService } from 'src/app/services/analytics.service';
 
 @Component({
   selector: 'app-web-conference',
@@ -41,6 +42,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
     private readonly peerService: PeerService, 
     private readonly loadingService: LoadingService,
     private readonly userCountService: UserCountService,
+    private readonly analyticsService: AnalyticsService,
     private readonly dialog: MatDialog,
     private readonly router: Router,
     private snackBar: MatSnackBar
@@ -54,6 +56,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
 
     this.peerService.peerError$.subscribe((err) => {
       console.error("UI ERROR: " + err);
+      this.analyticsService.trackEvent('Peer_Error', 'Error connecting to service', 'Error');
       this.openErrorSnackBar("Error connecting to service. Please try again");
       this.isCameraMicError = true;
       this.stopService();
@@ -111,6 +114,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
 
     this.loadingService.setIsSearching(true);
     this.loadingService.setLoadingStatus('Searching for Peer...');
+    this.analyticsService.trackEvent('Start_Service', 'User started the service', 'Button_Click');
   }
 
   /**
@@ -127,6 +131,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
     }
     this.isServiceStarted = false;
     this.isServiceStopped = true;
+    this.analyticsService.trackEvent('Stop_Service', 'User stopped the service', 'Button_Click');
   }
 
   /**
@@ -163,6 +168,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
       case "connected":
         this.isConnected = true;
         this.loadingService.setLoadingStatus('');
+        this.analyticsService.trackEvent('Connected', 'User connected to peer', 'Connection');
         break;
       case "disconnected":
         this.stopService();
@@ -192,12 +198,14 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
   public toggleMicrophone() {
     let micStatus = this.localStream.getAudioTracks()[0].enabled;
     this.localStream.getAudioTracks()[0].enabled = !micStatus;
-    
+
     if (!micStatus == true) {
       this.micSubject$.next('mic');
     } else {
       this.micSubject$.next('mic_off');
     }    
+
+    this.analyticsService.trackEvent('Toggle_Microphone', 'User toggled microphone', 'Button_Click');
   }
 
   /**
@@ -213,6 +221,8 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
     } else {
       this.videoSubject$.next('videocam_off');
     }
+
+    this.analyticsService.trackEvent('Toggle_Video', 'User toggled video', 'Button_Click');
   }
 
   openErrorSnackBar(message: string) {
