@@ -2,12 +2,12 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { BehaviorSubject, } from 'rxjs';
 import { LoadingService } from '../../services/loading.service';
 import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+  MatLegacySnackBar as MatSnackBar,
+  MatLegacySnackBarHorizontalPosition as MatSnackBarHorizontalPosition,
+  MatLegacySnackBarVerticalPosition as MatSnackBarVerticalPosition,
+} from '@angular/material/legacy-snack-bar';
 import { PeerService } from '../../services/peer.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { IntitialDialogComponent } from '../dialogs/intitial-dialog/intitial-dialog.component';
 import { UserCountService } from 'src/app/services/userCount.service';
 import { Router } from '@angular/router';
