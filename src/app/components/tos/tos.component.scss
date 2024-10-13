@@ -1,0 +1,40 @@
+/* General body styling for the Terms of Service page */
+.terms-container {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+}
+
+/* Headings */
+.terms-container h1, .terms-container h2 {
+    color: #2a2a2a;
+}
+
+/* General paragraph styling */
+.terms-container p {
+    margin-bottom: 15px;
+}
+
+/* List styling */
+.terms-container ul {
+    margin-left: 20px;
+}
+
+.terms-container ul li {
+    margin-bottom: 10px;
+}
+
+/* Links */
+.terms-container a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.terms-container a:hover {
+    text-decoration: underline;
+}
