@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WebConferenceComponent } from './components/web-conference/web-conference.component';
@@ -29,45 +29,39 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    WebConferenceComponent,
-    RemoteVideoComponent,
-    LocalVideoComponent,
-    IntitialDialogComponent,
-  ],
-  imports: [
-    BrowserModule,    
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    }),
-    AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatInputModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatTooltipModule,
-    MatCheckboxModule,
-  ],
-  providers: [ 
-    {
-      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, 
-      useValue: {duration: 2500}
-    } 
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        WebConferenceComponent,
+        RemoteVideoComponent,
+        LocalVideoComponent,
+        IntitialDialogComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        AppRoutingModule,
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFirestoreModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        MatInputModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        MatToolbarModule,
+        MatCardModule,
+        MatTooltipModule,
+        MatCheckboxModule], providers: [
+        {
+            provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+            useValue: { duration: 2500 }
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {}
