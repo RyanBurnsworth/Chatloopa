@@ -1,31 +1,30 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Status } from '../models/status.model';
+import { BehaviorSubject } from 'rxjs';
+import { SEARCHING } from '../shared/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatusService {
+  private statusSubject = new BehaviorSubject<string>('');
+  status$ = this.statusSubject.asObservable();
+  
+  private currentStatus = SEARCHING;
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor() { }
 
-  getStatusUpdates(roomId: string) {
-    const roomStatusId = roomId + "-status";
-    return this.firestore.collection(roomStatusId).snapshotChanges();
-  }
-
-  sendStatusUpdate(status: Status) {
-    return this.firestore.collection(status.id).add(Object.assign({}, status));
-  }
-
-  buildStatus(roomId: string, status: string, reporterId: string, recipientId: string): Status {
-    const s: Status = {
-      id: roomId + '-status',
-      status: status,
-      reporterId: reporterId,
-      recipientId: recipientId
-    };
-
-    return s;
+  /**
+   * Set the connection status
+   * 
+   * @param status the status of the connection
+   * 
+   */
+  public setStatus(status: string) {
+    if (this.currentStatus === status) {
+      return;
+    }
+    
+    this.currentStatus = status;
+    this.statusSubject.next(status);
   }
 }

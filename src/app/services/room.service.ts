@@ -7,7 +7,7 @@ import { Room } from '../models/room.model';
   providedIn: 'root'
 })
 
-export class RtcService {
+export class RoomService {
   constructor(private readonly httpClient: HttpClient) {
    }
   currentRoom$ = new ReplaySubject<Room>(1);
@@ -18,12 +18,17 @@ export class RtcService {
    * @returns Observable of {@link Room}
    */
   public getSoloRoom(): Observable<Room> {
-    console.log("Fetching room from rtc service from local api");
+    console.log("Fetching an empty room");
     return this.httpClient.get('https://developingads.com:3000/room', { responseType: 'json' } ) as Observable<Room>
   }
 
+  /**
+   * Update an existing room
+   * @param room the room to update
+   * @returns 
+   */
   public updateRoom(room: Room): Observable<Room> {
-    console.log("Updating room");
+    console.log("Updating room :", room.roomId);
     return this.httpClient.put('https://developingads.com:3000/room/' + room._id, room, { responseType: 'json' }) as Observable<Room>
   }
 }

@@ -20,14 +20,26 @@ export class SignalingService {
   }
 
   sendSignal(collectionName: string, signal: Signal) {
-    this.firestore.collection(collectionName).add(Object.assign({}, signal));
+    this.firestore.collection(collectionName).add(Object.assign({}, signal)).then(() => {
+      console.log('Signal sent');
+    }).catch((error) => {
+      console.error('Error sending signal: ', error);
+    });
   }
 
   updateRoom(collectionName: string, signal: Signal) {
-    this.firestore.doc(collectionName + '/' + signal.userId).update(signal);
+    this.firestore.doc(collectionName + '/' + signal.userId).update(signal).then(() => {
+      console.log('Room updated');
+    }).catch((error) => {
+      console.error('Error updating room: ', error);
+    });
   }
 
   deleteRoom(collectionName: string, signal: Signal) {
-    this.firestore.doc(collectionName + '/' + signal.userId).delete();
+    this.firestore.doc(collectionName + '/' + signal.userId).delete().then(() => {
+      console.log('Room deleted');
+    }).catch((error) => {
+      console.error('Error deleting room: ', error);
+    });
   }
 }

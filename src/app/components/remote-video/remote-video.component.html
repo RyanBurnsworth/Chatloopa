@@ -1,6 +1,6 @@
 <div class="remote-video-container">
     <video class='video-console' autoplay [srcObject]="sourceObject"></video>
-    <mat-progress-spinner mode="indeterminate" class="spinner" *ngIf="isSearching"></mat-progress-spinner>
+    <mat-progress-spinner mode="indeterminate" class="spinner" *ngIf="showProgressSpinner"></mat-progress-spinner>
     <span class="status-text">{{ statusText }}</span>
     <img src="../../../assets/watermark.png" class="watermark" />
 </div>

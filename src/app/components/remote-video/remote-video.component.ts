@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingService } from '../../services/loading.service';
+import { StatusService } from 'src/app/services/status.service';
+import { CLOSED, CONNECTED, CONNECTING, DISCONNECTED, FAILED, SEARCHING } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-remote-video',
@@ -8,14 +9,45 @@ import { LoadingService } from '../../services/loading.service';
 })
 export class RemoteVideoComponent implements OnInit {
   sourceObject: any;
-  isSearching: boolean = false;
+  showProgressSpinner: boolean = false;
   statusText: string = '';
 
-  constructor(private readonly loadingService: LoadingService) { }
+  constructor(private readonly statusService: StatusService) { }
 
   ngOnInit(): void {
-    this.loadingService.isSearching.subscribe((isSearching) => this.isSearching = isSearching);
 
-    this.loadingService.loadingStatus.subscribe((statusText) => this.statusText = statusText);
+    // update the status text and visibility of progress spinner based on the connection status
+    this.statusService.status$.subscribe((status) => {
+      switch (status) {
+        case SEARCHING:
+          this.showProgressSpinner = true;
+          this.statusText = 'Searching for a peer...';
+          break;
+        case CONNECTING:
+          this.showProgressSpinner = true;
+          this.statusText = 'Connecting to Peer...';
+          break;
+        case CONNECTED:
+          this.showProgressSpinner = false;
+          this.statusText = '';
+          break;
+        case DISCONNECTED:
+          this.showProgressSpinner = false;
+          this.statusText = 'Disconnected from Peer';
+          break;
+        case FAILED:
+          this.showProgressSpinner = false;
+          this.statusText = 'Connection Failed';
+          break;
+        case CLOSED:
+          this.showProgressSpinner = false;
+          this.statusText = 'Connection Closed by Peer';
+          break;
+        default:
+          this.showProgressSpinner = false;
+          this.statusText = '';
+          break;
+      };
+    });
   }
 }

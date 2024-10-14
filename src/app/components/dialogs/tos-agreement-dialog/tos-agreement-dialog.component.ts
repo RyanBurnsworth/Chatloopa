@@ -7,17 +7,17 @@ import { AnalyticsService } from 'src/app/services/analytics.service';
 
 @Component({
   selector: 'app-intitial-dialog',
-  templateUrl: './intitial-dialog.component.html',
-  styleUrls: ['./intitial-dialog.component.scss']
+  templateUrl: './tos-agreement-dialog.component.html',
+  styleUrls: ['./tos-agreement-dialog.component.scss']
 })
-export class IntitialDialogComponent implements OnInit {
+export class TosAgreementDialog implements OnInit {
   disableSubject = new BehaviorSubject(true);
   disableObservable = this.disableSubject.asObservable();
 
   constructor(
     private readonly router: Router,
     private readonly analyticsService: AnalyticsService,
-    private dialogRef: MatDialogRef<IntitialDialogComponent>
+    private dialogRef: MatDialogRef<TosAgreementDialog>
   ) { }
 
   ngOnInit(): void {

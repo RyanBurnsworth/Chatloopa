@@ -20,10 +20,12 @@ export class AppComponent implements OnInit {
   ngOnInit() {
   }
   
+  // TODO: Need to update his when refactoring the peer service
   @HostListener('window:beforeunload', [ '$event' ])
   beforeUnloadHandler(event) {
     // respond to browser close, refresh, etc. by telling the other peer the chat has ended
-    this.peerService.sendEndChatSignal();
-    this.userCountService.removeFromUserCount().subscribe();
+    
+    //this.peerService.sendEndChatSignal();
+    //this.userCountService.removeFromUserCount().subscribe();
   }
 }

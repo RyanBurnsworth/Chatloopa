@@ -1,5 +1,6 @@
 import { Message } from "../models/message.model";
 import { Signal } from "../models/signal.model";
+import * as uuid from 'uuid';
 
 export class Utils {
     public static sdpTransform(sdpValue: string) : RTCSessionDescriptionInit {
@@ -47,5 +48,17 @@ export class Utils {
             } 
         }));
         return contains;
+    }
+
+    public static createSignal(userId: string, message: string, roomId: string, signalType: string): Signal {
+        let signal = new Signal();
+        signal.id = uuid.v4();
+        signal.message = message;
+        signal.userId = userId;
+        signal.type = signalType;
+        signal.timestamp = new Date();
+        signal.roomId = roomId;
+
+        return signal;
     }
 }

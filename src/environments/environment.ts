@@ -12,4 +12,3 @@ export const environment = {
   },
   turnServiceUrl: "https://global.xirsys.net/_turn/SimpleAndroidRTC",
 };
-

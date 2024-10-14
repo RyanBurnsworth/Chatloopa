@@ -11,21 +11,32 @@
         <app-local-video class="local-stream-container" id="local" autoplay #local>
         </app-local-video>
 
-        <div class="control-card" *ngIf="isServiceStarted">
-            <button mat-button class="video-control-button" (click)="toggleLocalVideo()" matTooltip="{{ 'toggleCamera' | translate }}" aria-label="Click here to toggle your video camera"><mat-icon class="white-icon-vid">{{ videoSubject$ | async }}</mat-icon></button>
-            <button mat-button class="mic-control-button" (click)="toggleMicrophone()" matTooltip="{{ 'toggleMic' | translate }}" aria-label="Click here to toggle your microphone" ><mat-icon class="white-icon-mic" >{{ micSubject$ | async }}</mat-icon></button>
+        <div class="control-card" *ngIf="showControls">
+            <button mat-button class="video-control-button" (click)="toggleLocalVideo()" matTooltip="{{ 'toggleCamera' | translate }}" aria-label="Click here to toggle your video camera">
+                <mat-icon class="white-icon">{{ isVideoEnabled ? 'videocam' : 'videocam_off' }}</mat-icon>
+            </button>
+            
+            <button mat-button class="mic-control-button" (click)="toggleMicrophone()" matTooltip="{{ 'toggleMic' | translate }}" aria-label="Click here to toggle your microphone" >
+                <mat-icon class="white-icon">{{ isMicEnabled ? 'mic' : 'mic_off' }}</mat-icon>
+            </button>
         </div>
 
-        <div class="mobile-video-control-buttons">
-            <button mat-fab class="mobile-video-control-button" (click)="toggleMicrophone()" color="accent" matTooltip="{{ 'toggleMic' | translate }}" ><mat-icon class="white-icon">{{ micSubject$ | async }}</mat-icon></button>
-            <button mat-fab class="mobile-video-control-button" (click)="toggleLocalVideo()" color="accent" matTooltip="{{ 'toggleCamera' | translate }}"><mat-icon class="white-icon">{{ videoSubject$ | async }}</mat-icon></button>
-            <button mat-fab class="mobile-video-control-button" (click)="stopService()" title="Hang Up" color='warn' matTooltip="{{ 'stopChattingTooltip' | translate }}"  *ngIf="isServiceStarted"><mat-icon class="white-icon">stop</mat-icon></button>
-            <button mat-fab class="mobile-video-control-button" (click)="startService()" title="Find a new peer" color='primary' matTooltip="{{ 'nextPeerTooltip' | translate }}"  *ngIf="!isServiceStarted"><mat-icon class="white-icon">video_call</mat-icon></button>
+        <div class="mobile-video-control-buttons" *ngIf="showControls">
+            <button mat-fab class="mobile-video-control-button" (click)="toggleMicrophone()" color="accent" matTooltip="{{ 'toggleMic' | translate }}" >
+                <mat-icon class="white-icon">{{ isMicEnabled ? 'mic' : 'mic_off' }}</mat-icon>
+            </button>
+
+            <button mat-fab class="mobile-video-control-button" (click)="toggleLocalVideo()" color="accent" matTooltip="{{ 'toggleCamera' | translate }}" >
+                <mat-icon class="white-icon">{{ isVideoEnabled ? 'videocam' : 'videocam_off' }}</mat-icon>
+            </button>
+
+            <button mat-fab class="mobile-video-control-button" (click)="endCall()" title="Hang Up" color='warn' matTooltip="{{ 'stopChattingTooltip' | translate }}"  *ngIf="isConnected"><mat-icon class="white-icon">stop</mat-icon></button>
+            <button mat-fab class="mobile-video-control-button" (click)="startService()" title="Find a new peer" color='primary' matTooltip="{{ 'nextPeerTooltip' | translate }}"  *ngIf="!isConnected"><mat-icon class="white-icon">video_call</mat-icon></button>
         </div>
     </div>
     
-    <div class="controls-buttons-container">
-        <button mat-raised-button class="start-chat" id="start-chat" (click)="startService()" *ngIf="isServiceStopped" aria-label="{{ 'startChattingAriaLabel' | translate }}">{{ 'findANewPeer' | translate}} <mat-icon class="purple-icon">voice_chat</mat-icon></button>
-        <button mat-raised-button class="stop-chat" id="end-chat" (click)="stopService()" *ngIf="isServiceStarted" aria-label="{{ 'stopChattingAriaLabel' | translate }}">{{ 'stopChat' | translate }}<mat-icon class="purple-icon">call_end</mat-icon> </button>
+    <div class="controls-buttons-container" *ngIf="showControls">
+        <button mat-raised-button class="start-chat" id="start-chat" (click)="startService()" *ngIf="!isConnected" aria-label="{{ 'startChattingAriaLabel' | translate }}">{{ 'findANewPeer' | translate}} <mat-icon class="purple-icon">voice_chat</mat-icon></button>
+        <button mat-raised-button class="stop-chat" id="end-chat" (click)="endCall()" *ngIf="isConnected" aria-label="{{ 'stopChattingAriaLabel' | translate }}">{{ 'stopChat' | translate }}<mat-icon class="purple-icon">call_end</mat-icon> </button>
     </div>
 </div>

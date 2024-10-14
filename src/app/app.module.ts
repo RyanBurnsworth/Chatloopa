@@ -20,8 +20,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { IntitialDialogComponent } from './components/dialogs/intitial-dialog/intitial-dialog.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TosAgreementDialog } from './components/dialogs/tos-agreement-dialog/tos-agreement-dialog.component';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -33,7 +35,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         WebConferenceComponent,
         RemoteVideoComponent,
         LocalVideoComponent,
-        IntitialDialogComponent,
+        TosAgreementDialog,
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         TranslateModule.forRoot({
@@ -60,6 +62,10 @@ export function HttpLoaderFactory(http: HttpClient) {
             provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
             useValue: { duration: 2500 }
         },
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient(withInterceptorsFromDi()),
+        provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+        provideFirestore(() => getFirestore(),{
+            experimentalForceLongPolling: true
+          })
     ] })
 export class AppModule {}
