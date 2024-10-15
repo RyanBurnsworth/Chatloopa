@@ -24,3 +24,16 @@ export const CONNECTING = 'CONNECTING';
 export const FAILED = 'FAILED';
 export const SEARCHING = 'SEARCHING';
 export const PERMISSION_ERROR = 'PERMISSION_ERROR';
+
+export const BUTTON_CLICK_EVENT = 'BUTTON_CLICK_EVENT';
+export const CONNECTION_STATUS_EVENT = 'CONNECTION_STATUS_EVENT';
+export const LINK_CLICK_EVENT = 'LINK_CLICK_EVENT';
+
+export const START_CHAT = 'NEXT_PEER';
+export const STOP_CHAT = 'STOP_CHAT';
+export const TOGGLE_MIC_OFF = 'TOGGLE_MIC_OFF';
+export const TOGGLE_MIC_ON = 'TOGGLE_MIC_ON';
+export const TOGGLE_VIDEO_OFF = 'TOGGLE_VIDEO_OFF';
+export const TOGGLE_VIDEO_ON = 'TOGGLE_VIDEO_ON';
+export const CONTINUE_BUTTON = 'CONTINUE_BUTTON';
+export const TOS_LINK = 'TOS_LINK';

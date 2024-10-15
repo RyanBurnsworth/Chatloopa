@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { MatDialogRef } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators'; // For filtering events
 import { AnalyticsService } from 'src/app/services/analytics.service';
+import { BUTTON_CLICK_EVENT, CONTINUE_BUTTON, LINK_CLICK_EVENT, TOS_LINK } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-intitial-dialog',
@@ -27,7 +28,6 @@ export class TosAgreementDialog implements OnInit {
     ).subscribe(() => {
       // Close the dialog after navigation ends
       this.dialogRef.close();
-      console.log("Dialog Closed after navigation");
     });
   }
 
@@ -38,15 +38,12 @@ export class TosAgreementDialog implements OnInit {
   }
 
   continueToVideoChat() {
-    console.log("Continuing to Video Chat");
-    this.analyticsService.trackEvent('Continue_Button_Click', 'User clicked the continue button', 'Button_Click');
+    this.analyticsService.trackEvent(CONTINUE_BUTTON, 'User clicked the continue button', BUTTON_CLICK_EVENT);
   }
 
   closeDialogAndNavigate(link: string) {
-    console.log("Navigating to", link);
-
     // Track the event
-    this.analyticsService.trackEvent('TOS_Link_Click', 'User visited the TOS page', 'Link_Click');
+    this.analyticsService.trackEvent(TOS_LINK, 'User visited the TOS page', LINK_CLICK_EVENT);
 
     // First, navigate to the TOS page (or any other route)
     this.router.navigate([link]);

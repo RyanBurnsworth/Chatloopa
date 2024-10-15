@@ -7,7 +7,7 @@ import { AnalyticsService } from 'src/app/services/analytics.service';
 import { MediaControllerService } from 'src/app/services/media-controller.service';
 import { RtcService } from 'src/app/services/rtc.service';
 import { StatusService } from 'src/app/services/status.service';
-import { CLOSED, CONNECTED, DISCONNECTED, FAILED, PERMISSION_ERROR, SEARCHING } from 'src/app/shared/constants';
+import { BUTTON_CLICK_EVENT, CLOSED, CONNECTED, CONNECTION_STATUS_EVENT, DISCONNECTED, FAILED, PERMISSION_ERROR, SEARCHING, START_CHAT, STOP_CHAT, TOGGLE_MIC_OFF, TOGGLE_MIC_ON, TOGGLE_VIDEO_OFF, TOGGLE_VIDEO_ON } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-web-conference',
@@ -108,7 +108,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     // send event to Google Analytics
-    this.analyticsService.trackEvent('Start_Service', 'User started the service', 'Button_Click');
+    this.analyticsService.trackEvent(START_CHAT, 'User clicked next peer button', BUTTON_CLICK_EVENT);
   }
 
   /**
@@ -136,7 +136,7 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
       this.remote.sourceObject = null;
     }
 
-    this.analyticsService.trackEvent('Stop_Service', 'User stopped the service', 'Button_Click');
+    this.analyticsService.trackEvent(STOP_CHAT, 'User stopped the current chat', BUTTON_CLICK_EVENT);
   }
 
   /**
@@ -186,23 +186,26 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
       case SEARCHING:
         this.showControls = true;
       case CONNECTED:
-        this.analyticsService.trackEvent('Connected', 'User connected to peer', 'Connection');
+        this.analyticsService.trackEvent(CONNECTED, 'User connected to peer', CONNECTION_STATUS_EVENT);
         break;
       case DISCONNECTED:
         // ensure we are not calling stopService more than once
         if (this.currentConnectionState !== CLOSED && this.currentConnectionState !== FAILED) {
+          this.analyticsService.trackEvent(DISCONNECTED, 'User disconnected from peer', CONNECTION_STATUS_EVENT);
           this.stopService();
         }
         break;
       case FAILED:
         // ensure we are not calling stopService more than once
         if (this.currentConnectionState !== CLOSED && this.currentConnectionState !== DISCONNECTED) {
+          this.analyticsService.trackEvent(FAILED, 'Connection failed', CONNECTION_STATUS_EVENT);
           this.stopService();
         }
         break;
       case CLOSED:
         // ensure we are not calling stopService more than once
         if (this.currentConnectionState !== DISCONNECTED && this.currentConnectionState !== FAILED) {
+          this.analyticsService.trackEvent(CLOSED, 'User closed connection to peer', CONNECTION_STATUS_EVENT);
           this.stopService();
         }
         break
@@ -232,11 +235,11 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
 
     if (!micStatus == true) {
       this.isMicEnabled = true;
+      this.analyticsService.trackEvent(TOGGLE_MIC_ON, 'User toggled microphone on', BUTTON_CLICK_EVENT);
     } else {
       this.isMicEnabled = false;
+      this.analyticsService.trackEvent(TOGGLE_MIC_OFF, 'User toggled microphone off', BUTTON_CLICK_EVENT);
     }
-
-    this.analyticsService.trackEvent('Toggle_Microphone', 'User toggled microphone', 'Button_Click');
   }
 
   /**
@@ -252,14 +255,13 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
     let videoStatus = this.localStream.getVideoTracks()[0].enabled;
     this.localStream.getVideoTracks()[0].enabled = !videoStatus;
 
-    
     if (!videoStatus == true) {
       this.isVideoEnabled = true;
+      this.analyticsService.trackEvent(TOGGLE_VIDEO_ON, 'User toggled video on', BUTTON_CLICK_EVENT);
     } else {
       this.isVideoEnabled = false;
+      this.analyticsService.trackEvent(TOGGLE_VIDEO_OFF, 'User toggled video off', BUTTON_CLICK_EVENT);
     }
-
-    this.analyticsService.trackEvent('Toggle_Video', 'User toggled video', 'Button_Click');
   }
 
   openErrorSnackBar(message: string) {
