@@ -222,6 +222,11 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
    * 
    */
   public toggleMicrophone() {
+    // if the user is not connected, do nothing
+    if (!this.isConnected) {
+      return;
+    }
+
     let micStatus = this.localStream.getAudioTracks()[0].enabled;
     this.localStream.getAudioTracks()[0].enabled = !micStatus;
 
@@ -239,9 +244,15 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
    * 
    */
   public toggleLocalVideo() {
+    // if the user is not connected, do nothing    
+    if (!this.isConnected) {
+      return;
+    }
+
     let videoStatus = this.localStream.getVideoTracks()[0].enabled;
     this.localStream.getVideoTracks()[0].enabled = !videoStatus;
 
+    
     if (!videoStatus == true) {
       this.isVideoEnabled = true;
     } else {
