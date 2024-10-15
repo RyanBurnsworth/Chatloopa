@@ -5,7 +5,7 @@ import { TosComponent } from './components/tos/tos.component';
 
 const routes: Routes = [
   { path: '', component: WebConferenceComponent },
-  { path: 'tos', component: TosComponent}
+  { path: 'tos', component: TosComponent }
 ];
 
 @NgModule({

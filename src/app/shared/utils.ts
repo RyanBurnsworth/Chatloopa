@@ -3,7 +3,7 @@ import { Signal } from "../models/signal.model";
 import * as uuid from 'uuid';
 
 export class Utils {
-    public static sdpTransform(sdpValue: string) : RTCSessionDescriptionInit {
+    public static sdpTransform(sdpValue: string): RTCSessionDescriptionInit {
         let descInitObj = JSON.parse(sdpValue);
         let descInit: RTCSessionDescriptionInit = {
             sdp: descInitObj.sdp,
@@ -12,7 +12,7 @@ export class Utils {
         return descInit
     }
 
-    public static iceCandidateTransform(iceCandidate: string) : RTCIceCandidateInit {
+    public static iceCandidateTransform(iceCandidate: string): RTCIceCandidateInit {
         let iceCandidateObj = JSON.parse(iceCandidate);
         let iceCandidateInit: RTCIceCandidateInit = {
             candidate: iceCandidateObj.candidate,
@@ -45,7 +45,7 @@ export class Utils {
                 msg.read_on == messageObj.read_on ||
                 messageObj.type != 'MESSAGE') {
                 contains = true;
-            } 
+            }
         }));
         return contains;
     }

@@ -27,10 +27,11 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+    return new TranslateHttpLoader(http);
 }
 
-@NgModule({ declarations: [
+@NgModule({
+    declarations: [
         AppComponent,
         WebConferenceComponent,
         RemoteVideoComponent,
@@ -58,14 +59,15 @@ export function HttpLoaderFactory(http: HttpClient) {
         MatCardModule,
         MatTooltipModule,
         MatCheckboxModule], providers: [
-        {
-            provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-            useValue: { duration: 2500 }
-        },
-        provideHttpClient(withInterceptorsFromDi()),
-        provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-        provideFirestore(() => getFirestore(),{
-            experimentalForceLongPolling: true
-          })
-    ] })
-export class AppModule {}
+            {
+                provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+                useValue: { duration: 2500 }
+            },
+            provideHttpClient(withInterceptorsFromDi()),
+            provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+            provideFirestore(() => getFirestore(), {
+                experimentalForceLongPolling: true
+            })
+        ]
+})
+export class AppModule { }

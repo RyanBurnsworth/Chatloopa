@@ -1,18 +1,24 @@
-# WebrtcProject
+# ChatLoopa
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.1.
+This project uses [Angular CLI](https://github.com/angular/angular-cli) version 18.
 
-## Development server
+## Production Server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng --configuration production` to create the production artifacts. These are located in the project ChatLoopa\dist\chatloopa\browser.
 
-## Code scaffolding
+Copy these artifacts to the production server (172.105.153.56) in `/var/www/html/chatloopa/public`. 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The new update will take effect immediately.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Using a Node version 18 or higher run `npm install` to install the dependencies.
+
+Next run `npm run build` to build the project.
+
+Finally, run `npm run start` to start the project locally on port 4200.
+
+Navigate to `http://localhost:4200` to use the application.
 
 ## Running unit tests
 

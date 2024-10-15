@@ -44,7 +44,7 @@ export class PeerService {
 
         // start the signal listener
         this.startListener();
-        
+
       },
       (error) => {
         console.error("Failed to initiate services: ", error.message);
@@ -73,7 +73,7 @@ export class PeerService {
 
         let rtcSessionDescInit = Utils.sdpTransform(signal.message);
         this.rtcService.addRemoteDescription(new RTCSessionDescription(rtcSessionDescInit));
-        
+
         this.rtcService.createAnswer(this.userId, this.currentRoom.roomId);
         break;
       case ANSWER:
@@ -151,12 +151,12 @@ export class PeerService {
    * Start listening for signals from the current room
    * 
    */
-  private startListener() {   
+  private startListener() {
     // start the Firestore listener to listen for incoming signals
     this.signalingService.startSignalListener(this.currentRoom.roomId);
 
     console.log('Starting Signal Listener for room: ' + this.currentRoom.roomId);
-    
+
     // listen for the incoming signals
     this.signalingService.getSignalListener().subscribe(
       (resp) => {

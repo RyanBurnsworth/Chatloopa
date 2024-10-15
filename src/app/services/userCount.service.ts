@@ -7,7 +7,7 @@ import { EMPTY, Observable, ReplaySubject } from 'rxjs';
 })
 
 export class UserCountService {
-  constructor(private readonly httpClient: HttpClient) {}
+  constructor(private readonly httpClient: HttpClient) { }
 
   currentUserCount$ = new ReplaySubject<UserCount>(1);
 
@@ -18,7 +18,7 @@ export class UserCountService {
    */
   public getCurrentUserCount(): Observable<UserCount> {
     console.log("Fetching user count from rtc service from local api");
-    return this.httpClient.get('https://developingads.com:3000/user-count', { responseType: 'json' } ) as Observable<UserCount>
+    return this.httpClient.get('https://developingads.com:3000/user-count', { responseType: 'json' }) as Observable<UserCount>
   }
 
   public addToUserCount(): Observable<UserCount> {
@@ -33,5 +33,5 @@ export class UserCountService {
 }
 
 export interface UserCount {
-    currentCount: number;
+  currentCount: number;
 }

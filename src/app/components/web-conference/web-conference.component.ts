@@ -100,12 +100,12 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
       this.localStream.getAudioTracks()[0].enabled = true;
 
       this.mediaControllerService.setLocalStream(this.localStream);
+
+      // set the status to searching to kick off the signaling process
+      this.statusService.setStatus(SEARCHING);
     } else {
       this.mediaControllerService.getLocalMediaStream();
     }
-
-    // set the status to searching
-    this.statusService.setStatus(SEARCHING);
 
     // send event to Google Analytics
     this.analyticsService.trackEvent('Start_Service', 'User started the service', 'Button_Click');
@@ -152,7 +152,6 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
 
     // Perform action after the dialog is closed
     dialogRef.afterClosed().subscribe(result => {
-      this.showControls = true;
       this.startService();
     });
   }
@@ -184,6 +183,8 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
     this.statusService.setStatus(connectionState);
 
     switch (connectionState) {
+      case SEARCHING:
+        this.showControls = true;
       case CONNECTED:
         this.analyticsService.trackEvent('Connected', 'User connected to peer', 'Connection');
         break;

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { StatusService } from './status.service';
+import { SEARCHING } from '../shared/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class MediaControllerService {
   private remoteStreamSubject = new Subject<MediaStream>();
   remoteStream$ = this.remoteStreamSubject.asObservable();
   
-  constructor() { }
+  constructor(private readonly statusService: StatusService) { }
 
   /**
    * Enable the camera and microphone
@@ -25,6 +27,9 @@ export class MediaControllerService {
     .then((stream) => {
       console.log("Obtained camera and microphone");
       this.setLocalStream(stream);
+
+      // set the status to searching to kick off the signaling process
+      this.statusService.setStatus(SEARCHING);
     }).catch(err => {
       // this.openErrorSnackBar("Error: Couldn't obtain camera and/or microphone!");
       console.error("Error obtaining camera and microphone: " + err.message);

@@ -7,7 +7,7 @@ import { Component, } from '@angular/core';
 })
 export class LocalVideoComponent {
   sourceObject: any;
-  
+
   constructor() { }
 
 }

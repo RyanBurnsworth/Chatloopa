@@ -6,7 +6,7 @@
     min-width: 800px;
     padding: 16px;
     background: linear-gradient(to right, #a0c4ff, #ffadad);
-    
+
     @media (max-width: 1024px) {
         min-width: 600px;
     }
@@ -25,9 +25,9 @@
     margin-bottom: 24px;
     align-self: center;
     font-weight: 600;
-    
+
     @media (max-width: 768px) {
-        margin-top:32px;
+        margin-top: 32px;
     }
 
     @media (max-width: 480px) {
@@ -68,7 +68,8 @@
 }
 
 // changes the color of the checkbox
-::ng-deep .mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background, .mdc-checkbox__ripple {
+::ng-deep .mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background,
+.mdc-checkbox__ripple {
     background-color: var(--primary) !important;
     border-color: var(--accent) !important;
 }
@@ -98,7 +99,7 @@
     line-height: normal;
     font-size: 20px;
     margin-bottom: 16px;
-    
+
     @media (max-width: 768px) {
         font-size: 18px;
         margin-left: 16px;
@@ -138,11 +139,13 @@
 }
 
 ::ng-deep .mdc-button.continue-dialog-button {
-    color: white !important;        /* White text for high contrast */
-    border: none;                   /* No border */
+    color: white !important;
+    /* White text for high contrast */
+    border: none;
+    /* No border */
 
     &:hover {
-        background-color: #E65100  !important;  /* Darker red on hover */
+        background-color: #E65100 !important;
+        /* Darker red on hover */
     }
 }
- 

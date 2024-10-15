@@ -53,7 +53,6 @@ export class RtcService {
 
       if (connectionState === 'closed') {
         console.log('Peer connection closed.');
-        // Handle connection closed
       }
 
       if (connectionState === 'disconnected' || connectionState === 'failed') {

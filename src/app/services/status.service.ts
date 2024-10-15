@@ -8,7 +8,7 @@ import { SEARCHING } from '../shared/constants';
 export class StatusService {
   private statusSubject = new BehaviorSubject<string>('');
   status$ = this.statusSubject.asObservable();
-  
+
   private currentStatus = SEARCHING;
 
   constructor() { }
@@ -23,7 +23,7 @@ export class StatusService {
     if (this.currentStatus === status) {
       return;
     }
-    
+
     this.currentStatus = status;
     this.statusSubject.next(status);
   }

@@ -6,10 +6,10 @@
 }
 
 .video-console {
-    width:100% !important;
-    height:100% !important;
-    background-color: black;
-    position:absolute;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: #474747;
+    position: absolute;
     border-radius: 8px;
 
     @media screen and (max-width: 600px) {
@@ -49,10 +49,10 @@ video {
     /* Desktop versions */
 
     .video-console {
-        width:80% !important;
-        height:80% !important;
-        background-color: black;
-        position:absolute;
+        width: 80% !important;
+        height: 80% !important;
+        background-color: #474747;
+        position: absolute;
     }
 
     .watermark {
@@ -70,10 +70,10 @@ video {
     /* Tablet versions */
 
     .video-console {
-        width:75% !important;
-        height:75% !important;
-        background-color: black;
-        position:absolute;
+        width: 75% !important;
+        height: 75% !important;
+        background-color: #474747;
+        position: absolute;
     }
 
     .watermark {

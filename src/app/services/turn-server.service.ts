@@ -12,7 +12,7 @@ export class TurnServerService {
   constructor(private http: HttpClient) { }
 
   setTurnServer() {
-    const headers = {'Authorization': 'Basic cnlhbmIxOTg6Y2QxMDM0ZDAtY2NkNy0xMWVhLWE3NGItMDI0MmFjMTUwMDAz'};
+    const headers = { 'Authorization': 'Basic cnlhbmIxOTg6Y2QxMDM0ZDAtY2NkNy0xMWVhLWE3NGItMDI0MmFjMTUwMDAz' };
     const body = {};
     this.http.put<TurnServer>(environment.turnServiceUrl, body, { headers })
       .subscribe({

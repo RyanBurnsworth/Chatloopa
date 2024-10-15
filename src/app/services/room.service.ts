@@ -9,7 +9,7 @@ import { Room } from '../models/room.model';
 
 export class RoomService {
   constructor(private readonly httpClient: HttpClient) {
-   }
+  }
   currentRoom$ = new ReplaySubject<Room>(1);
 
   /**
@@ -19,7 +19,7 @@ export class RoomService {
    */
   public getSoloRoom(): Observable<Room> {
     console.log("Fetching an empty room");
-    return this.httpClient.get('https://developingads.com:3000/room', { responseType: 'json' } ) as Observable<Room>
+    return this.httpClient.get('https://developingads.com:3000/room', { responseType: 'json' }) as Observable<Room>
   }
 
   /**

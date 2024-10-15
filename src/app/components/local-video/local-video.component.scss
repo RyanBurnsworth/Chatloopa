@@ -1,8 +1,10 @@
 .local-video-container {
     display: flex;
-    justify-content: flex-end; /* Changed to align to the right */
+    justify-content: flex-end;
+    /* Changed to align to the right */
     position: absolute;
-    right: 10vw; /* Added to position the container on the right side */
+    right: 10vw;
+    /* Added to position the container on the right side */
     width: auto;
     margin-top: 16px;
     margin-right: 16px;
@@ -21,6 +23,7 @@ video {
 }
 
 @media only screen and (min-width: 1024px) {
+
     /* Desktop versions */
     .video-console {
         width: 175px;
@@ -29,6 +32,7 @@ video {
 }
 
 @media only screen and (min-width: 600px) and (max-width: 1024px) {
+
     /* Tablet versions */
     .video-console {
         width: 150px;

@@ -7,19 +7,6 @@
     align-items: center;
 }
 
-.control-card {
-    width: auto;
-    height: auto;
-    background: var(--primary) !important;
-    padding: 16px;
-    position: relative;
-    border-radius: 8px;
-
-    @media screen and (max-width: 600px) {
-        display: none;   
-    }
-}
-
 .video-control-buttons {
     position: absolute;
     top: 80vw;
@@ -37,17 +24,33 @@
     bottom: 0;
     left: 0;
     padding: 16px;
-    background-color: rgba(0, 0, 0, 0.5); /* Optional: Add a background color for better visibility */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Optional: Add a background color for better visibility */
 
     @media screen and (max-width: 600px) {
-        display: none;   
+        display: none;
     }
 }
 
 .video-control-button,
+.mic-control-button,
+.mobile-mic-control-button,
 .mobile-video-control-button {
-    margin-right: 16px;
-    color: black;
+    margin-right: 24px;
+    color: white;
+    background: orange;
+}
+
+.start-chat,
+.mobile-start-chat {
+    color: white;
+    background: var(--primary);
+}
+
+.stop-chat,
+.mobile-stop-chat {
+    color: white;
+    background: darkred;
 }
 
 .mobile-video-control-buttons {
@@ -99,47 +102,29 @@
     background-color: var(--primary);
 }
 
-::ng-deep .mdc-button.start-chat {
-    background: #4CAF50 !important;  /* Medium Green (brighter and more vibrant) */
-    color: white !important;         /* White text for high contrast */
-    border: none;                    /* No border */
-    margin-right: 8px;
-    &:hover {
-        background-color: #388e3c !important; /* Darker green on hover */
-    }
-}
-
-::ng-deep .mdc-button.stop-chat {
-    background: #FF6D00 !important;  /* Bright red for the default state */
-    color: white !important;        /* White text for high contrast */
-    border: none;                   /* No border */
-
-    &:hover {
-        background-color: #C13636 !important;  /* Darker red on hover */
-    }
-}
-
 ::ng-deep .mdc-button.next-peer {
     &:hover {
-        background-color: #1976D2 !important;  /* Darker red on hover */
+        background-color: #1976D2 !important;
+        /* Darker red on hover */
     }
 
     @media screen and (max-width: 600px) {
         display: none;
     }
 }
- 
+
 @media only screen and (min-width: 1024px) {
     .white-icon-vid {
         margin: 0 8px 0 12px;
     }
-    
-    ::ng-deep .mat-icon.white-icon-mic, .mat-icon.white-icon-vid {
+
+    ::ng-deep .mat-icon.white-icon-mic,
+    .mat-icon.white-icon-vid {
         font-size: 1.5em !important;
         color: #ffffff;
         padding: 0;
     }
-    
+
     .stream-container {
         margin-top: 16px;
     }
@@ -153,7 +138,7 @@
     .stream-container {
         margin-top: 16px;
     }
-    
+
     .stop-chat {
         display: visible;
     }

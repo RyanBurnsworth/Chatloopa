@@ -16,7 +16,7 @@ export class SignalingService {
   }
 
   getSignalListener() {
-   return this.signalListener;
+    return this.signalListener;
   }
 
   sendSignal(collectionName: string, signal: Signal) {
