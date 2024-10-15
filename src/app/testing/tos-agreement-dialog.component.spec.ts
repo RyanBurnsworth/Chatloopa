@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TosAgreementDialog } from 'src/app/components/dialogs/tos-agreement-dialog/tos-agreement-dialog.component';
 
-import { IntitialDialogComponent } from './intitial-dialog.component';
-
-describe('IntitialDialogComponent', () => {
-  let component: IntitialDialogComponent;
-  let fixture: ComponentFixture<IntitialDialogComponent>;
+describe('TosAgreementDialog', () => {
+  let component: TosAgreementDialog;
+  let fixture: ComponentFixture<TosAgreementDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IntitialDialogComponent ]
+      declarations: [ TosAgreementDialog ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IntitialDialogComponent);
+    fixture = TestBed.createComponent(TosAgreementDialog);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

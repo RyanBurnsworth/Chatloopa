@@ -7,4 +7,5 @@ export class Room {
     createdTime: string;
     joinTime: string;
     endTime: string;
+    isInitiator = false;
 }

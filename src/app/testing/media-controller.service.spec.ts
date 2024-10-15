@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MediaControllerService } from './media-controller.service';
+import { MediaControllerService } from 'src/app/services/media-controller.service';
 
 describe('MediaControllerService', () => {
   let service: MediaControllerService;

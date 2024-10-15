@@ -1,0 +1,30 @@
+::ng-deep .messages-list {
+    height: 90vh;
+    margin: 16px;
+}
+
+::ng-deep .message-input {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.name-container {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 36px;
+    color: white;
+    margin-left: 8px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  }
+  
+  .toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px !important;
+    width: 100% !important;
+    background: #0b74c7;
+    margin-bottom: 24px;
+    padding-top: 16px;
+  }
+  

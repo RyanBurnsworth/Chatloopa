@@ -1,9 +1,18 @@
-export interface Message {
+export class Message {
     id: string;
-    senderId: string;
-    recipientId: string;
-    type: string;
-    message: string;
-    created_on: string;
-    read_on: string;
+    
+    // first userId in the array is the sender
+    participants: string[];
+
+    messageId: string;
+
+    content: string;
+
+    timestamp: number;
+
+    deliveryTime: string;
+
+    status: 'sent' | 'delivered' | 'read';
+
+    type: 'text' | 'image' | 'video' | 'audio' | 'document' | 'emoji';
 }

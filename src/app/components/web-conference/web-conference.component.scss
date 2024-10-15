@@ -84,24 +84,26 @@
     font-family: 'Roboto', sans-serif;
 }
 
-.chatloopa-name {
-    font-family: 'Satisfy', cursive;
+.name-container {
+    font-family: 'Open Sans', sans-serif;
     font-size: 36px;
-    margin-top: 8px;
     color: white;
+    margin-left: 8px;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-}
-
-.toolbar {
+  }
+  
+  .toolbar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     height: 64px !important;
     width: 100% !important;
-    padding: 16px;
-    background-color: var(--primary);
-}
-
+    background: #0b74c7;
+    margin-bottom: 24px;
+    padding-top: 16px;
+  }
+  
 ::ng-deep .mdc-button.next-peer {
     &:hover {
         background-color: #1976D2 !important;

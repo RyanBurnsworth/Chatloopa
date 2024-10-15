@@ -1,0 +1,23 @@
+<div class="messages-container">
+  <div *ngIf="messages$ | async as messages;" class="messages-list" #messagesContainer>
+    <div *ngFor="let message of messages" class="message">
+      <div class="message-sender" [ngStyle]="{
+        'color': message.participants[0] === 'ChatLoopa' ? 'black' :
+                 (message.participants[0] === localUser ? 'blue' : 'red')
+      }">
+        {{ message.participants[0] === 'ChatLoopa' ? 'ChatLoopa' :
+        (message.participants[0] === localUser ? 'You' : 'Stranger') }}
+
+        <span class="message-timestamp"> - {{ message.deliveryTime }}</span>
+      </div>
+      <div class="message-content">{{ message.content }}</div>
+      <mat-divider class="message-divider"></mat-divider>
+    </div>
+  </div>
+
+  <div class="message-input">
+    <input matInput class="input-message-box" [(ngModel)]="newMessage" placeholder="Type a message..." (keydown.enter)="sendMessage()" />
+    <button mat-icon-button class="send-btn" (click)="sendMessage()">
+      <mat-icon>send</mat-icon>
+    </button>
+  </div>

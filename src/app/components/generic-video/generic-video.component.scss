@@ -1,0 +1,27 @@
+.generic-video-console {
+    background: black;
+    margin-top: 8px;
+}
+
+.generic-video-container {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+    position: absolute;
+    top: 55%;
+    left: 19%;
+}
+
+.status-text {
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: #ffffff;
+    position: absolute;
+    top: 68%;
+    left: 17%;
+}

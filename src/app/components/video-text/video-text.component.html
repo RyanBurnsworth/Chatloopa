@@ -1,0 +1,34 @@
+<!-- Toolbar -->
+<div class="toolbar mat-elevation-z8">
+    <div class="logo-container">
+        <img src="assets/chatloopa-logo.png"  style="width: 105px; height: 90px; padding-bottom: 16px;"/>
+        <span class="name-container">ChatLoopa</span>
+    </div>
+    <span class="toolbar-spacer"></span>
+</div>
+
+<!-- Main Container - This will be a flex row -->
+<div class="main-container">
+    <!-- Video Container (stacked generic video consoles) -->
+    <div class="video-container">
+        <div class="animation-container">
+            <img src="assets/love-you-emoji.gif" class="animation-local" *ngIf="isLocalAnimationVisible" />
+            <img src="assets/love-you-emoji.gif" class="animation-remote" *ngIf="isRemoteAnimationVisible" />
+        </div>
+        <app-generic-video class="local-stream-container" id="local" autoplay #local></app-generic-video>
+
+        <app-generic-video class="remote-stream-container" id="remote" autoplay #remote></app-generic-video>
+
+        <div class="action-buttons-container">
+            <button mat-raised-button class="_like_button" (click)="showRemoteAnimation()"><mat-icon>favorite</mat-icon></button>
+
+            <button mat-raised-button color="warn" class="_end_button" (click)="endCall()">Stop Chat</button>
+            <button mat-raised-button color="primary" class="_start_button" (click)="startService()">Next Peer</button>
+        </div>
+    </div>
+
+    <!-- Messages Component -->
+    <div class="chat-container">
+        <app-messages [roomId]="roomId" [localUser]="localUser" [remoteUser]="remoteUser"></app-messages>
+    </div>
+</div>

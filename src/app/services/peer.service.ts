@@ -7,6 +7,7 @@ import { SignalingService } from './signaling.service';
 import { ANSWER, CLOSED, CREATE_ROOM, ICE_CANDIDATE, JOIN_ROOM, OFFER } from '../shared/constants';
 import { RtcService } from './rtc.service';
 import { StatusService } from './status.service';
+import * as uuid from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -63,9 +64,16 @@ export class PeerService {
 
     switch (signal.type) {
       case JOIN_ROOM:
+        console.log("Received a JOIN_ROOM signal");
         if (this.isInitiator) {
+          // update the room with a user two id (remote peer / joiner)
+          this.currentRoom.userTwoId = uuid.v4();
+
           // Create and send offer signal
           this.rtcService.createOffer(this.userId, this.currentRoom.roomId);
+        } else {
+          // update the room with a user one id (remote peer / initiator)
+          this.currentRoom.userOneId = uuid.v4();
         }
         break;
       case OFFER:
@@ -77,10 +85,12 @@ export class PeerService {
         this.rtcService.createAnswer(this.userId, this.currentRoom.roomId);
         break;
       case ANSWER:
+        console.log("Received an ANSWER signal");
         let remoteDesc = Utils.sdpTransform(signal.message);
         this.rtcService.addRemoteDescription(remoteDesc);
         break;
       case ICE_CANDIDATE:
+        console.log("Received an ICE_CANDIDATE signal");
         if (signal.message == 'null')
           return;
 
@@ -90,6 +100,7 @@ export class PeerService {
       case CLOSED:
         console.log("Received a CLOSED signal");
         this.statusService.setStatus(CLOSED);
+        break;
       default:
         break;
     }
@@ -107,22 +118,26 @@ export class PeerService {
       console.log("Sending CREATE_ROOM signal");
 
       this.userId = this.currentRoom.userOneId;
+      this.currentRoom.isInitiator = true;
+
       const signal = Utils.createSignal(this.currentRoom.userOneId, '', this.currentRoom.roomId, CREATE_ROOM);
       this.signalingService.sendSignal(this.currentRoom.roomId, signal);
     } else {
       console.log("Sending JOIN_ROOM signal");
 
       this.userId = this.currentRoom.userTwoId;
+      this.currentRoom.isInitiator = false;
+
       const signal = Utils.createSignal(this.currentRoom.userTwoId, '', this.currentRoom.roomId, JOIN_ROOM);
       this.signalingService.sendSignal(this.currentRoom.roomId, signal);
-
+    }
+    
       // update the room data in the database
       this.currentRoom.joinTime = new Date().toString();
 
       this.roomService.updateRoom(this.currentRoom).subscribe((room) => {
         this.currentRoom = room;
       });
-    }
   }
 
   /**

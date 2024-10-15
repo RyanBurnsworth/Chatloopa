@@ -5,6 +5,11 @@ module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    files: [
+      // Add this line to include the `testing` directory
+      'src/app/testing/**/*.spec.ts', // Includes all .spec.ts files under testing/
+      'src/**/*.spec.ts' // Optional: You can also include the default location
+    ],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
@@ -25,7 +30,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/webrtc-project'),
+      dir: require('path').join(__dirname, './coverage/chatloopa'),
       subdir: '.',
       reporters: [
         { type: 'html' },

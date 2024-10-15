@@ -1,0 +1,206 @@
+.main-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100vh;
+  background: #292929;
+  position: absolute;
+
+  .video-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 16px;
+    width: auto !important;
+
+    .local-stream-container {
+      width: 40vw;
+      height: 40vh;
+      border-radius: 8px;
+      
+      @media screen and (max-height: 800px) {
+        height: 30vh;
+        width: 30vw;
+      }
+    }
+
+    .remote-stream-container {
+      width: 40vw;
+      height: 40vh;
+      margin-top: 16px;
+      @media screen and (max-height: 800px) {
+        height: 30vh;
+        width: 30vw;
+      }
+    }
+  }
+
+  .chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    margin-left: 16px;
+    margin-right: 16px;
+    width: 40vw;
+  }
+}
+
+::ng-deep .generic-video-console {
+  width: 100%;
+  height: 100%;
+  background: black;
+  object-fit: cover;
+}
+
+.name-container {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 36px;
+  color: white;
+  margin-left: 8px;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px !important;
+  width: 100% !important;
+  background: #0b74c7;
+  margin-bottom: 24px;
+  padding-top: 16px;
+}
+
+::ng-deep .generic-video-container {
+  width: 25vw;
+  height: 35%;
+  background: black;
+  margin-bottom: 8px;
+}
+
+::ng-deep .messages-container {
+  width: 100% !important;
+  padding: 8px;
+}
+
+::ng-deep .messages-list {
+  height: 91vh;
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+}
+
+/* Action buttons styling */
+.action-buttons-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  /* Change to 'center' for vertical alignment */
+  margin-top: 16px;
+  width: 100%;
+  gap: 16px;
+  /* Add gap between buttons */
+
+  ._end_button,
+  ._start_button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    /* Optional: adds rounded corners to the button */
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    /* Smooth transition */
+    font-size: 14px;
+    /* Adjust the font size */
+    cursor: pointer;
+  }
+
+  /* End Call Button */
+  ._end_button {
+    background-color: orange;
+    /* Red color for "Stop Chat" */
+    color: white;
+
+    &:hover {
+      background-color: #d32f2f;
+      /* Darker red when hovered */
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+      /* Box shadow on hover */
+      transform: scale(1.05);
+      /* Slight scale-up effect */
+    }
+  }
+
+  /* Start Call Button */
+  ._start_button {
+    background-color: #1976d2;
+    /* Blue color for "Next Peer" */
+    color: white;
+
+    &:hover {
+      background-color: #1565c0;
+      /* Darker blue when hovered */
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+      /* Box shadow on hover */
+      transform: scale(1.05);
+      /* Slight scale-up effect */
+    }
+  }
+
+  /* Like Button */
+  ._like_button {
+    width: 32px !important;
+    height: 32px !important;
+    background-color: #bf6b99;
+    /* Pink color for "Like" */
+    color: white;
+
+    &:hover {
+      background-color: #b33b72;
+      /* Darker pink when hovered */
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+      /* Box shadow on hover */
+      transform: scale(1.05);
+      /* Slight scale-up effect */
+    }
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    /* Start below the screen */
+    opacity: 0;
+    /* Start with no opacity */
+  }
+
+  to {
+    transform: translateY(0);
+    /* Move to the final position */
+    opacity: 1;
+    /* End with full opacity */
+  }
+}
+
+.animation-remote {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  left: 20%;
+  top: 60%;
+  animation: slideUp 0.5s ease-out;
+
+  @media screen and (max-width: 768) {
+    left: 45%;
+    top: 6%;
+  }
+}
+
+.animation-local {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  left: 20%;
+  top: 15%;
+  animation: slideUp 0.5s ease-out;
+}

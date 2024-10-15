@@ -37,3 +37,12 @@ export const TOGGLE_VIDEO_OFF = 'TOGGLE_VIDEO_OFF';
 export const TOGGLE_VIDEO_ON = 'TOGGLE_VIDEO_ON';
 export const CONTINUE_BUTTON = 'CONTINUE_BUTTON';
 export const TOS_LINK = 'TOS_LINK';
+export const EMOJI = 'EMOJI';
+export const SEND_EMOJI = 'SEND_EMOJI';
+export const JOIN_CHAT = 'JOIN_CHAT';
+export const END_CHAT = 'END_CHAT';
+
+export const STARTED = 'STARTED';
+export const STOPPED = 'STOPPED';
+
+export const DEFAULT_CHAT_MESSAGE = 'Enjoy meeting new people on ChatLoopa. Remember to be kind and respectful to others.';

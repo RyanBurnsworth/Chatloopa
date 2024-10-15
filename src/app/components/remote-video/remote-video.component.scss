@@ -36,11 +36,11 @@ video {
 }
 
 .watermark {
+    width: 250;
+    height: 150px;
     z-index: 1000;
     position: absolute;
     margin: 8px;
-    width: 125px;
-    height: 50px;
     left: 30%;
     top: 98%;
 }

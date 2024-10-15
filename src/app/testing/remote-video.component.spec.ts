@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RemoteVideoComponent } from './remote-video.component';
+import { RemoteVideoComponent } from 'src/app/components/remote-video/remote-video.component';
 
 describe('RemoteVideoComponent', () => {
   let component: RemoteVideoComponent;

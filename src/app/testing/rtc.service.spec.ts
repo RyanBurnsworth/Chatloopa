@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RtcService } from './rtc.service';
+import { RtcService } from 'src/app/services/rtc.service';
 
 describe('RtcService', () => {
   let service: RtcService;

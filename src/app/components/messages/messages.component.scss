@@ -1,0 +1,91 @@
+.messages-container {
+  margin: 0 auto;
+}
+
+.messages-list {
+  max-height: 80vh;
+  overflow-y: auto;
+  border-bottom: 1px solid #474747;
+  padding-bottom: 10px;
+  padding-top: 16px;
+  background: #e8f4f8;
+  color: #474747;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 4px;
+  
+  @media screen and (max-height: 800px) {
+    max-height: 60vh;
+  }
+}
+
+.message {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.message-sender {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.message-input {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.message-input input {
+  width: 80%;
+  padding: 5px;
+}
+
+.message-input button {
+  padding: 5px 10px;
+}
+
+.message-divider {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+.message-input {
+  position: relative;  /* Ensure the input container is positioned relative */
+}
+
+.message-input input {
+  width: 100%;         /* Make sure the input takes full width */
+  padding-right: 40px; /* Space for the send button */
+}
+
+.send-btn {
+  position: absolute;  /* Position the button inside the input field */
+  right: 10px;         /* Adjust the position to the right */
+  top: 50%;            /* Vertically center it */
+  transform: translateY(-50%);
+  background-color: transparent;  /* Optional: remove background color */
+  border: none;        /* Optional: remove border */
+  padding: 0;          /* Remove padding to make it tight */
+  cursor: pointer;     /* Change cursor to pointer when hovering */
+  color: var(--accent);
+}
+
+.send-btn mat-icon {
+  color: orange; /* Change the icon color if necessary */
+  font-size: 24px; /* Adjust the icon size */
+}
+
+.header-timestamp {
+  font-weight: 400;
+}
+
+.input-message-box {
+  border-radius: 4px;
+  padding: 8px !important;
+  background: #e8f4f8;
+  font-family: 'Roboto', sans-serif;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.input-message-box:hover {
+  background: #d4ebf2;
+  border-color: #999;
+}
