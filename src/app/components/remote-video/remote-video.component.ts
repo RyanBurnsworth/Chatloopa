@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StatusService } from 'src/app/services/status.service';
-import { CLOSED, CONNECTED, CONNECTING, DISCONNECTED, FAILED, SEARCHING } from 'src/app/shared/constants';
+import { CLOSED, CONNECTED, CONNECTING, DISCONNECTED, FAILED, PERMISSION_ERROR, SEARCHING } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-remote-video',
@@ -42,6 +42,10 @@ export class RemoteVideoComponent implements OnInit {
         case CLOSED:
           this.showProgressSpinner = false;
           this.statusText = 'Connection Closed by Peer';
+          break;
+        case PERMISSION_ERROR:
+          this.showProgressSpinner = false;
+          this.statusText = 'Permission Error: Cannot Access Camera/Microphone';
           break;
         default:
           this.showProgressSpinner = false;

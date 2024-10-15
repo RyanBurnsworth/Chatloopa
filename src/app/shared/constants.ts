@@ -23,3 +23,4 @@ export const DISCONNECTED = 'DISCONNECTED';
 export const CONNECTING = 'CONNECTING';
 export const FAILED = 'FAILED';
 export const SEARCHING = 'SEARCHING';
+export const PERMISSION_ERROR = 'PERMISSION_ERROR';

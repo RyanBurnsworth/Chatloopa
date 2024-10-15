@@ -7,7 +7,7 @@ import { AnalyticsService } from 'src/app/services/analytics.service';
 import { MediaControllerService } from 'src/app/services/media-controller.service';
 import { RtcService } from 'src/app/services/rtc.service';
 import { StatusService } from 'src/app/services/status.service';
-import { CLOSED, CONNECTED, DISCONNECTED, FAILED, SEARCHING } from 'src/app/shared/constants';
+import { CLOSED, CONNECTED, DISCONNECTED, FAILED, PERMISSION_ERROR, SEARCHING } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-web-conference',
@@ -206,6 +206,9 @@ export class WebConferenceComponent implements OnInit, OnDestroy, AfterViewInit 
           this.stopService();
         }
         break
+      case PERMISSION_ERROR:
+        this.openErrorSnackBar("Error: Couldn't obtain camera and/or microphone!");
+        break;
       default:
         break;
     }

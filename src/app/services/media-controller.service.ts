@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { StatusService } from './status.service';
-import { SEARCHING } from '../shared/constants';
+import { PERMISSION_ERROR, SEARCHING } from '../shared/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +33,7 @@ export class MediaControllerService {
     }).catch(err => {
       // this.openErrorSnackBar("Error: Couldn't obtain camera and/or microphone!");
       console.error("Error obtaining camera and microphone: " + err.message);
+      this.statusService.setStatus(PERMISSION_ERROR);
       // this.stopService();
     });
     return undefined;
