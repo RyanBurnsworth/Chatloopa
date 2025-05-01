@@ -26,10 +26,6 @@ import { TosAgreementDialog } from './components/dialogs/tos-agreement-dialog/to
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
-import { MessagesComponent } from './components/messages/messages.component';
-import { VideoTextComponent } from './components/video-text/video-text.component';
-import { GenericVideoComponent } from './components/generic-video/generic-video.component';
-import { TextChatComponent } from './components/text-chat/text-chat.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -42,11 +38,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         WebConferenceComponent,
         RemoteVideoComponent,
         LocalVideoComponent,
-        MessagesComponent,
         TosAgreementDialog,
-        VideoTextComponent,
-        GenericVideoComponent,
-        TextChatComponent,
     ],
     bootstrap: [AppComponent], 
     imports: [BrowserModule,

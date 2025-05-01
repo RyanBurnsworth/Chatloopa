@@ -19,7 +19,7 @@ export class RoomService {
    */
   public getSoloRoom(): Observable<Room> {
     console.log("Fetching an empty room");
-    return this.httpClient.get('https://developingads.com:3000/room', { responseType: 'json' }) as Observable<Room>
+    return this.httpClient.get('http://localhost:3000/room', { responseType: 'json' }) as Observable<Room>
   }
 
   /**
@@ -29,6 +29,6 @@ export class RoomService {
    */
   public updateRoom(room: Room): Observable<Room> {
     console.log("Updating room :", room.roomId);
-    return this.httpClient.put('https://developingads.com:3000/room/' + room._id, room, { responseType: 'json' }) as Observable<Room>
+    return this.httpClient.put('http://localhost:3000/room/' + room._id, room, { responseType: 'json' }) as Observable<Room>
   }
 }
